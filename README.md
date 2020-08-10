@@ -10,4 +10,5 @@ A Team
 | :---------: | :--------: | :-----------------------------: |
 | Zihan Zhang |   963790   | zhazz@student.unimelb.edu.au    |
 | Chegneng Liu|   813174   | chengengl@student.unimelb.edu.au|
+| Hao Ding    |   825702   | dingh2@student.unimelb.edu.au|
 
