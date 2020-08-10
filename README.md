@@ -6,7 +6,8 @@ A Team
 
 # Team Member
 
-|    Name     | Student ID |            E-mail            |
-| :---------: | :--------: | :--------------------------: |
-| Zihan Zhang |   963790   | zhazz@student.unimelb.edu.au |
+|    Name     | Student ID |            E-mail               |
+| :---------: | :--------: | :-----------------------------: |
+| Zihan Zhang |   963790   | zhazz@student.unimelb.edu.au    |
+| Chegneng Liu|   813174   | chengengl@student.unimelb.edu.au|
 
