@@ -1,5 +1,8 @@
 package auth;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -15,9 +18,15 @@ public class LoginServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("text/html");
         System.out.println("Hello from Get method");
-        PrintWriter writer = response.getWriter();
-        writer.println("<h3> Hello in HTML</h3>");
+        String jsonStr = "{\"userName\": \"zzh\"}";
+        try {
+            JSONObject jsonObject = new JSONObject(jsonStr);
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write(jsonObject.toString());
+        }catch (JSONException err) {
+            System.out.println("Error to convert from String to JSON!");
+        }
     }
 }
