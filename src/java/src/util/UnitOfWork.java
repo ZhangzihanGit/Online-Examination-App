@@ -60,4 +60,7 @@ public class UnitOfWork {
             deletedObjectList.add(object);
         }
     }
+
+    public void commit() {
+    }
 }
