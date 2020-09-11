@@ -1,5 +1,6 @@
 package auth;
 
+import db.DBConnection;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -20,11 +21,12 @@ public class LoginServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         System.out.println("Hello from Get method");
         String jsonStr = "{\"userName\": \"zzh\"}";
+        String mock = DBConnection.mockDataTest();
         try {
             JSONObject jsonObject = new JSONObject(jsonStr);
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
-            response.getWriter().write(jsonObject.toString());
+            response.getWriter().write(jsonObject.toString()+mock);
         }catch (JSONException err) {
             System.out.println("Error to convert from String to JSON!");
         }
