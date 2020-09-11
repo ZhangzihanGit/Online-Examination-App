@@ -54,3 +54,4 @@ out/
 release.properties
 pom.xml.releaseBackup
 pom.xml.tag
+src/java/src/main/resources/secreturi.properties
