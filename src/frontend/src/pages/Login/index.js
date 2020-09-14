@@ -12,7 +12,7 @@ const Login = () => {
     try {
       const response = await api.getTest();
       console.log(response);
-      setData(response.data);
+      setData(JSON.stringify(response.data));
     } catch (error) {
       console.log(error);
       setData(error);

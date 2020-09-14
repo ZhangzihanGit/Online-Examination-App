@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet(name = "LoginServlet", urlPatterns = {"/login"})
+@WebServlet(name = "LoginServlet", urlPatterns = {"/getLogin"})
 public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -26,7 +26,7 @@ public class LoginServlet extends HttpServlet {
             JSONObject jsonObject = new JSONObject(jsonStr);
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
-            response.getWriter().write(jsonObject.toString()+mock);
+            response.getWriter().write(jsonObject.toString() + mock);
         }catch (JSONException err) {
             System.out.println("Error to convert from String to JSON!");
         }
