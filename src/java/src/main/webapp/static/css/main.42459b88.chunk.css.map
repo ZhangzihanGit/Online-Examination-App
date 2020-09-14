@@ -1,0 +1,1 @@
+{"version":3,"sources":["index.module.less"],"names":[],"mappings":"AAAA,iBACE,cAAA,CACA,UAAA,CACA,WAAA,CACA,YAAA,CACA,sBAAA,CACA,kBACF","file":"main.42459b88.chunk.css","sourcesContent":[".spinWrap {\n  position: fixed;\n  width: 100%;\n  height: 100%;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}"]}
