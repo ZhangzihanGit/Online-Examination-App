@@ -55,9 +55,9 @@ public class DBConnection {
         if (dbConnection == null) {
             try {
                 // URI used in production environment
-                URI dbURI = new URI(System.getenv("DATABASE_URL"));
+//                URI dbURI = new URI(System.getenv("DATABASE_URL"));
                 // URI used in local development environment
-//                URI dbURI = new URI(Objects.requireNonNull(SecretLoader.getDBUri()));
+                URI dbURI = new URI(Objects.requireNonNull(SecretLoader.getDBUri()));
 
                 String username = dbURI.getUserInfo().split(":")[0];
                 String password = dbURI.getUserInfo().split(":")[1];
