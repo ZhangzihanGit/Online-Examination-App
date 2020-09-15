@@ -1,0 +1,1 @@
+export const RELATIVE_PATH = '/online_examination_war_exploded';

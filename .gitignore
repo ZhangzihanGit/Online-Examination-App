@@ -1,7 +1,7 @@
 # Maven 
 target/
 
-src/main/webapp/
+src/java/src/main/webapp/
 
 # IntelliJ project files 
 *.iml
