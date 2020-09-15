@@ -1,7 +1,10 @@
 # Maven 
 target/
 
-src/java/src/main/webapp/
+# ignore everything inside webapp/ except WEB-INF/ and META-INF/
+src/java/src/main/webapp/*
+!src/java/src/main/webapp/WEB-INF/
+!src/java/src/main/webapp/META-INF/
 
 # IntelliJ project files 
 *.iml
