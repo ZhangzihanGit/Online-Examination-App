@@ -3,7 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 import { Spin } from 'antd';
 import styles from './index.module.less';
 
-const Home = lazy(() => import('../pages/Home'));
+const Dashboard = lazy(() => import('../pages/Dashboard'));
 const Login = lazy(() => import('../pages/Login'));
 
 const Router = () => (
@@ -13,8 +13,8 @@ const Router = () => (
     </div>
   }>
     <Switch>
-      <Route exact path="/" component={Home} />
-      <Route exact path="/login" component={Login} />
+      <Route path="/login" component={Login} />
+      <Route path="/" component={Dashboard} />
     </Switch>
   </Suspense>
 );

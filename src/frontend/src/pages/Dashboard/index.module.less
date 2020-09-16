@@ -23,9 +23,16 @@
     }
 
     .contentContainer {
-      padding: 16px;
+      padding: 12px 24px 24px 24px;
+
+      :global {
+        .ant-breadcrumb {
+          margin: 4px 0 12px 0;
+        }
+      }
       .content {
         background-color: #fff;
+        padding: 16px;
       }
     }
   }
