@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
-import { Switch, Route, Link, useRouteMatch, } from 'react-router-dom';
+import React from 'react';
+import { Switch, Route, Link } from 'react-router-dom';
 import { Layout, Menu, Avatar, Breadcrumb } from 'antd';
 import { UserOutlined, HomeOutlined } from '@ant-design/icons';
 import Home from '../Home';
 import SubjectList from '../SubjectList';
+import Subject from '../Subject';
 import styles from './index.module.less';
 
-const { Header, Sider, Content, Footer } = Layout;
+const { Header, Sider, Content } = Layout;
 
 const subjectList = [{
   id: 1,
@@ -58,43 +59,36 @@ const menuList = [
   { key: '/settings', name: 'Settings', content: () => <h2>Settings</h2> },
 ];
 
-const breadcrumbNameMap = {
-  '/home': <HomeOutlined />,
-  '/subjects': 'Subjects',
-  '/settings': 'Settings',
-};
+// const breadcrumbNameMap = {
+//   '/home': <HomeOutlined />,
+//   '/subjects': 'Subjects',
+//   '/settings': 'Settings',
+//   '/subjects/SWEN90004': 'SWEN90004',
+// };
+
+const capitalizeFirstLetter = (str) => str.charAt(0).toUpperCase() + str.slice(1);
 
 const extraBreadcrumbItems = location => {
-  console.log(location.pathname)
-  // get current URL, split them and remove empty string
+  // Get current URL, split them and remove empty string
   const pathSnippets = location.pathname.split('/').filter(i => i);
-  console.log(location.pathname.split('/'));
+  let i = 0;
   return pathSnippets.map((_, index) => {
-    const url = `/${pathSnippets.slice(0, index + 1).join('/')}`;
-    console.log(url)
+    const currentTitle = pathSnippets.slice(i++, index + 1).join('/');
+    const url = `/${currentTitle}`;
+    const breadcrumbText = currentTitle === 'home'
+      ? <HomeOutlined />
+      : capitalizeFirstLetter(currentTitle);
+
     return (
       <Breadcrumb.Item key={url}>
-        <Link to={url}>{breadcrumbNameMap[url]}</Link>
+        <Link to={url}>{breadcrumbText}</Link>
       </Breadcrumb.Item>
     );
   });
 }
 
 const Dashboard = ({ location }) => {
-  // const [menuKey, setMenuKey] = useState(null);
-  // console.log(menuKey)
-
-  // let { path, url } = useRouteMatch();
-  // console.log(path, url)
-  // console.log(props.history.location.pathname);
-
-
   const breadcrumbItems = [].concat(extraBreadcrumbItems(location));
-  // const breadcrumbItems = [
-  //   <Breadcrumb.Item key="home">
-  //     <Link to="/home"><HomeOutlined /></Link>
-  //   </Breadcrumb.Item>,
-  // ].concat(extraBreadcrumbItems(location));
 
   return (
     <Layout className={styles.container}>
@@ -127,8 +121,8 @@ const Dashboard = ({ location }) => {
             {breadcrumbItems}
           </Breadcrumb>
           <div className={styles.content}>
-            {/* {renderContentByKey(menuKey)} */}
             <Switch>
+              <Route path="/subjects/:code" render={() => <Subject />} />
               {menuList.map(({ key, content }) => {
                 return (
                   <Route key={key} path={key} render={content} />
