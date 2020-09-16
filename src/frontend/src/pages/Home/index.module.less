@@ -1,3 +1,33 @@
-.test {
-  color: red;
+@import '~antd/es/style/themes/default.less';
+
+.container {
+  min-height: 100vh;
+
+  .avatarContainer {
+    color: #fff;
+    padding: 8px;
+    margin: 24px;
+    text-align: center;
+    & > div {
+      margin-top: 12px;
+    }
+  }
+
+  .rightPanel {
+    :global {
+      .ant-layout-header {
+        padding: 0;
+        height: 48px;
+        background-color: #fff;
+      }
+    }
+
+    .contentContainer {
+      padding: 16px;
+      .content {
+        background-color: #fff;
+      }
+    }
+  }
 }
+
