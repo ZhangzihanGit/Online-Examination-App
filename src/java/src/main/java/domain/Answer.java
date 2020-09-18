@@ -1,5 +1,7 @@
 package domain;
 
+import util.UnitOfWork;
+
 import java.util.Date;
 
 public class Answer {
@@ -23,9 +25,11 @@ public class Answer {
 
     public void setQuestionID(int questionID) {
         this.questionID = questionID;
+        UnitOfWork.getInstance().registerDirtyObject(this);
     }
 
     public void setContent(String content) {
         this.content = content;
+        UnitOfWork.getInstance().registerDirtyObject(this);
     }
 }

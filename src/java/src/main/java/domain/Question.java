@@ -1,5 +1,7 @@
 package domain;
 
+import util.UnitOfWork;
+
 public class Question {
     private int questionID;
     private String content;
@@ -31,17 +33,21 @@ public class Question {
 
     public void setQuestionID(int questionID) {
         this.questionID = questionID;
+        UnitOfWork.getInstance().registerDirtyObject(this);
     }
 
     public void setContent(String content) {
         this.content = content;
+        UnitOfWork.getInstance().registerDirtyObject(this);
     }
 
     public void setType(String type) {
         this.type = type;
+        UnitOfWork.getInstance().registerDirtyObject(this);
     }
 
     public void setDescription(String description) {
         this.description = description;
+        UnitOfWork.getInstance().registerDirtyObject(this);
     }
 }
