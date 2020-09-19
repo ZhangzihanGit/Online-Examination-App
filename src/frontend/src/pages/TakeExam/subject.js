@@ -25,7 +25,7 @@ export default class Subject extends React.Component {
         if (isStarted) {
             return (
                 <div>
-                    <h1>Exam Started</h1>
+                    <TakeExam />
                 </div >
             );
 
