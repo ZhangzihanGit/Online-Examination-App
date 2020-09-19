@@ -4,7 +4,8 @@ import { Layout, Menu, Avatar, Breadcrumb } from 'antd';
 import { UserOutlined, HomeOutlined } from '@ant-design/icons';
 import Home from '../Home';
 import SubjectList from '../SubjectList';
-import Subject from '../Subject';
+// import Subject from '../Subject';
+import Subject from '../TakeExam/subject';
 import styles from './index.module.less';
 
 const { Header, Sider, Content } = Layout;
@@ -122,7 +123,8 @@ const Dashboard = ({ location }) => {
           </Breadcrumb>
           <div className={styles.content}>
             <Switch>
-              <Route path="/subjects/:code" render={() => <Subject />} />
+              <Route path="/subjects/:code" component={Subject} />
+              {/* <Route path="/subjects/:code" render={() => <Subject />} /> */}
               {menuList.map(({ key, content }) => {
                 return (
                   <Route key={key} path={key} render={content} />
