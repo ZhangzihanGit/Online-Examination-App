@@ -1,5 +1,4 @@
 import React from 'react';
-import { NavLink } from "react-router-dom";
 import TakeExam from "./takeExam";
 
 
@@ -32,8 +31,8 @@ export default class Subject extends React.Component {
         } else {
             return (
                 <div>
-                    <h1>{this.state.code}</h1>
-                    <button onClick={this.handleStart}>Take Exam</button>
+                    <h1>{code}</h1>
+                    <button onClick={this.handleStart} className="buttonExam green">Take Exam</button>
                 </div >
             );
         }

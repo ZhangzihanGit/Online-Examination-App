@@ -29,7 +29,7 @@ export default class TakeExam extends React.Component {
         if (isCompleted) {
             return (
                 <div>
-                    <h1>Congradualtions! Ready to submit to the backend:</h1>
+                    <h1>Congradualtions! You answers have been saved and submitted successfully.</h1>
                     {JSON.stringify(answers)}
                 </div >
             );

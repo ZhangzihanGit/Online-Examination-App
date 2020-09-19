@@ -9,10 +9,8 @@ export default class ExamQuestions extends Component {
         this.state = {
             questions: null,
             questionLen: null,
+            submitAble: false,
             Qindex: 0,
-            fadeAwayState: false,
-            skiped: { name: "skpied" },
-            result: [],
             answers: {}
         };
     }
@@ -37,23 +35,41 @@ export default class ExamQuestions extends Component {
     }
 
     handleNext = (selected, option) => {
-        console.log(770, selected, option);
         this.saveAnswer(this.state.Qindex, selected, option);
 
         if (this.state.Qindex + 1 < this.state.questionLen) {
             this.setState({
                 Qindex: this.state.Qindex + 1
             });
+            console.log(664, this.state.Qindex)
         } else {
-            console.log(886, this.state.answers);
-            this.props.handleComplete(this.state.answers);
+
+            this.setState({
+                submitAble: true
+            });
+            alert("You have reached the end of the exam, you can click submit to submit the exam" +
+                "Or you can  can go back already answered questions to update them by clicking previous.");
+        }
+    }
+
+    handleComplete = () => {
+        this.props.handleComplete(this.state.answers);
+    }
+
+    handlePrevious = (selected, option) => {
+        if (this.state.Qindex > 0) {
+            this.setState({
+                Qindex: this.state.Qindex - 1
+            });
+        } else {
+            console.log(886);
         }
     };
 
     render() {
 
 
-        const { Qindex, questions } = this.state;
+        const { Qindex, questions, submitAble } = this.state;
 
         if (questions == null) {
             return (
@@ -73,7 +89,14 @@ export default class ExamQuestions extends Component {
                             </div>
 
                             <h4 className="primary-card-text">{questions[Qindex].questionText}</h4>
-                            <QuestionType item={questions[Qindex]} handleNext={this.handleNext} />
+
+                            <QuestionType item={questions[Qindex]} handleNext={this.handleNext} index={Qindex}
+                                handlePrevious={this.handlePrevious} />
+                            {submitAble ?
+                                <div>
+                                    <br /> <button onClick={this.handleComplete} className="buttonExam green">Submit</button>
+                                </div>
+                                : null}
                         </div>
                     </div>
                 </div>
