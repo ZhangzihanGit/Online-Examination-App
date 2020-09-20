@@ -2,7 +2,7 @@ import React from 'react';
 import { Switch, Route, Link } from 'react-router-dom';
 import { Layout, Menu, Avatar, Breadcrumb } from 'antd';
 import { UserOutlined, HomeOutlined } from '@ant-design/icons';
-import Home from '../Home';
+// import Home from '../Home';
 import SubjectList from '../SubjectList';
 // import Subject from '../Subject';
 import Subject from '../TakeExam/subject';
@@ -55,17 +55,9 @@ const fakeUserInfo = {
 }
 
 const menuList = [
-  { key: '/home', name: 'Home', content: () => <Home /> },
-  { key: '/subjects', name: 'Subjects', content: () => <SubjectList list={subjectList} /> },
-  { key: '/settings', name: 'Settings', content: () => <h2>Settings</h2> },
+  { key: '/dashboard/subjects', name: 'Subjects', content: () => <SubjectList list={subjectList} /> },
+  { key: '/dashboard/settings', name: 'Settings', content: () => <h2>Settings</h2> },
 ];
-
-// const breadcrumbNameMap = {
-//   '/home': <HomeOutlined />,
-//   '/subjects': 'Subjects',
-//   '/settings': 'Settings',
-//   '/subjects/SWEN90004': 'SWEN90004',
-// };
 
 const capitalizeFirstLetter = (str) => str.charAt(0).toUpperCase() + str.slice(1);
 
@@ -75,14 +67,14 @@ const extraBreadcrumbItems = location => {
   let i = 0;
   return pathSnippets.map((_, index) => {
     const currentTitle = pathSnippets.slice(i++, index + 1).join('/');
-    const url = `/${currentTitle}`;
-    const breadcrumbText = currentTitle === 'home'
+    const url = `/${pathSnippets.slice(0, index + 1).join('/')}`;
+    const breadcrumbText = currentTitle === 'dashboard'
       ? <HomeOutlined />
       : capitalizeFirstLetter(currentTitle);
 
     return (
       <Breadcrumb.Item key={url}>
-        <Link to={url}>{breadcrumbText}</Link>
+        <Link to={`${url}`}>{breadcrumbText}</Link>
       </Breadcrumb.Item>
     );
   });
@@ -101,7 +93,6 @@ const Dashboard = ({ location }) => {
         </div>
         <Menu
           theme="dark"
-          defaultSelectedKeys={['/home']}
           selectedKeys={[location.pathname]}
           onClick={(item) => {
             console.log(item);
@@ -123,8 +114,7 @@ const Dashboard = ({ location }) => {
           </Breadcrumb>
           <div className={styles.content}>
             <Switch>
-              <Route path="/subjects/:code" component={Subject} />
-              {/* <Route path="/subjects/:code" render={() => <Subject />} /> */}
+              <Route path="/dashboard/subjects/:code" component={Subject} />
               {menuList.map(({ key, content }) => {
                 return (
                   <Route key={key} path={key} render={content} />

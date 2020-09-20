@@ -5,6 +5,7 @@ import { List, Card } from 'antd';
 const SubjectList = ({ list }) => {
   const [imgLoading, setImgLoading] = useState(true);
   const { url } = useRouteMatch();
+  console.log(url)
 
   return (
     <List
