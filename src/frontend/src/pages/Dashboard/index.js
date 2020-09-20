@@ -1,10 +1,8 @@
 import React from 'react';
 import { Switch, Route, Link } from 'react-router-dom';
 import { Layout, Menu, Avatar, Breadcrumb } from 'antd';
-import { UserOutlined, HomeOutlined } from '@ant-design/icons';
-// import Home from '../Home';
+import { UserOutlined, HomeOutlined, LogoutOutlined } from '@ant-design/icons';
 import SubjectList from '../SubjectList';
-// import Subject from '../Subject';
 import Subject from '../TakeExam/subject';
 import styles from './index.module.less';
 
@@ -59,6 +57,10 @@ const menuList = [
   { key: '/dashboard/settings', name: 'Settings', content: () => <h2>Settings</h2> },
 ];
 
+const renderDashboard = () => (
+  <h2>Welcome, user XXX.</h2>
+)
+
 const capitalizeFirstLetter = (str) => str.charAt(0).toUpperCase() + str.slice(1);
 
 const extraBreadcrumbItems = location => {
@@ -107,19 +109,31 @@ const Dashboard = ({ location }) => {
       </Sider>
 
       <Layout className={styles.rightPanel}>
-        <Header>Header</Header>
+        <Header>
+          <div className={styles.header}>
+            <Link to="/">
+              <span>
+                <LogoutOutlined className={styles.logout} />
+                Log out
+              </span>
+            </Link>
+          </div>
+        </Header>
         <Content className={styles.contentContainer}>
           <Breadcrumb>
             {breadcrumbItems}
           </Breadcrumb>
           <div className={styles.content}>
+
+
             <Switch>
               <Route path="/dashboard/subjects/:code" component={Subject} />
               {menuList.map(({ key, content }) => {
                 return (
-                  <Route key={key} path={key} render={content} />
+                  <Route key={key} path={key} component={content} />
                 )
               })}
+              <Route path="/dashboard" component={renderDashboard} />
             </Switch>
           </div>
         </Content>
