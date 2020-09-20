@@ -1,0 +1,40 @@
+@import '~antd/es/style/themes/default.less';
+
+.container {
+  min-height: 100vh;
+
+  .avatarContainer {
+    color: #fff;
+    padding: 8px;
+    margin: 24px;
+    text-align: center;
+    & > div {
+      margin-top: 12px;
+    }
+  }
+
+  .rightPanel {
+    :global {
+      .ant-layout-header {
+        padding: 0;
+        height: 48px;
+        background-color: #fff;
+      }
+    }
+
+    .contentContainer {
+      padding: 12px 24px 24px 24px;
+
+      :global {
+        .ant-breadcrumb {
+          margin: 4px 0 12px 0;
+        }
+      }
+      .content {
+        background-color: #fff;
+        padding: 16px;
+      }
+    }
+  }
+}
+
