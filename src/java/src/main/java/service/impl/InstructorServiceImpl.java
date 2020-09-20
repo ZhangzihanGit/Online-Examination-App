@@ -1,8 +1,11 @@
 package service.impl;
 
+import db.SubjectMapper;
 import domain.Exam;
+import domain.Subject;
 import service.InstructorService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class InstructorServiceImpl implements InstructorService {
@@ -92,5 +95,12 @@ public class InstructorServiceImpl implements InstructorService {
     @Override
     public void publishExam(int subjectId, int examId) {
 
+    }
+
+    @Override
+    public List<Subject> viewAllSubjects() {
+        List<Subject> subjects = new ArrayList<Subject>();
+        subjects = SubjectMapper.loadAllSubjects();
+        return subjects;
     }
 }

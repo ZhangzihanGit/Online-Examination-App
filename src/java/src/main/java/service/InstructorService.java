@@ -1,6 +1,7 @@
 package service;
 
 import domain.Exam;
+import domain.Subject;
 
 import java.util.List;
 
@@ -61,4 +62,6 @@ public interface InstructorService {
      * @param examId
      */
     public void publishExam(int subjectId, int examId);
+
+    public List<Subject> viewAllSubjects();
 }

@@ -12,6 +12,8 @@ public class Solution {
         this.questionID = questionID;
         this.content = content;
         this.id = id;
+
+        UnitOfWork.getInstance().registerNewObject(this);
     }
 
     public int getQuestionID() {

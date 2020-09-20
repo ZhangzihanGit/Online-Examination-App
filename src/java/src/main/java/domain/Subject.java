@@ -10,14 +10,36 @@ public class Subject {
     private String subjectCode;
     private List<Exam> exams;
     private List<Student> students;
+    private String description;
 
-    public Subject(int id, String subjectCode, List<Exam> exams, List<Student> students) {
+    public Subject() {
+    }
+
+    public Subject(int id, String description, String subjectCode, List<Exam> exams, List<Student> students) {
         this.subjectCode = subjectCode;
         this.exams = exams;
         this.students = students;
         this.id = id;
+        this.description = description;
 
         UnitOfWork.getInstance().registerNewObject(this);
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+        UnitOfWork.getInstance().registerDirtyObject(this);
+    }
+
+    public String getDescription() {
+        if (this.description == null) {
+            load();
+        }
+        return description;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+        UnitOfWork.getInstance().registerDirtyObject(this);
     }
 
     public String getSubjectCode() {
@@ -32,6 +54,10 @@ public class Subject {
             load();
         }
         return exams;
+    }
+
+    public Integer getId() {
+        return id;
     }
 
     public List<Student> getStudents() {
@@ -63,6 +89,9 @@ public class Subject {
         }
         if (this.subjectCode == null) {
             this.subjectCode = subject.subjectCode;
+        }
+        if (this.description == null) {
+            this.description = subject.description;
         }
     }
 }

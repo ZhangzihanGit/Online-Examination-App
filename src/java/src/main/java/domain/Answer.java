@@ -14,6 +14,8 @@ public class Answer {
         this.questionID = questionID;
         this.content = content;
         this.updatedTime = updatedTime;
+
+        UnitOfWork.getInstance().registerNewObject(this);
     }
 
     public int getQuestionID() {
