@@ -1,24 +1,27 @@
 package domain;
 
 import db.StudentMapper;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import util.UnitOfWork;
 
 import java.util.List;
 import java.util.Map;
 
 public class Student extends User{
+    private static Logger logger = LogManager.getLogger(User.class);
     private List<Subject> subjects;
-    private boolean status;
+    private boolean isInExam;
     private List<Map<Exam,Integer>> marks;
 
-    public Student(int id, List<Subject> subjects, boolean status, String name,
+    public Student(int id, List<Subject> subjects, boolean isInExam, String name,
                    UserType userType) {
         super(id,name,userType,subjects);
-        this.status = status;
+        this.isInExam = isInExam;
     }
 
-    public boolean getStatus() {
-        return status;
+    public boolean getInExam() {
+        return isInExam;
     }
 
     public List<Map<Exam, Integer>> getMarks() {
@@ -28,8 +31,8 @@ public class Student extends User{
         return marks;
     }
 
-    public void setStatus(boolean status) {
-        this.status = status;
+    public void setInExam(boolean inExam) {
+        this.isInExam = inExam;
         UnitOfWork.getInstance().registerDirtyObject(this);
     }
 
@@ -46,9 +49,11 @@ public class Student extends User{
     @Override
     public void load() {
         super.load();
+        logger.info("Reach Sub load, not only the parent load");
         Student student = StudentMapper.loadWithId(this.id);
         if (this.marks == null) {
-            this.marks = student.marks;
+//            this.marks = student.marks;
+            logger.info("marks is null");
         }
     }
 }

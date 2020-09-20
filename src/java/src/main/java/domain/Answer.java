@@ -1,5 +1,6 @@
 package domain;
 
+import db.AnswerMapper;
 import util.UnitOfWork;
 
 import java.util.Date;
@@ -20,6 +21,9 @@ public class Answer {
     }
 
     public String getContent() {
+        if (this.content == null) {
+            load();
+        }
         return content;
     }
 
@@ -31,5 +35,15 @@ public class Answer {
     public void setContent(String content) {
         this.content = content;
         UnitOfWork.getInstance().registerDirtyObject(this);
+    }
+
+    private void load() {
+        Answer answer = AnswerMapper.loadWithId(this.questionID);
+        if (this.updatedTime == null) {
+            this.updatedTime = answer.updatedTime;
+        }
+        if (this.content == null) {
+            this.content = answer.content;
+        }
     }
 }

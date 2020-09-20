@@ -13,6 +13,8 @@ public class Question {
         this.content = content;
         this.type = type;
         this.description = description;
+
+        UnitOfWork.getInstance().registerNewObject(this);
     }
 
     public int getQuestionID() {
@@ -49,5 +51,9 @@ public class Question {
     public void setDescription(String description) {
         this.description = description;
         UnitOfWork.getInstance().registerDirtyObject(this);
+    }
+
+    private void load() {
+
     }
 }
