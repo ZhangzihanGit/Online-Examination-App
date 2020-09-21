@@ -12,8 +12,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SubjectMapper {
-    private static Logger logger = LogManager.getLogger(SubjectMapper.class);
+    private static final Logger logger = LogManager.getLogger(SubjectMapper.class);
     public static Subject loadWithId(String id) {
+        return null;
+    }
+    public static List<Subject> loadUserSubjects(String userid) {
+
+
+
         return null;
     }
     public static List<Subject> loadAllSubjects() {
@@ -37,19 +43,16 @@ public class SubjectMapper {
             IdentityMap<Subject> map = IdentityMap.getInstance(subject);
 
             Integer id = resultSet.getInt("id");
-
-            subject = map.get(id);
             // If not previously loaded, load from DB.
-            if (subject == null) {
-                subject = new Subject();
+            if (map.get(id) == null) {
                 String showName = resultSet.getString("show_name");
                 String description = resultSet.getString("description");
-
                 Integer instructorId = resultSet.getInt("instructorId");
 
 //            TODO: Load UserMapper and ExamMapper here// 或者是直接UserMapper，具体实现再商量,
 //             to construct Subject Object.  => See Subject Constructor.
 //            Instructor instructor = InstructorMapper.loadWithId(instructorId);
+                subject.setId(id);
                 subject.setSubjectCode(showName);
                 subject.setDescription(description);
             }

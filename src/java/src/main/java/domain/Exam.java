@@ -12,6 +12,9 @@ public class Exam {
     private boolean isPublished=false;
     private List<Question> questions;
 
+    public Exam() {
+
+    }
     public Exam(Integer id,String subjectCode, String description, List<Question> questions,boolean isPublished) {
         this.subjectCode = subjectCode;
         this.description = description;

@@ -2,17 +2,20 @@ package domain;
 
 import util.UnitOfWork;
 
+import java.util.List;
+
 public class Question {
     private int questionID;
-    private String content;
-    private String type;
+    private QuestionType questionType;
     private String description;
-
-    public Question(int questionID, String content, String type, String description) {
+    private String options;
+    public Question() {
+    }
+    public Question(int questionID, String description, String options, QuestionType questionType) {
         this.questionID = questionID;
-        this.content = content;
-        this.type = type;
+        this.questionType = questionType;
         this.description = description;
+        this.options = options;
 
         UnitOfWork.getInstance().registerNewObject(this);
     }
@@ -21,12 +24,8 @@ public class Question {
         return questionID;
     }
 
-    public String getContent() {
-        return content;
-    }
-
-    public String getType() {
-        return type;
+    public QuestionType getType() {
+        return questionType;
     }
 
     public String getDescription() {
@@ -38,13 +37,13 @@ public class Question {
         UnitOfWork.getInstance().registerDirtyObject(this);
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setOptions(String options) {
+        this.options = options;
         UnitOfWork.getInstance().registerDirtyObject(this);
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setType(QuestionType questionType) {
+        this.questionType = questionType;
         UnitOfWork.getInstance().registerDirtyObject(this);
     }
 

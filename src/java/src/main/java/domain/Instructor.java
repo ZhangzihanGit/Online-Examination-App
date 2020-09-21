@@ -10,6 +10,9 @@ import java.util.List;
 
 public class Instructor extends User{
     private static Logger logger = LogManager.getLogger(Instructor.class);
+    public Instructor(){
+
+    }
     public Instructor(int id, String name, List<Subject> subjects, UserType userType) {
         super(id,name,userType,subjects);
     }

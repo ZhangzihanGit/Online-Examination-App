@@ -14,6 +14,9 @@ public class Student extends User{
     private boolean isInExam;
     private List<Map<Exam,Integer>> marks;
 
+    public Student() {
+
+    }
     public Student(int id, List<Subject> subjects, boolean isInExam, String name,
                    UserType userType) {
         super(id,name,userType,subjects);

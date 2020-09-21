@@ -1,7 +1,7 @@
 DROP SCHEMA IF EXISTS exam CASCADE;
 CREATE SCHEMA exam;
 -- CREATE TYPE IF EXISTS usertype as ENUM('student','admin','instructor');
--- CREATE TYPE questiontype as ENUM('multiple_choice','short_answer');
+-- CREATE TYPE questiontype as ENUM('multiplechoice','shortanswer');
 CREATE TABLE IF NOT EXISTS exam.users(
 	id SERIAL UNIQUE,
 	username VARCHAR(30) UNIQUE,
@@ -38,6 +38,7 @@ CREATE TABLE IF NOT EXISTS exam.exam(
 	description TEXT,
 	PRIMARY KEY (id, subjectId)
 );
+
 CREATE TABLE IF NOt EXISTS exam.question (
 	id SERIAL UNIQUE,
 	examId INT NOT NULL,
@@ -45,6 +46,7 @@ CREATE TABLE IF NOt EXISTS exam.question (
 	question_type questionType NOT NULL,
 	description TEXT NOT NULL,
 	mark INT NOT NULL,
+    options TEXT,
 	PRIMARY KEY(id, examId)
 );
 
@@ -66,18 +68,3 @@ CREATE TABLE IF NOT EXISTS exam.answer(
 	mark INT NOT NULL,
 	PRIMARY KEY (id,submissionId, questionId)
 );
-CREATE TABLE IF NOT EXISTS exam.solution(
-	id SERIAL UNIQUE,
-	questionId INT NOT NULL,
-	FOREIGN KEY (questionId) REFERENCES exam.question(id),
-	content TEXT NOT NULL,
-	PRIMARY KEY (id, questionId)
-);
-
-
-
-
-
-
-
-
