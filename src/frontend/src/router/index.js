@@ -4,7 +4,7 @@ import { Spin } from 'antd';
 import styles from './index.module.less';
 
 const Dashboard = lazy(() => import('../pages/Dashboard'));
-const Login = lazy(() => import('../pages/Login'));
+const Home = lazy(() => import('../pages/Home'));
 
 const Router = () => (
   <Suspense fallback={
@@ -13,8 +13,8 @@ const Router = () => (
     </div>
   }>
     <Switch>
-      <Route path="/login" component={Login} />
-      <Route path="/" component={Dashboard} />
+      <Route exact path="/" component={Home} />
+      <Route path="/dashboard" component={Dashboard} />
     </Switch>
   </Suspense>
 );
