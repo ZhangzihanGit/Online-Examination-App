@@ -22,8 +22,8 @@ public class SubjectMapper {
 
         return null;
     }
-    public static List<Subject> loadAllSubjects() {
-        String sql = "SELECT * FROM exam.subject";
+    public static List<Subject> loadAllSubjects(int userId) {
+        String sql = "SELECT * FROM exam.subject where instructorid=\'" + userId + "\'";
         List<Subject> subjects = new ArrayList<>();
         try {
             PreparedStatement statement = DBConnection.prepare(sql);
@@ -42,7 +42,9 @@ public class SubjectMapper {
         try {
             IdentityMap<Subject> map = IdentityMap.getInstance(subject);
 
+
             Integer id = resultSet.getInt("id");
+            System.out.println(id);
             // If not previously loaded, load from DB.
             if (map.get(id) == null) {
                 String showName = resultSet.getString("show_name");
@@ -55,6 +57,7 @@ public class SubjectMapper {
                 subject.setId(id);
                 subject.setSubjectCode(showName);
                 subject.setDescription(description);
+//                map.put()
             }
         }catch (SQLException e) {
             logger.error(e.getMessage());

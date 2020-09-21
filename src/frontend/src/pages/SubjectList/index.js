@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import { List, Card, Button } from 'antd';
@@ -7,10 +7,14 @@ import {
   SettingOutlined,
   DeleteOutlined
 } from '@ant-design/icons';
-import { deleteSubject } from '../../actions/subject';
+import { getSubjectList, deleteSubject } from '../../actions/subject';
 import styles from './index.module.less';
 
-const SubjectList = ({ list }) => {
+const getRandomANumber = (min, max) => {
+  return Math.random() * (max - min) + min;
+};
+
+const SubjectList = () => {
   const dispatch = useDispatch();
   const { identity } = useSelector(state => state.user);
   const { subjectList } = useSelector(state => state.subject);
@@ -26,13 +30,22 @@ const SubjectList = ({ list }) => {
     name: "Add Subject"
   };
 
+  const renderList = subjectList ? (isAdmin ? [addSubjectButton, ...subjectList] : subjectList)
+    : [];
+
+  console.log(renderList)
+
+  useEffect(() => {
+    dispatch(getSubjectList(10));
+  }, [dispatch]);
+
   const handleAddSubject = () => {
     console.log("subject created!");
   };
 
   const handleSelectSubject = (item) => {
     // TODO: get subject content from server
-    history.push(`${url}/${item.showName}`);
+    history.push(`${url}/${item.subjectCode}`);
   };
 
   const handleDeleteSubject = (item) => {
@@ -46,8 +59,9 @@ const SubjectList = ({ list }) => {
       size="small"
       rowKey="id"
       grid={{ gutter: 24, xxl: 4, xl: 3, lg: 2, md: 2, sm: 2, xs: 1 }}
-      dataSource={isAdmin ? [addSubjectButton, ...list] : list}
+      dataSource={renderList}
       renderItem={(item) => {
+        console.log(item)
         if (item.name === "Add Subject") {
           return (
             <List.Item>
@@ -69,8 +83,8 @@ const SubjectList = ({ list }) => {
                 size="small"
                 cover={
                   <img
-                    alt={item.cover}
-                    src={item.cover}
+                    alt={`https://picsum.photos/seed/${getRandomANumber(1, 10)}/300/180`}
+                    src={`https://picsum.photos/seed/${getRandomANumber(1, 10)}/300/180`}
                     onLoad={() => setImgLoading(false)}
                     onClick={() => handleSelectSubject(item)}
                   />}
@@ -80,7 +94,7 @@ const SubjectList = ({ list }) => {
                 ] : null}
               >
                 <Card.Meta
-                  title={item.showName}
+                  title={item.subjectCode}
                   description={item.description}
                   onClick={() => handleSelectSubject(item)}
                 />

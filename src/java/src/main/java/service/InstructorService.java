@@ -63,5 +63,5 @@ public interface InstructorService {
      */
     public void publishExam(int subjectId, int examId);
 
-    public List<Subject> viewAllSubjects();
+    public List<Subject> viewAllSubjects(int userId);
 }

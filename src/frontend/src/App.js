@@ -5,7 +5,7 @@ import { RELATIVE_PATH } from './constants';
 
 const App = () => (
   // In dev env replace: RELATIVE_PATH with ''
-  <BrowserRouter basename={process.env.REACT_APP_ROUTER_BASE || ''}>
+  <BrowserRouter basename={process.env.REACT_APP_ROUTER_BASE || RELATIVE_PATH}>
     <Router />
   </BrowserRouter>
 )

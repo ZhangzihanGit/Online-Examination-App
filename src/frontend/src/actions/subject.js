@@ -1,5 +1,23 @@
-import * as api from '../api/user';
-import { DELETE_SUBJECT } from '../constants/actions';
+import * as api from '../api/subject';
+import { DELETE_SUBJECT, GET_SUBJECT_LIST } from '../constants/actions';
+
+export function getSubjectList(payload = {}) {
+  return async (dispatch) => {
+    // TODO:
+    const result = await api.getSubjectList(payload);
+    console.log(result);
+
+    console.log(result.data.data);
+
+    // TODO: if get subjects successfully
+    if (true) {
+      dispatch({
+        type: GET_SUBJECT_LIST,
+        payload: result.data.data,
+      });
+    }
+  }
+}
 
 export function deleteSubject(payload = {}) {
   return async (dispatch) => {
@@ -17,4 +35,4 @@ export function deleteSubject(payload = {}) {
       });
     }
   }
-}
+};

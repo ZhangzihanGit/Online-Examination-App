@@ -98,9 +98,9 @@ public class InstructorServiceImpl implements InstructorService {
     }
 
     @Override
-    public List<Subject> viewAllSubjects() {
+    public List<Subject> viewAllSubjects(int userId) {
         List<Subject> subjects = new ArrayList<Subject>();
-        subjects = SubjectMapper.loadAllSubjects();
+        subjects = SubjectMapper.loadAllSubjects(userId);
         return subjects;
     }
 }
