@@ -1,10 +1,7 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Tabs, Form, Row, Typography } from 'antd';
-import { UserOutlined, LockTwoTone } from '@ant-design/icons';
+import React from 'react';
+import { Form } from 'antd';
 import InputItem from '../../components/InputItem';
 import SubmitButton from '../../components/SubmitButton';
-import * as api from '../../api/test';
 import styles from './index.module.less';
 
 const layout = {

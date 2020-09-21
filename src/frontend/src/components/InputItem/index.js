@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Input, Form } from 'antd';
-import styles from './index.module.less';
 
 const InputItem = ({ name, rules, label, ...rest }) => {
   return (

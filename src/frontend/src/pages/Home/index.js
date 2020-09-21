@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Tabs, Typography } from 'antd';
+import { Tabs } from 'antd';
 import Login from '../Login';
 import Register from '../Register';
-import * as api from '../../api/test';
 import styles from './index.module.less';
 
-const { Title } = Typography;
 const { TabPane } = Tabs;
 
 const Home = () => {

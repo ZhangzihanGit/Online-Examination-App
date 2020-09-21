@@ -124,8 +124,6 @@ const Dashboard = ({ location }) => {
             {breadcrumbItems}
           </Breadcrumb>
           <div className={styles.content}>
-
-
             <Switch>
               <Route path="/dashboard/subjects/:code" component={Subject} />
               {menuList.map(({ key, content }) => {
