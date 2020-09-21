@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import { List, Card, Button } from 'antd';
 import {
@@ -7,13 +7,17 @@ import {
   SettingOutlined,
   DeleteOutlined
 } from '@ant-design/icons';
+import { deleteSubject } from '../../actions/subject';
 import styles from './index.module.less';
 
 const SubjectList = ({ list }) => {
+  const dispatch = useDispatch();
   const { identity } = useSelector(state => state.user);
+  const { subjectList } = useSelector(state => state.subject);
   const [imgLoading, setImgLoading] = useState(true);
   const history = useHistory();
   const { url } = useRouteMatch();
+  console.log(subjectList)
 
   console.log(identity);
   const isAdmin = identity && identity.username === "admin";
@@ -28,8 +32,13 @@ const SubjectList = ({ list }) => {
 
   const handleSelectSubject = (item) => {
     // TODO: get subject content from server
-    history.push(`${url}/${item.code}`);
-  }
+    history.push(`${url}/${item.showName}`);
+  };
+
+  const handleDeleteSubject = (item) => {
+    console.log(item)
+    dispatch(deleteSubject(item));
+  };
 
   return (
     <List
@@ -67,12 +76,12 @@ const SubjectList = ({ list }) => {
                   />}
                 actions={isAdmin ? [
                   <SettingOutlined key="setting" />,
-                  <DeleteOutlined key="delete" />
+                  <DeleteOutlined key="delete" onClick={() => handleDeleteSubject(item)} />
                 ] : null}
               >
                 <Card.Meta
-                  title={item.code}
-                  description={item.name}
+                  title={item.showName}
+                  description={item.description}
                   onClick={() => handleSelectSubject(item)}
                 />
               </Card>
