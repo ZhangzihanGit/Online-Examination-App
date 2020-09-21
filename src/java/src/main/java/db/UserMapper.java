@@ -11,7 +11,7 @@ import java.sql.SQLException;
 public class UserMapper {
     private static final Logger logger = LogManager.getLogger(UserMapper.class);
     public static User loadWithId(Integer id) {
-        String sql = "SELECT * FROM exam.subject WHERE id = ?";
+        String sql = "SELECT * FROM exam.user WHERE id = ?";
         User user = null;
         PreparedStatement preparedStatement = null;
         try {
