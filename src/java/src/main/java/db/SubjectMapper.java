@@ -23,10 +23,11 @@ public class SubjectMapper {
         return null;
     }
     public static List<Subject> loadAllSubjects(int userId) {
-        String sql = "SELECT * FROM exam.subject where instructorid=\'" + userId + "\'";
+        String sql = "SELECT * FROM exam.subject where instructorid=?";
         List<Subject> subjects = new ArrayList<>();
         try {
             PreparedStatement statement = DBConnection.prepare(sql);
+            statement.setInt(1,userId);
             ResultSet resultSet = statement.executeQuery();
             while(resultSet.next()) {
                 subjects.add(SubjectMapper.load(resultSet));
