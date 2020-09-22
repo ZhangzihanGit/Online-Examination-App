@@ -17,9 +17,8 @@ public abstract class User {
     public UserType userType;
     public List<Subject> subjects;
 
-    public User(){
-
-    }
+    public User(){}
+    
     public User(int id, String name, UserType userType, List<Subject> subjects) {
         this.id = id;
         this.name = name;

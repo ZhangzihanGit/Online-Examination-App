@@ -26,11 +26,18 @@ public class UserMapper {
     }
 
     public static User loadWithUsername(String username) {
-//        User user = new User();
-
-
-
-        return null;
+        String sql = "SELECT * FROM exam.user WHERE username = ?";
+        User user = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            preparedStatement = DBConnection.prepare(sql);
+            preparedStatement.setString(1, username);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            user = UserMapper.load(resultSet);
+        } catch (SQLException e) {
+            logger.error(e.getMessage());
+        }
+        return user;
     }
 
     private static User load(ResultSet resultSet) {

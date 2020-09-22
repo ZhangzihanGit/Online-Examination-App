@@ -5,5 +5,6 @@ import domain.Subject;
 import java.util.List;
 
 public interface UserService {
-    List<Subject> viewAllSubjects(int userId);
+    public List<Subject> viewAllSubjects(int userId);
+    public String getUserType(String userName);
 }
