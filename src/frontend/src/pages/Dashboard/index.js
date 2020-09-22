@@ -6,6 +6,7 @@ import { UserOutlined, HomeOutlined, LogoutOutlined } from '@ant-design/icons';
 import SubjectList from '../SubjectList';
 import Subject from '../TakeExam/subject';
 import { capitalizeFirstLetter } from '../../utils/helpers';
+import { getSubjectList } from '../../actions/subject';
 import styles from './index.module.less';
 
 const { Header, Sider, Content } = Layout;
@@ -37,20 +38,19 @@ const Dashboard = ({ location }) => {
   const dispatch = useDispatch();
   const breadcrumbItems = [].concat(extraBreadcrumbItems(location));
   const { identity } = useSelector(state => state.user);
-  // const { subjectList } = useSelector(state => state.subject);
-  // console.log(subjectList)
 
   const menuList = [
     { key: '/dashboard/subjects', name: 'Subjects', content: () => <SubjectList /> },
     { key: '/dashboard/settings', name: 'Settings', content: () => <h2>Settings</h2> },
   ];
 
-  const handleMenuClick = ({ item, key }) => {
-    console.log(key);
-
-    // if (key === '/dashboard/subjects') {
-    //   dispatch(getSubjectList(10));
-    // }
+  const handleMenuClick = ({ _, key }) => {
+    if (key === '/dashboard/subjects') {
+      dispatch(getSubjectList({
+        userId: identity.userId,
+        userType: identity.userType,
+      }));
+    }
   }
 
   return (

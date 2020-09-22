@@ -16,6 +16,12 @@ public class SubjectMapper {
     public static Subject loadWithId(String id) {
         return null;
     }
+
+    /**
+     * Student loads subjects by id
+     * @param userid
+     * @return
+     */
     public static List<Subject> loadStudentSubjects(int userid) {
         String sql = "SELECT subjectid, studentid FROM exam.student_subject_relation WHERE studentid = ?";
         List<Subject> subjects = new ArrayList<>();
@@ -24,8 +30,48 @@ public class SubjectMapper {
             statement.setInt(1,userid);
             ResultSet resultSet = statement.executeQuery();
             while(resultSet.next()) {
-                int subejctId = resultSet.getInt("subjectid");
-                subjects.add(SubjectMapper.loadSubject(subejctId));
+                int subjectId = resultSet.getInt("subjectid");
+                subjects.add(SubjectMapper.loadSubject(subjectId));
+            }
+        } catch (SQLException e) {
+            logger.error(e.getMessage());
+        }
+        return subjects;
+    }
+
+    /**
+     * Instructor loads subjects by id
+     * @param userId
+     * @return
+     */
+    public static List<Subject> loadInstructorSubjects(int userId) {
+        String sql = "SELECT * FROM exam.subject where instructorid=?";
+        List<Subject> subjects = new ArrayList<>();
+        try {
+            PreparedStatement statement = DBConnection.prepare(sql);
+            statement.setInt(1,userId);
+            ResultSet resultSet = statement.executeQuery();
+            while(resultSet.next()) {
+                subjects.add(SubjectMapper.load(resultSet));
+            }
+        } catch (SQLException e) {
+            logger.error(e.getMessage());
+        }
+        return subjects;
+    }
+
+    /**
+     * Admin loads all subjects
+     * @return
+     */
+    public static List<Subject> loadAllSubjects() {
+        String sql = "SELECT * FROM exam.subject";
+        List<Subject> subjects = new ArrayList<>();
+        try {
+            PreparedStatement statement = DBConnection.prepare(sql);
+            ResultSet resultSet = statement.executeQuery();
+            while(resultSet.next()) {
+                subjects.add(SubjectMapper.load(resultSet));
             }
         } catch (SQLException e) {
             logger.error(e.getMessage());
@@ -48,22 +94,7 @@ public class SubjectMapper {
         }
         return subject;
     }
-    // Admin and Instructor
-    public static List<Subject> loadAllSubjects(int userId) {
-        String sql = "SELECT * FROM exam.subject where instructorid=?";
-        List<Subject> subjects = new ArrayList<>();
-        try {
-            PreparedStatement statement = DBConnection.prepare(sql);
-            statement.setInt(1,userId);
-            ResultSet resultSet = statement.executeQuery();
-            while(resultSet.next()) {
-                subjects.add(SubjectMapper.load(resultSet));
-            }
-        } catch (SQLException e) {
-            logger.error(e.getMessage());
-        }
-        return subjects;
-    }
+
 
     private static Subject load(ResultSet resultSet) {
         Subject subject = new Subject();

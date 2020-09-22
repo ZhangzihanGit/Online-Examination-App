@@ -3,7 +3,7 @@ import { DELETE_SUBJECT, GET_SUBJECT_LIST } from '../constants/actions';
 
 export function getSubjectList(payload = {}) {
   return async (dispatch) => {
-    // TODO:
+    console.log(payload)
     const result = await api.getSubjectList(payload);
     console.log(result);
 

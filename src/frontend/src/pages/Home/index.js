@@ -7,7 +7,6 @@ import styles from './index.module.less';
 const { TabPane } = Tabs;
 
 const Home = () => {
-
   const [activeKey, setActiveKey] = useState('login');
 
   return (

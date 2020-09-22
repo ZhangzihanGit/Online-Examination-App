@@ -3,7 +3,6 @@ import { useParams } from 'react-router-dom';
 
 const Subject = () => {
   const { code } = useParams();
-  console.log(code)
 
   return (
     <>

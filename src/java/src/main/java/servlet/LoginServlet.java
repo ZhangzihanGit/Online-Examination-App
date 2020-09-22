@@ -40,7 +40,7 @@ public class LoginServlet extends HttpServlet {
 
         JSONObject data = new JSONObject();
         if (authenticated) {
-            data.put("message", "Login success!");
+            data.put("message", "Login successfully!");
             data.put("username", user.getName());
             data.put("userType", user.getUserType().toString().toLowerCase());
             data.put("userId", user.getId());

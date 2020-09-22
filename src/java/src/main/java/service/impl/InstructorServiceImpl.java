@@ -102,7 +102,7 @@ public class InstructorServiceImpl implements InstructorService {
     @Override
     public List<Subject> viewAllSubjects(int userId) {
         List<Subject> subjects = new ArrayList<Subject>();
-        subjects = SubjectMapper.loadAllSubjects(userId);
+        subjects = SubjectMapper.loadInstructorSubjects(userId);
         return subjects;
     }
 

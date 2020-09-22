@@ -54,29 +54,34 @@ public class UserMapper {
         try {
             Integer id = resultSet.getInt("id");
             String usertype = resultSet.getString("users_type");
+            List<Subject> subjects = null;
 
             if (usertype.equalsIgnoreCase(UserType.ADMIN.toString())) {
                 user = new Admin();
+                subjects = SubjectMapper.loadAllSubjects();
             }
             else if (usertype.equalsIgnoreCase(UserType.STUDENT.toString())) {
                 user = new Student();
+                subjects = SubjectMapper.loadStudentSubjects(id);
             }
             else user = new Instructor();
-            IdentityMap<User> map = IdentityMap.getInstance(User.class);
+            subjects = SubjectMapper.loadInstructorSubjects(id);
 
-            // If the object is not loaded, load from rs.
-            if (map.get(id)==null ){
+//            IdentityMap<User> map = IdentityMap.getInstance(User.class);
+//
+//            // If the object is not loaded, load from rs.
+//            if (map.get(id)==null ){
                 String username = resultSet.getString("username");
                 String show_name = resultSet.getString("show_name");
                 user.setId(id);
                 user.setName(username);
                 user.setUserType(UserType.valueOf(usertype.toUpperCase()));
-                // Load subjects
-                List<Subject> subjects = SubjectMapper.loadAllSubjects(id);
+
+//                List<Subject> subjects = SubjectMapper.loadInstructorSubjects(id);
                 user.setSubjects(subjects);
-            } else {
-                user = map.get(id);
-            }
+//            } else {
+//                user = map.get(id);
+//            }
         } catch (SQLException e) {
             logger.error(e.getMessage());
         }

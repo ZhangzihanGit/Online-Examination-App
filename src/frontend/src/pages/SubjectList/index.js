@@ -7,7 +7,7 @@ import {
   SettingOutlined,
   DeleteOutlined
 } from '@ant-design/icons';
-import { getSubjectList, deleteSubject } from '../../actions/subject';
+import { deleteSubject } from '../../actions/subject';
 import styles from './index.module.less';
 
 const getRandomANumber = (min, max) => {
@@ -21,10 +21,8 @@ const SubjectList = () => {
   const [imgLoading, setImgLoading] = useState(true);
   const history = useHistory();
   const { url } = useRouteMatch();
-  console.log(subjectList)
 
-  console.log(identity);
-  const isAdmin = identity && identity.username === "admin";
+  const isAdmin = identity && identity.userType === "admin";
 
   const addSubjectButton = {
     name: "Add Subject"
@@ -33,11 +31,9 @@ const SubjectList = () => {
   const renderList = subjectList ? (isAdmin ? [addSubjectButton, ...subjectList] : subjectList)
     : [];
 
-  console.log(renderList)
-
-  useEffect(() => {
-    dispatch(getSubjectList(10));
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(getSubjectList(10));
+  // }, [dispatch]);
 
   const handleAddSubject = () => {
     console.log("subject created!");
@@ -49,7 +45,6 @@ const SubjectList = () => {
   };
 
   const handleDeleteSubject = (item) => {
-    console.log(item)
     dispatch(deleteSubject(item));
   };
 
@@ -61,7 +56,6 @@ const SubjectList = () => {
       grid={{ gutter: 24, xxl: 4, xl: 3, lg: 2, md: 2, sm: 2, xs: 1 }}
       dataSource={renderList}
       renderItem={(item) => {
-        console.log(item)
         if (item.name === "Add Subject") {
           return (
             <List.Item>

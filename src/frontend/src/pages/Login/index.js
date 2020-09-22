@@ -1,6 +1,5 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
 import { Form } from 'antd';
 import { UserOutlined, LockTwoTone } from '@ant-design/icons';
 import { login } from '../../actions/user';
@@ -9,15 +8,10 @@ import SubmitButton from '../../components/SubmitButton';
 
 const Login = () => {
   const [form] = Form.useForm();
-  const history = useHistory();
   const dispatch = useDispatch()
 
   const handleLogin = (values) => {
-    // TODO: add real authentication
     dispatch(login(values));
-
-    // // after login, if success, redirect to dashboard
-    // history.push("/dashboard");
   }
 
   return (
