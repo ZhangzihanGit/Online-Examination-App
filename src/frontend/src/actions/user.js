@@ -1,4 +1,5 @@
 import { message } from 'antd';
+import { push } from 'connected-react-router';
 import * as api from '../api/user';
 import { LOGIN } from '../constants/actions';
 
@@ -16,7 +17,7 @@ export function login(payload = {}) {
         type: LOGIN,
         payload: data,
       });
-
+      dispatch(push('/dashboard'));
     } else {
       message.error('Fail to login!');
     }
