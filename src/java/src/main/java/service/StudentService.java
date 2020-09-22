@@ -5,7 +5,7 @@ import domain.Question;
 
 import java.util.List;
 
-public interface StudentService {
+public interface StudentService extends UserService{
     /**
      * Update the answer given the subject ID, exam Id and questions ID.
      * @param subjectId Subject

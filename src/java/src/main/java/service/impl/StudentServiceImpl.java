@@ -1,9 +1,13 @@
 package service.impl;
 
+import db.SubjectMapper;
 import domain.Exam;
 import domain.Question;
+import domain.Subject;
 import service.StudentService;
+import service.UserService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class StudentServiceImpl implements StudentService {
@@ -65,4 +69,13 @@ public class StudentServiceImpl implements StudentService {
     public Exam viewExamById(int subjectId, int examId) {
         return null;
     }
+
+    @Override
+    public List<Subject> viewAllSubjects(int userId) {
+        List<Subject> subjects = new ArrayList<>();
+        subjects = SubjectMapper.loadStudentSubjects(userId);
+        return subjects;
+    }
+
+
 }

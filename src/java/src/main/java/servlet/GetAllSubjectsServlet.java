@@ -12,7 +12,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import service.InstructorService;
+import service.UserService;
 import service.impl.InstructorServiceImpl;
+import service.impl.StudentServiceImpl;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -33,26 +35,26 @@ public class GetAllSubjectsServlet extends HttpServlet {
         String userId = request.getParameter("userid");
         System.out.println(userId);
 
-        InstructorService instructorService = new InstructorServiceImpl();
-        List<Subject> subjects = instructorService.viewAllSubjects(Integer.parseInt(userId));
+        UserService userService = new InstructorServiceImpl();
+        List<Subject> subjects = userService.viewAllSubjects(Integer.parseInt(userId));
 
-        for (int i = 0; i < subjects.size(); i++) {
-            System.out.println(subjects.get(i).getSubjectCode());
-            System.out.println(subjects.get(i).getDescription());
-            System.out.println((subjects.get(i).getId()));
-        }
+
+        UserService userService1 = new StudentServiceImpl();
+        List<Subject> subjects1 = userService1.viewAllSubjects(Integer.parseInt(userId));
 
         try{
             GsonBuilder builder = new GsonBuilder();
             builder.excludeFieldsWithoutExposeAnnotation();
             Gson gson = builder.create();
-            Subject subject = subjects.get(0);
+//            Subject subject = subjects.get(0);
             String json = gson.toJson(subjects);
-            logger.info(json);
+//            logger.info(json);
+            logger.info(gson.toJson(subjects1));
 //            [{"id":7,"subjectCode":"SWEN9007","description":"Software Design and Architecture"},{"id":8,"subjectCode":"SWEN90010","description":"High Integrity Systems Engineering"}]
             // TO add more field:
 
         } catch (Exception e){
+            e.printStackTrace();
             logger.error(e.getMessage());
         }
 
