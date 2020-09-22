@@ -9,11 +9,11 @@ public class IdentityMap<E> {
     private Map<Integer, E> map = new HashMap<Integer, E>();
     private static Map<Class, IdentityMap> instance = new HashMap<Class, IdentityMap>();
 
-    public static synchronized <E> IdentityMap<E> getInstance(E e) {
-        IdentityMap<E> result = instance.get(e.getClass());
+    public static synchronized <E> IdentityMap<E> getInstance(Class c) {
+        IdentityMap<E> result = instance.get(c);
         if (result == null) {
             result = new IdentityMap<E>();
-            instance.put(e.getClass(),result);
+            instance.put(c,result);
         }
         return result;
     }
