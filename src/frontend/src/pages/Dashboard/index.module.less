@@ -22,7 +22,24 @@
       }
     }
 
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+
+      height: 100%;
+      padding: 0 16px;
+      background: #fff;
+      box-shadow: 0 1px 4px rgba(0,21,41,.08);
+
+      .logout {
+        width: 24px;
+        height: 24px;
+      }
+    }
+
     .contentContainer {
+      height: 100%;
       padding: 12px 24px 24px 24px;
 
       :global {
@@ -33,6 +50,7 @@
       .content {
         background-color: #fff;
         padding: 16px;
+        // height: 100vh;
       }
     }
   }

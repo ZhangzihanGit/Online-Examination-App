@@ -1,0 +1,381 @@
+{
+	"info": {
+		"_postman_id": "dad011d6-365b-460d-b3d4-3308e2c90aa3",
+		"name": "online-examination",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "AllSubjects",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "/all-subjects?userid",
+					"path": [
+						"all-subjects"
+					],
+					"query": [
+						{
+							"key": "userid",
+							"value": null
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "AllSubjects",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "/all-subjects?userid",
+							"path": [
+								"all-subjects"
+							],
+							"query": [
+								{
+									"key": "userid",
+									"value": null
+								}
+							]
+						}
+					},
+					"_postman_previewlanguage": "json",
+					"header": [],
+					"cookie": [],
+					"body": "{\n    \"message\": \"success\",\n    \"data\":{\n        \"subject-list\":[{\n            \"id\": 1,\n            \"show-name\": \"demo\",\n            \"description\": \"hello\",\n            \"userid\": 1,\n            \"username\": \"test\"\n        }\n        ]\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "Subject",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "/subject?subjectid",
+					"path": [
+						"subject"
+					],
+					"query": [
+						{
+							"key": "subjectid",
+							"value": null
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Subject",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "/subject?subjectid",
+							"path": [
+								"subject"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "subjectid",
+									"value": null
+								}
+							]
+						}
+					},
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"message\": \"Success\",\n    \"data\":\n    [\n        {\n            \"exam-lists\":\n            [{\n                \"examid\" : 1,\n                \"show-name\": \"test\",\n                \"ispublished\": false,\n                \"isstart\": false,\n                \"description\": \"test\"\n            }]\n        }\n    ]\n}"
+				},
+				{
+					"name": "Subject",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "/subject?userid",
+							"path": [
+								"subject"
+							],
+							"query": [
+								{
+									"key": "userid",
+									"value": null
+								}
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "AddSubject",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"usedid\": 1,\n    \"data\" : [{\n        \"name\": \"test\",\n        \"description\": \"test\"\n    }]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "/add-subject",
+					"path": [
+						"add-subject"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "AddSubject",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"usedid\": 1,\n    \"data\" : [{\n        \"name\": \"test\",\n        \"description\": \"test\"\n    }]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "/add-subject",
+							"path": [
+								"add-subject"
+							]
+						}
+					},
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"message\":\"success\",\n    \"subjectid\": 1\n}"
+				}
+			]
+		},
+		{
+			"name": "AddExam",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"subjectid\" : 1,\n    \"data\":{\n        \"show-name\": \"test\",\n        \"ispublished\": false,\n        \"isstart\": false,\n        \"description\": \"test\",\n        \"totalmark\": 100\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "/add-exam",
+					"path": [
+						"add-exam"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "AddExam",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"subjectid\" : 1,\n    \"data\":{\n        \"show-name\": \"test\",\n        \"ispublished\": false,\n        \"isstart\": false,\n        \"description\": \"test\",\n        \"totalmark\": 100\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "/add-exam",
+							"path": [
+								"add-exam"
+							]
+						}
+					},
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"message\": \"success\",\n    \"examid\": 1\n}"
+				}
+			]
+		},
+		{
+			"name": "UpdateExam",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"examid\": 1,\n    \"subjectid\" :1,\n    \"data\":{\n        \n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "/update-exam",
+					"path": [
+						"update-exam"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetExam",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteExam",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"examid\": 1,\n    \"subjectid\": 1,\n    \"userid\": 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "/delete-exam",
+					"path": [
+						"delete-exam"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "DeleteExam",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"examid\": 1,\n    \"subjectid\": 1,\n    \"userid\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "/delete-exam",
+							"path": [
+								"delete-exam"
+							]
+						}
+					},
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"message\":\"test\"\n}"
+				}
+			]
+		},
+		{
+			"name": "MarkSubmission",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CloseExam",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "/close-exam",
+					"path": [
+						"close-exam"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PublishExam",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"examid\": 1,\n    \"userid\": 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "/publish-exam",
+					"path": [
+						"publish-exam"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Submission",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"userid\": 1,\n    \"submissionid\": 1,\n    \"examid\": 1,\n    \"data\":[{\n        \"questionid\":1,\n        \"answer\": \"test\"\n    }]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "/submission",
+					"path": [
+						"submission"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
