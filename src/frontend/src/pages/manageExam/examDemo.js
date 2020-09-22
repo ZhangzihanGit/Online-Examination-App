@@ -1,6 +1,6 @@
 export default [
     {
-        examid: "910001",
+        examid: "EXAM910001",
         subjectid: 'SWEN90010',
         showName: 'High Integrity Systems Engineering',
         description: "2020S2 Final Exam",
@@ -53,7 +53,7 @@ export default [
                 ]
             },
             {
-                "Qid": "4",
+                "Qid": "5",
                 "mark": 2,
                 "questionText": "Which one is your favourite letter",
                 "questionType": "MCQ",
@@ -70,7 +70,7 @@ export default [
                 ]
             },
             {
-                "Qid": "5",
+                "Qid": "6",
                 "mark": 2,
                 "questionText": "Do you like math",
                 "questionType": "shortAnswer"
@@ -78,7 +78,7 @@ export default [
         ]
     },
     {
-        examid: "810001",
+        examid: "EXAM810001",
         subjectid: 'SWEN90049',
         showName: 'Machine Learning',
         description: "2020S1 Final Exam",
@@ -131,7 +131,7 @@ export default [
                 ]
             },
             {
-                "Qid": "4",
+                "Qid": "5",
                 "mark": 2,
                 "questionText": "Which one is your favourite letter",
                 "questionType": "MCQ",
@@ -148,7 +148,7 @@ export default [
                 ]
             },
             {
-                "Qid": "5",
+                "Qid": "6",
                 "mark": 2,
                 "questionText": "Do you like math",
                 "questionType": "shortAnswer"

@@ -138,6 +138,7 @@ export default class AddExam extends React.Component {
                                     required
                                     labelId="demo-simple-select-label"
                                     id="demo-simple-select"
+                                    defaultValue="MCQ"
                                     name="questionType"
                                     onChange={this.handleSelect}
                                 >

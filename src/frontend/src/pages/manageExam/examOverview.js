@@ -37,12 +37,7 @@ export default class ExamOverview extends React.Component {
     }
 
 
-    handleManage = () => {
-        this.setState({
-            isstarted: false,
-            isManaging: true
-        });
-    }
+
 
     render() {
         const { isLoaded, examList } = this.state;
@@ -59,18 +54,16 @@ export default class ExamOverview extends React.Component {
                 <div>
                     <List
                         size="small"
-
+                        url="ads"
                         dataSource={examList}
                         renderItem={(item) => (
                             <List.Item>
-                                {/* <Link to={`${url}/${item.code}`}> */}
-                                <Card hoverable size="small">
+                                <Card hoverable size="small" onClick={() => this.props.startUpdate(item)}>
                                     <Card.Meta
-                                        title={item.examid}
+                                        title={item.showName}
                                         description={item.description}
                                     />
                                 </Card>
-                                {/* </Link> */}
                             </List.Item>
                         )}
                     />

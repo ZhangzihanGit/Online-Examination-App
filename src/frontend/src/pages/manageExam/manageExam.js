@@ -4,35 +4,44 @@ import React from 'react';
 // import ExamQuestions from "./examQuestions";
 import ExamOverview from "./examOverview";
 import AddExam from "./addExam";
-
-
-
+import UpdateExam from "./updateExam";
+// import "./exam.css";
 
 export default class manageExam extends React.Component {
     constructor(props) {
         super();
         this.state = {
-            isLoaded: false,
-            isAdding: false
+            isAdding: false,
+            isUpdating: false,
+            targetExam: null
         };
     }
 
     handleAdd = () => {
         this.setState({
-            isAdding: true
+            isAdding: true,
+            isUpdating: false
+        });
+    }
+
+    startUpdate = (item) => {
+        this.setState({
+            isAdding: false,
+            isUpdating: true,
+            targetExam: item.examid
         });
     }
 
     render() {
-        const { isLoaded, isAdding } = this.state;
+        const { isAdding, isUpdating, targetExam } = this.state;
 
-        if (isLoaded === true) {
+        if (isUpdating) {
             return (
                 <div>
-                    <h1>Loading...</h1>
+                    <UpdateExam examid={targetExam} />
                 </div >
             );
-        } else if (isAdding === true) {
+        } else if (isAdding) {
             return (
                 <div>
                     <AddExam code={this.props.code} />
@@ -41,9 +50,10 @@ export default class manageExam extends React.Component {
         } else {
             return (
                 <div>
-
-                    <ExamOverview />
-                    <button onClick={this.handleAdd} className="buttonExam green">Add Exam</button>
+                    <ExamOverview startUpdate={this.startUpdate} />
+                    <div className=" center_align">
+                        <button onClick={this.handleAdd} className="buttonExam green">Add Exam</button>
+                    </div>
                 </div >
             );
         }
