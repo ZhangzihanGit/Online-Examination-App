@@ -39,7 +39,7 @@ public class QuestionMapper {
                     getString("question_type"));
             // TODO: comma separated string. Current DB schema needs a fix on Options.
             String options = resultSet.getString("options");
-            IdentityMap<Question> map = IdentityMap.getInstance(question);
+            IdentityMap<Question> map = IdentityMap.getInstance(Question.class);
 
             question = map.get(id);
             if (question == null) {

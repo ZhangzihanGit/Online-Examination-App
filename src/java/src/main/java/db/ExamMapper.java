@@ -20,7 +20,7 @@ public class ExamMapper {
         try {
             preparedStatement = DBConnection.prepare(sql);
             preparedStatement.setInt(1,id);
-            IdentityMap<Exam> map = IdentityMap.getInstance(exam);
+            IdentityMap<Exam> map = IdentityMap.getInstance(Exam.class);
             exam = map.get(id);
             if (exam == null) {
                 exam = ExamMapper.load(preparedStatement.executeQuery());

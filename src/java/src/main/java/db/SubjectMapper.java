@@ -16,12 +16,39 @@ public class SubjectMapper {
     public static Subject loadWithId(String id) {
         return null;
     }
-    public static List<Subject> loadUserSubjects(String userid) {
-
-
-
-        return null;
+    public static List<Subject> loadStudentSubjects(int userid) {
+        String sql = "SELECT subjectid, studentid FROM exam.student_subject_relation WHERE studentid = ?";
+        List<Subject> subjects = new ArrayList<>();
+        try {
+            PreparedStatement statement = DBConnection.prepare(sql);
+            statement.setInt(1,userid);
+            ResultSet resultSet = statement.executeQuery();
+            while(resultSet.next()) {
+                int subejctId = resultSet.getInt("subjectid");
+                subjects.add(SubjectMapper.loadSubject(subejctId));
+            }
+        } catch (SQLException e) {
+            logger.error(e.getMessage());
+        }
+        return subjects;
     }
+
+    public static Subject loadSubject (int subjectid) {
+        String sql = "SELECT * FROM exam.subject WHERE id = ?";
+        Subject subject = null;
+        try {
+            PreparedStatement statement = DBConnection.prepare(sql);
+            statement.setInt(1,subjectid);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                subject = SubjectMapper.load(resultSet);
+            }
+        } catch (SQLException e) {
+            logger.error(e.toString());
+        }
+        return subject;
+    }
+    // Admin and Instructor
     public static List<Subject> loadAllSubjects(int userId) {
         String sql = "SELECT * FROM exam.subject where instructorid=?";
         List<Subject> subjects = new ArrayList<>();
@@ -41,9 +68,7 @@ public class SubjectMapper {
     private static Subject load(ResultSet resultSet) {
         Subject subject = new Subject();
         try {
-            IdentityMap<Subject> map = IdentityMap.getInstance(Subject.class);
-
-
+            IdentityMap<Subject> map = IdentityMap.getInstance(subject.getClass());
             Integer id = resultSet.getInt("id");
             System.out.println(id);
             // If not previously loaded, load from DB.
@@ -56,6 +81,7 @@ public class SubjectMapper {
 //             to construct Subject Object.  => See Subject Constructor.
 //            Instructor instructor = InstructorMapper.loadWithId(instructorId);
                 subject.setId(id);
+//                subject.setExams(ExamMapper.loadWithId());
                 subject.setSubjectCode(showName);
                 subject.setDescription(description);
 //                map.put()

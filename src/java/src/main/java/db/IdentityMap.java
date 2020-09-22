@@ -13,7 +13,7 @@ public class IdentityMap<E> {
         IdentityMap<E> result = instance.get(c);
         if (result == null) {
             result = new IdentityMap<E>();
-            instance.put(c, result);
+            instance.put(c,result);
         }
         return result;
     }

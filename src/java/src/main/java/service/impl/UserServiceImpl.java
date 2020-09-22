@@ -1,15 +1,12 @@
 package service.impl;
 
-import db.UserMapper;
+import domain.Subject;
 import service.UserService;
 
+import java.util.List;
+
 public class UserServiceImpl implements UserService {
-
-    @Override
-    public String getUserType(String username) {
-
-//        UserMapper
-
+    public List<Subject> viewAllSubjects(int userid){
         return null;
     }
 }

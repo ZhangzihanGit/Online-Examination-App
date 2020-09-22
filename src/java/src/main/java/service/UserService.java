@@ -1,6 +1,9 @@
 package service;
 
-public interface UserService {
+import domain.Subject;
 
-    public String getUserType(String username);
+import java.util.List;
+
+public interface UserService {
+    List<Subject> viewAllSubjects(int userId);
 }
