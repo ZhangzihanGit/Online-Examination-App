@@ -16,8 +16,8 @@ const Login = () => {
     // TODO: add real authentication
     dispatch(login(values));
 
-    // after login, if success, redirect to dashboard
-    history.push("/dashboard");
+    // // after login, if success, redirect to dashboard
+    // history.push("/dashboard");
   }
 
   return (

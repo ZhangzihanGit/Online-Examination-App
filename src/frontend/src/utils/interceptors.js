@@ -4,8 +4,9 @@ const responseInterceptors = [
     // Any status code that lie within the range of 2xx cause this function to trigger
     // Do something with response data
     success(response) {
-      console.log(response);
-      return response.data;
+      // console.log(response);
+      // return response.data;
+      return response;
     },
     // Any status codes that falls outside the range of 2xx cause this function to trigger
     // Do something with response error

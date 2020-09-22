@@ -4,6 +4,7 @@ import db.SubjectMapper;
 import domain.Exam;
 import domain.Question;
 import domain.Subject;
+import domain.User;
 import service.StudentService;
 import service.UserService;
 
@@ -75,6 +76,11 @@ public class StudentServiceImpl implements StudentService {
         List<Subject> subjects = new ArrayList<>();
         subjects = SubjectMapper.loadStudentSubjects(userId);
         return subjects;
+    }
+
+    @Override
+    public User getUser(String userName) {
+        return null;
     }
 
 

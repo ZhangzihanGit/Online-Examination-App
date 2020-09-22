@@ -3,6 +3,7 @@ package service.impl;
 import db.SubjectMapper;
 import domain.Exam;
 import domain.Subject;
+import domain.User;
 import service.InstructorService;
 import service.UserService;
 
@@ -103,5 +104,10 @@ public class InstructorServiceImpl implements InstructorService {
         List<Subject> subjects = new ArrayList<Subject>();
         subjects = SubjectMapper.loadAllSubjects(userId);
         return subjects;
+    }
+
+    @Override
+    public User getUser(String userName) {
+        return null;
     }
 }

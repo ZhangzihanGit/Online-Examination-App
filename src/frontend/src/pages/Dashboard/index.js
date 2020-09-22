@@ -5,6 +5,7 @@ import { Layout, Menu, Avatar, Breadcrumb } from 'antd';
 import { UserOutlined, HomeOutlined, LogoutOutlined } from '@ant-design/icons';
 import SubjectList from '../SubjectList';
 import Subject from '../TakeExam/subject';
+import { capitalizeFirstLetter } from '../../utils/helpers';
 import styles from './index.module.less';
 
 const { Header, Sider, Content } = Layout;
@@ -12,8 +13,6 @@ const { Header, Sider, Content } = Layout;
 const renderDashboard = (identity) => (
   <h2>{`Welcome, ${identity ? identity.username : `XXX`}.`}</h2>
 );
-
-const capitalizeFirstLetter = (str) => str.charAt(0).toUpperCase() + str.slice(1);
 
 const extraBreadcrumbItems = location => {
   // Get current URL, split them and remove empty string
@@ -61,7 +60,7 @@ const Dashboard = ({ location }) => {
           <Avatar size="large" icon={<UserOutlined />} />
           {/** first line renders username, second line renders identity */}
           <div>{identity && identity.username}</div>
-          <div>{identity && identity.username}</div>
+          <div>{identity && capitalizeFirstLetter(identity.userType)}</div>
         </div>
         <Menu
           theme="dark"
