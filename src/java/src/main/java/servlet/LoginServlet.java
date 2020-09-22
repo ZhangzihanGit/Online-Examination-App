@@ -1,4 +1,4 @@
-package auth;
+package servlet;
 
 import db.DBConnection;
 import org.json.JSONException;
@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 @WebServlet(name = "LoginServlet", urlPatterns = {"/getLogin"})
 public class LoginServlet extends HttpServlet {

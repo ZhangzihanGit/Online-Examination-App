@@ -1,8 +1,12 @@
 package util;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
 import java.util.ArrayList;
 
 public class UnitOfWork {
+    private static Logger logger = LogManager.getLogger(UnitOfWork.class);
     private static UnitOfWork instance;
     private ArrayList<Object> newObjectList = new ArrayList<Object>();
     private ArrayList<Object> dirtyObjectList = new ArrayList<Object>();
@@ -28,6 +32,7 @@ public class UnitOfWork {
      * @param object
      */
     public void registerDirtyObject(Object object) {
+        logger.info(object.getClass());
         if (newObjectList.contains(object) || dirtyObjectList.contains(object)
         || deletedObjectList.contains(object)) {
             return;
@@ -62,5 +67,8 @@ public class UnitOfWork {
     }
 
     public void commit() {
+        for (Object object: newObjectList) {
+
+        }
     }
 }
