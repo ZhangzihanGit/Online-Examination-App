@@ -13,6 +13,11 @@ import java.util.List;
 
 public class QuestionMapper {
     private static final Logger logger = LogManager.getLogger(QuestionMapper.class);
+
+    public static void addQuestion(Question question, int examId) {
+        String sql = "INSERT INTO exam.question ()";
+    }
+
     public static List<Question> loadQuestionsFromExamId(int examid) {
         String sql = "SELECT * FROM exam.question WHERE examId = ?";
         PreparedStatement preparedStatement = null;

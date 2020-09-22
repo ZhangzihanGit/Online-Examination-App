@@ -1,5 +1,9 @@
 package util;
 
+import db.ExamMapper;
+import db.QuestionMapper;
+import domain.Exam;
+import domain.Question;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -68,7 +72,12 @@ public class UnitOfWork {
 
     public void commit() {
         for (Object object: newObjectList) {
-
+            if (object instanceof Exam) {
+                ExamMapper.addExam((Exam)object);
+            }
+            if (object instanceof Question) {
+                QuestionMapper.addQuestion((Question)object);
+            }
         }
     }
 }

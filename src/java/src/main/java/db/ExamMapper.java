@@ -13,6 +13,13 @@ import java.util.List;
 
 public class ExamMapper {
     private static final Logger logger = LogManager.getLogger(ExamMapper.class);
+
+    public static void addExam(Exam exam) {
+        String SQL = "INSERT INTO exam.exam (show_name, subjectId, description,isPublished)" +
+                "VALUES (?,?,?,?)";
+
+    }
+
     public static Exam loadWithId(Integer id) {
         String sql = "SELECT * FROM exam.exam WHERE id = ?";
         Exam exam = new Exam();
@@ -36,12 +43,12 @@ public class ExamMapper {
         try {
             String showName = resultSet.getString("show_name");
             String description = resultSet.getString("description");
-//            int subjectId = resultSet.getInt("subjectId");
+            int subjectId = resultSet.getInt("subjectId");
             int id = resultSet.getInt("id");
             boolean isPublished = resultSet.getBoolean("isPublished");
             List<Question> questions = new ArrayList<>();
             questions = QuestionMapper.loadQuestionsFromExamId(id);
-            exam = new Exam(id,showName,description,questions,isPublished);
+            exam = new Exam(id,subjectId,description,questions,isPublished);
         } catch (SQLException e) {
             logger.error(e.getMessage());
         }

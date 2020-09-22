@@ -64,24 +64,18 @@ public class UserMapper {
                 user = new Student();
                 subjects = SubjectMapper.loadStudentSubjects(id);
             }
-            else user = new Instructor();
-            subjects = SubjectMapper.loadInstructorSubjects(id);
+            else{
+                user = new Instructor();
+                subjects = SubjectMapper.loadInstructorSubjects(id);
+            }
 
-//            IdentityMap<User> map = IdentityMap.getInstance(User.class);
-//
-//            // If the object is not loaded, load from rs.
-//            if (map.get(id)==null ){
-                String username = resultSet.getString("username");
-                String show_name = resultSet.getString("show_name");
-                user.setId(id);
-                user.setName(username);
-                user.setUserType(UserType.valueOf(usertype.toUpperCase()));
+            String username = resultSet.getString("username");
+            String show_name = resultSet.getString("show_name");
+            user.setId(id);
+            user.setName(username);
+            user.setUserType(UserType.valueOf(usertype.toUpperCase()));
+            user.setSubjects(subjects);
 
-//                List<Subject> subjects = SubjectMapper.loadInstructorSubjects(id);
-                user.setSubjects(subjects);
-//            } else {
-//                user = map.get(id);
-//            }
         } catch (SQLException e) {
             logger.error(e.getMessage());
         }

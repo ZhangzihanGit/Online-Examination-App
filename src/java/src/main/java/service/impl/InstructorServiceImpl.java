@@ -6,6 +6,7 @@ import domain.Subject;
 import domain.User;
 import service.InstructorService;
 import service.UserService;
+import util.UnitOfWork;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,11 +27,11 @@ public class InstructorServiceImpl implements InstructorService {
      * Add a new exam given the subject ID. Exam id will be auto-generated
      * by the DB.
      *
-     * @param subjectId Subject Id
+//     * @param subjectId Subject Id
      */
     @Override
-    public void addExam(int subjectId) {
-
+    public void addExam(Exam exam) {
+        UnitOfWork.getInstance().commit();
     }
 
     /**
