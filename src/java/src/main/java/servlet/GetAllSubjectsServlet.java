@@ -1,6 +1,8 @@
 package servlet;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import db.DBConnection;
 import domain.Subject;
@@ -40,6 +42,20 @@ public class GetAllSubjectsServlet extends HttpServlet {
             System.out.println((subjects.get(i).getId()));
         }
 
+        try{
+            GsonBuilder builder = new GsonBuilder();
+            builder.excludeFieldsWithoutExposeAnnotation();
+            Gson gson = builder.create();
+            Subject subject = subjects.get(0);
+            String json = gson.toJson(subjects);
+            logger.info(json);
+//            [{"id":7,"subjectCode":"SWEN9007","description":"Software Design and Architecture"},{"id":8,"subjectCode":"SWEN90010","description":"High Integrity Systems Engineering"}]
+            // TO add more field:
+
+        } catch (Exception e){
+            logger.error(e.getMessage());
+        }
+
         JSONObject resJson = new JSONObject ();
         JSONObject  subjectListJson = new JSONObject ();
         JSONArray subjectArr = new JSONArray(subjects);
@@ -47,11 +63,6 @@ public class GetAllSubjectsServlet extends HttpServlet {
         resJson.put("message", "success");
         resJson.put("data", subjectListJson);
         System.out.println(resJson);
-
-//        for (Subject subject : subjects) {
-//            String subjectJSONstr = new Gson().toJson(subject);
-//            System.out.println(subjectJSONstr);
-//        }
 
         try {
             response.setContentType("application/json");
