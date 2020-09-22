@@ -41,7 +41,7 @@ public class SubjectMapper {
     private static Subject load(ResultSet resultSet) {
         Subject subject = new Subject();
         try {
-            IdentityMap<Subject> map = IdentityMap.getInstance(subject);
+            IdentityMap<Subject> map = IdentityMap.getInstance(Subject.class);
 
 
             Integer id = resultSet.getInt("id");

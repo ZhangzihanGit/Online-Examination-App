@@ -25,6 +25,14 @@ public class UserMapper {
         return user;
     }
 
+    public static User loadWithUsername(String username) {
+//        User user = new User();
+
+
+
+        return null;
+    }
+
     private static User load(ResultSet resultSet) {
         User user = null;
         try {
@@ -37,7 +45,7 @@ public class UserMapper {
                 user = new Student();
             }
             else user = new Instructor();
-            IdentityMap<User> map = IdentityMap.getInstance(user);
+            IdentityMap<User> map = IdentityMap.getInstance(User.class);
 
             // If the object is not loaded, load from rs.
             if (map.get(id)==null ){
