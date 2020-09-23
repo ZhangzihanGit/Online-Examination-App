@@ -3,6 +3,8 @@ package servlet;
 import db.DBConnection;
 import domain.Subject;
 import domain.User;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.json.JSONException;
 import org.json.JSONObject;
 import service.UserService;
@@ -20,6 +22,7 @@ import java.util.stream.Collectors;
 
 @WebServlet(name = "LoginServlet", urlPatterns = {"/login"})
 public class LoginServlet extends HttpServlet {
+    private final static Logger logger = LogManager.getLogger(LoginServlet.class);
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String requestData = request.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
         JSONObject jsonObject = new JSONObject(requestData);
@@ -36,8 +39,7 @@ public class LoginServlet extends HttpServlet {
         Boolean authenticated = true;
         UserService userService = new UserServiceImpl();
         User user = userService.getUser(username);
-        System.out.println(user.getId() + user.getName() + user.getUserType());
-
+        logger.info("User name : " + user.getName() + "  user Type: " + user.getUserType());
         JSONObject data = new JSONObject();
         if (authenticated) {
             data.put("message", "Login successfully!");

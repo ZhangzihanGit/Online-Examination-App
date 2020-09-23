@@ -19,7 +19,7 @@ public interface InstructorService extends UserService{
      * by the DB.
      * @param subjectId Subject Id
      */
-    public void addExam(int subjectId);
+    public void addExam(Exam exam);
 
     /**
      * View all exams under the subject.
