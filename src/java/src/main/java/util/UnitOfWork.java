@@ -71,12 +71,13 @@ public class UnitOfWork {
     }
 
     public void commit() {
-        for (Object object: newObjectList) {
+        for ( int i=0; i<newObjectList.size(); i++) {
+            Object object = newObjectList.get(i);
             if (object instanceof Exam) {
                 ExamMapper.addExam((Exam)object);
             }
             if (object instanceof Question) {
-                QuestionMapper.addQuestion((Question)object);
+                QuestionMapper.addQuestion((Question) object);
             }
         }
     }

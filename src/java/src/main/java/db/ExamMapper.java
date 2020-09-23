@@ -18,17 +18,16 @@ public class ExamMapper {
         String sql = "INSERT INTO exam.exam (show_name, subjectId, description,isPublished)" +
                 "VALUES (?,?,?,?) RETURNING id";
         PreparedStatement statement = null;
+        int examId=0;
         try {
             statement = DBConnection.prepare(sql);
             // TODO： 这个字段是否需要不确定，现在写死了是因为db schema要求该字段not null
             statement.setString(1, "exam");
             statement.setInt(2,exam.getSubjectId());
             statement.setString(3,exam.getDescription());
-            // TODO: 这个字段可能被删除
             statement.setBoolean(4,false);
 
             ResultSet resultSet = statement.executeQuery();
-            int examId=0;
             while(resultSet.next()) {
                 examId = resultSet.getInt("id");
             }

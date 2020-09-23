@@ -22,7 +22,12 @@ public class Exam {
 
         UnitOfWork.getInstance().registerNewObject(this);
     }
-    public Exam(Integer id, Integer subjectId, String description, List<Question> questions,boolean isPublished) {
+
+    public boolean isPublished() {
+        return isPublished;
+    }
+
+    public Exam(Integer id, Integer subjectId, String description, List<Question> questions, boolean isPublished) {
         this.description = description;
         this.questions = questions;
         this.id = id;
