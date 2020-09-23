@@ -507,3 +507,15 @@
 
     .blue {        background: #2e0994;      }
     .green {       background: #158039;      }
+
+    .center_align{     
+      text-align: center;
+    }
+
+    .right_align{     
+      text-align: right;
+    }
+
+    .padding_top{
+      padding: 2em 0 0 0;
+    }
