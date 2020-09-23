@@ -3,6 +3,8 @@ package service;
 import domain.Exam;
 import domain.Subject;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.List;
 
 // 接口可以是在controller层面解析parameter，把id发过来。
@@ -41,7 +43,7 @@ public interface InstructorService extends UserService{
      * @param subjectId Subject Id
      * @param examId Exam Id
      */
-    public void updateExam(int subjectId, int examId);
+    public void updateExam(HttpServletRequest request) throws IOException;
 
     /**
      * Update the marks of the student.

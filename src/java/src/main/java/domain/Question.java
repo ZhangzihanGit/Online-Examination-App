@@ -1,5 +1,6 @@
 package domain;
 
+import db.QuestionMapper;
 import util.UnitOfWork;
 
 import java.util.List;
@@ -11,15 +12,36 @@ public class Question {
     private String description;
     private String options;
     private Integer examId;
+    private Integer mark;
     public Question() {
     }
 
-    public Question(String description, String options, QuestionType questionType) {
+    /**
+     * Overloading constructor, it is used when the object is first time created.
+     * @param description
+     * @param options
+     * @param questionType
+     * @param examId
+     */
+    public Question(String description, String options, QuestionType questionType, int examId,
+                    int mark) {
         this.description = description;
         this.questionType = questionType;
         this.options = options;
         this.examId = examId;
+        this.mark = mark;
+
+        UnitOfWork.getInstance().registerNewObject(this);
     }
+
+    /**
+     * Full constructor, that requires question id. The contructor will not be used if the question
+     * is the first time created.
+     * @param questionID
+     * @param description
+     * @param options
+     * @param questionType
+     */
     public Question(int questionID, String description, String options, QuestionType questionType) {
         this.questionID = questionID;
         this.questionType = questionType;
@@ -29,12 +51,47 @@ public class Question {
         UnitOfWork.getInstance().registerNewObject(this);
     }
 
-    public int getQuestionID() {
-        return questionID;
+    public void setMark(Integer mark) {
+        this.mark = mark;
     }
 
-    public QuestionType getType() {
+    public Integer getMark() {
+        return mark;
+    }
+
+    public void setQuestionType(QuestionType questionType) {
+        this.questionType = questionType;
+        UnitOfWork.getInstance().registerDirtyObject(this);
+    }
+
+    public void setExamId(Integer examId) {
+        this.examId = examId;
+        UnitOfWork.getInstance().registerDirtyObject(this);
+    }
+
+    public QuestionType getQuestionType() {
+        if ( questionType ==null ){
+            load();
+        }
         return questionType;
+    }
+
+    public String getOptions() {
+        if (options == null ) {
+            load();
+        }
+        return options;
+    }
+
+    public Integer getExamId() {
+        if (examId == null) {
+            load();
+        }
+        return examId;
+    }
+
+    public int getQuestionID() {
+        return questionID;
     }
 
     public String getDescription() {
@@ -62,6 +119,19 @@ public class Question {
     }
 
     private void load() {
+        Question question = QuestionMapper.loadWithId(this.questionID);
+        if (options == null ){
+            this.options = question.options;
+        }
+        if (questionType == null) {
+            this.questionType = question.questionType;
+        }
+        if (description == null) {
+            this.description = question.description;
+        }
+        if (examId == null) {
+            this.examId = examId;
+        }
 
     }
 }

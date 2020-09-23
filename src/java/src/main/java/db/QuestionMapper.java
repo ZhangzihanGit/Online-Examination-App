@@ -22,6 +22,32 @@ public class QuestionMapper {
     public static void  addQuestion(Question question) {
         String sql = "INSERT INTO exam.question (examid, question_type, " +
                 "description,mark, options) RETURNING id";
+        int questionId = 0;
+        int examId =question.getExamId();
+        String description = question.getDescription();
+        int mark = question.getMark();
+        String options = question.getOptions();
+        QuestionType type = question.getQuestionType();
+
+        try {
+            PreparedStatement statement = DBConnection.prepare(sql);
+            statement.setInt(1,examId);
+            statement.setString(2,type.toString().toLowerCase());
+            statement.setString(3,description);
+            statement.setInt(4,mark);
+            statement.setString(5,options);
+
+            ResultSet resultSet = statement.executeQuery();
+            while(resultSet.next()) {
+                questionId = resultSet.getInt("id");
+                if(questionId!=0) {
+                    logger.info("questions id is: " + questionId);
+                    question.setQuestionID(questionId);
+                }
+            }
+        }catch (SQLException e) {
+            logger.error(e.toString());
+        }
 
     }
 
