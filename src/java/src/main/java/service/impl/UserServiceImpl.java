@@ -3,10 +3,7 @@ package service.impl;
 import db.ExamMapper;
 import db.SubjectMapper;
 import db.UserMapper;
-import domain.Exam;
-import domain.Subject;
-import domain.User;
-import domain.UserType;
+import domain.*;
 import service.UserService;
 
 import java.util.ArrayList;
@@ -35,5 +32,15 @@ public class UserServiceImpl implements UserService {
     public User getUser(String userName) {
         User user = UserMapper.loadWithUsername(userName);
         return user;
+    }
+
+    @Override
+    public List<Student> viewAllStudents(int subjectId) {
+        return null;
+    }
+
+    @Override
+    public List<Instructor> viewAllInstructors(int subjectId) {
+        return null;
     }
 }

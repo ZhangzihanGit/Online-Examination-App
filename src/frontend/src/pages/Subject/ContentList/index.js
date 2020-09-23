@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { List, Button } from 'antd';
 import {
-  PlusOutlined,
   PlayCircleOutlined,
   SettingOutlined,
   DeleteOutlined
@@ -71,7 +70,7 @@ const ContentList = ({ list, isExam }) => {
         >
           <List.Item.Meta
             title={<a href="#!">{item.showName}</a>}
-            description={`${item.description}`}
+            description={isExam ? `${item.description}` : `id: ${item.userId}`}
           />
         </List.Item>
       )}

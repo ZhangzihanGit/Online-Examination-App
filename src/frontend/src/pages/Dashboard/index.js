@@ -60,7 +60,7 @@ const Dashboard = ({ location }) => {
         <div className={styles.avatarContainer}>
           <Avatar size="large" icon={<UserOutlined />} />
           {/** first line renders username, second line renders identity */}
-          <div>{identity && identity.username}</div>
+          <div>{identity && identity.showName}</div>
           <div>{identity && capitalizeFirstLetter(identity.userType)}</div>
         </div>
         <Menu

@@ -1,14 +1,10 @@
 package servlet;
 
-import db.DBConnection;
-import domain.Subject;
 import domain.User;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
-import org.json.JSONException;
 import org.json.JSONObject;
 import service.UserService;
-import service.impl.InstructorServiceImpl;
 import service.impl.UserServiceImpl;
 
 import javax.servlet.ServletException;
@@ -17,7 +13,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
 import java.util.stream.Collectors;
 
 @WebServlet(name = "LoginServlet", urlPatterns = {"/login"})
@@ -39,13 +34,14 @@ public class LoginServlet extends HttpServlet {
         Boolean authenticated = true;
         UserService userService = new UserServiceImpl();
         User user = userService.getUser(username);
-        logger.info("User name : " + user.getName() + "  user Type: " + user.getUserType());
+        logger.info("User name : " + user.getName() + "User showName: " + user.getShowName() + "  user Type: " + user.getUserType());
         JSONObject data = new JSONObject();
         if (authenticated) {
             data.put("message", "Login successfully!");
             data.put("username", user.getName());
+            data.put("showName", user.getShowName());
             data.put("userType", user.getUserType().toString().toLowerCase());
-            data.put("userId", user.getId());
+            data.put("userId", user.getUserId());
             response.setStatus(200);
         } else {
             // TODO: failure reason

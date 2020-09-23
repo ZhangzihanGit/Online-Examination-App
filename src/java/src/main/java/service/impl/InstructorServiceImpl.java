@@ -1,11 +1,11 @@
 package service.impl;
 
 import db.ExamMapper;
+import db.InstructorMapper;
 import db.SubjectMapper;
-import domain.Exam;
-import domain.Subject;
-import domain.User;
-import domain.UserType;
+import domain.*;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import service.InstructorService;
 import service.UserService;
 import util.UnitOfWork;
@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class InstructorServiceImpl implements InstructorService {
+    private static final Logger logger = LogManager.getLogger(InstructorServiceImpl.class);
     /**
      * Delete the exam given the subject Id and exam Id.
      *
@@ -119,5 +120,16 @@ public class InstructorServiceImpl implements InstructorService {
     @Override
     public User getUser(String userName) {
         return null;
+    }
+
+    @Override
+    public List<Student> viewAllStudents(int subjectId) {
+        return null;
+    }
+
+    @Override
+    public List<Instructor> viewAllInstructors(int subjectId) {
+        List<Instructor> instructors = InstructorMapper.loadInstructorsBySubject(subjectId);
+        return instructors;
     }
 }
