@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useParams, useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { List, Button } from 'antd';
 import {
@@ -9,6 +10,8 @@ import {
 
 const ContentList = ({ list, isExam }) => {
   const { identity } = useSelector(state => state.user);
+  const { code } = useParams();
+  const history = useHistory();
   // const { examList } = useSelector(state => state.subject);
   const [publisedList, setPublisedList] = useState([]);
   const isInstructor = identity && identity.userType === "instructor";
@@ -16,6 +19,7 @@ const ContentList = ({ list, isExam }) => {
 
   const handleEditExam = (item) => {
     console.log(item);
+    history.push(`/dashboard/subjects/${code}/edit-exam`);
   }
 
   const handleDeleteExam = (item) => {
