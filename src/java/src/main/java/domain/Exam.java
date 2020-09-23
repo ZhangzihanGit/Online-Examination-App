@@ -6,30 +6,55 @@ import util.UnitOfWork;
 import java.util.List;
 
 public class Exam {
-    private String subjectCode;
+    private Integer subjectId;
     private String description;
     private Integer id;
     private boolean isPublished=false;
     private List<Question> questions;
+    private String showName;
 
     public Exam() {
 
     }
-    public Exam(Integer id,String subjectCode, String description, List<Question> questions,boolean isPublished) {
-        this.subjectCode = subjectCode;
-        this.description = description;
+    public Exam(int subjectId, List<Question> questions,String description) {
         this.questions = questions;
-        this.id = id;
-        this.isPublished = isPublished;
+        this.subjectId = subjectId;
+        this.description = description;
 
         UnitOfWork.getInstance().registerNewObject(this);
     }
 
-    public String getSubjectCode() {
-        if (this.subjectCode == null) {
-            load();
-        }
-        return subjectCode;
+    public boolean isPublished() {
+        return isPublished;
+    }
+
+    public Exam(Integer id, Integer subjectId, String description, List<Question> questions, boolean isPublished, String showName) {
+        this.description = description;
+        this.questions = questions;
+        this.id = id;
+        this.isPublished = isPublished;
+        this.subjectId = subjectId;
+        this.showName = showName;
+
+        UnitOfWork.getInstance().registerNewObject(this);
+    }
+
+    public String getShowName() {
+        return this.showName;
+    }
+
+    public void setShowName(String showName) {
+        this.showName = showName;
+        UnitOfWork.getInstance().registerDirtyObject(this);
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+        UnitOfWork.getInstance().registerDirtyObject(this);
+    }
+
+    public Integer getId() {
+        return id;
     }
 
     public String getDescription() {
@@ -39,6 +64,18 @@ public class Exam {
         return description;
     }
 
+    public void setSubjectId(Integer subjectId) {
+        this.subjectId = subjectId;
+        UnitOfWork.getInstance().registerDirtyObject(this);
+    }
+
+    public int getSubjectId() {
+        if (this.subjectId == null ){
+            load();
+        }
+        return subjectId;
+    }
+
     public List<Question> getQuestions() {
         if (this.questions == null) {
             load();
@@ -46,10 +83,6 @@ public class Exam {
         return questions;
     }
 
-    public void setSubjectCode(String subjectCode) {
-        this.subjectCode = subjectCode;
-        UnitOfWork.getInstance().registerDirtyObject(this);
-    }
 
     public void setDescription(String description) {
         this.description = description;
@@ -68,13 +101,13 @@ public class Exam {
     private void load() {
         Exam exam = ExamMapper.loadWithId(this.id);
         if (this.description == null) {
-            this.description = exam.description;
-        }
-        if (this.subjectCode == null) {
-            this.subjectCode = exam.subjectCode;
+            this.description = exam.getDescription();
         }
         if (this.questions == null) {
-            this.questions = exam.questions;
+            this.questions = exam.getQuestions();
+        }
+        if (this.subjectId == null) {
+            this.subjectId = exam.getSubjectId();
         }
     }
 }

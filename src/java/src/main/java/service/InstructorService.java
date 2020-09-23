@@ -6,7 +6,7 @@ import domain.Subject;
 import java.util.List;
 
 // 接口可以是在controller层面解析parameter，把id发过来。
-public interface InstructorService {
+public interface InstructorService extends UserService{
     /**
      * Delete the exam given the subject Id and exam Id.
      * @param subjectId Subject Id
@@ -19,7 +19,7 @@ public interface InstructorService {
      * by the DB.
      * @param subjectId Subject Id
      */
-    public void addExam(int subjectId);
+    public void addExam(Exam exam);
 
     /**
      * View all exams under the subject.
@@ -63,5 +63,4 @@ public interface InstructorService {
      */
     public void publishExam(int subjectId, int examId);
 
-    public List<Subject> viewAllSubjects();
 }

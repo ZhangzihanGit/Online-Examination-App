@@ -1,14 +1,20 @@
 package service.impl;
 
+import db.ExamMapper;
+import db.InstructorMapper;
 import db.SubjectMapper;
-import domain.Exam;
-import domain.Subject;
+import domain.*;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import service.InstructorService;
+import service.UserService;
+import util.UnitOfWork;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class InstructorServiceImpl implements InstructorService {
+    private static final Logger logger = LogManager.getLogger(InstructorServiceImpl.class);
     /**
      * Delete the exam given the subject Id and exam Id.
      *
@@ -24,11 +30,11 @@ public class InstructorServiceImpl implements InstructorService {
      * Add a new exam given the subject ID. Exam id will be auto-generated
      * by the DB.
      *
-     * @param subjectId Subject Id
+//     * @param subjectId Subject Id
      */
     @Override
-    public void addExam(int subjectId) {
-
+    public void addExam(Exam exam) {
+        UnitOfWork.getInstance().commit();
     }
 
     /**
@@ -98,9 +104,32 @@ public class InstructorServiceImpl implements InstructorService {
     }
 
     @Override
-    public List<Subject> viewAllSubjects() {
+    public List<Subject> viewAllSubjects(int userId) {
         List<Subject> subjects = new ArrayList<Subject>();
-        subjects = SubjectMapper.loadAllSubjects();
+        subjects = SubjectMapper.loadInstructorSubjects(userId);
         return subjects;
+    }
+
+    @Override
+    public List<Exam> viewAllExams(int subjectId, int userId, UserType userType) {
+//        List<Exam> exams = ExamMapper.loadIntructorExam(subjectId, userId);
+//        return exams;
+        return null;
+    }
+
+    @Override
+    public User getUser(String userName) {
+        return null;
+    }
+
+    @Override
+    public List<Student> viewAllStudents(int subjectId) {
+        return null;
+    }
+
+    @Override
+    public List<Instructor> viewAllInstructors(int subjectId) {
+        List<Instructor> instructors = InstructorMapper.loadInstructorsBySubject(subjectId);
+        return instructors;
     }
 }

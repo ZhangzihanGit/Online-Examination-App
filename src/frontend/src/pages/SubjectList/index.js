@@ -1,43 +1,46 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useHistory, useRouteMatch } from 'react-router-dom';
 import { List, Card, Button } from 'antd';
 import {
   PlusOutlined,
   SettingOutlined,
   DeleteOutlined
 } from '@ant-design/icons';
-import { deleteSubject } from '../../actions/subject';
+import { getSubject } from '../../actions/subject';
 import styles from './index.module.less';
 
-const SubjectList = ({ list }) => {
+const getRandomANumber = (min, max) => {
+  return Math.random() * (max - min) + min;
+};
+
+const SubjectList = () => {
   const dispatch = useDispatch();
   const { identity } = useSelector(state => state.user);
+  const { pathname } = useSelector(state => state.router.location);
   const { subjectList } = useSelector(state => state.subject);
   const [imgLoading, setImgLoading] = useState(true);
-  const history = useHistory();
-  const { url } = useRouteMatch();
-  console.log(subjectList)
-
-  console.log(identity);
-  const isAdmin = identity && identity.username === "admin";
+  const isAdmin = identity && identity.userType === "admin";
 
   const addSubjectButton = {
     name: "Add Subject"
   };
+
+  const renderList = subjectList ? (isAdmin ? [addSubjectButton, ...subjectList] : subjectList)
+    : [];
 
   const handleAddSubject = () => {
     console.log("subject created!");
   };
 
   const handleSelectSubject = (item) => {
-    // TODO: get subject content from server
-    history.push(`${url}/${item.showName}`);
+    dispatch(getSubject({
+      userId: identity.userId,
+      userType: identity.userType,
+      subjectId: item.id,
+    }, `${pathname}/${item.subjectCode}`));
   };
 
   const handleDeleteSubject = (item) => {
-    console.log(item)
-    dispatch(deleteSubject(item));
   };
 
   return (
@@ -46,7 +49,7 @@ const SubjectList = ({ list }) => {
       size="small"
       rowKey="id"
       grid={{ gutter: 24, xxl: 4, xl: 3, lg: 2, md: 2, sm: 2, xs: 1 }}
-      dataSource={isAdmin ? [addSubjectButton, ...list] : list}
+      dataSource={renderList}
       renderItem={(item) => {
         if (item.name === "Add Subject") {
           return (
@@ -69,8 +72,8 @@ const SubjectList = ({ list }) => {
                 size="small"
                 cover={
                   <img
-                    alt={item.cover}
-                    src={item.cover}
+                    alt={`https://picsum.photos/seed/${getRandomANumber(1, 10)}/300/180`}
+                    src={`https://picsum.photos/seed/${getRandomANumber(1, 10)}/300/180`}
                     onLoad={() => setImgLoading(false)}
                     onClick={() => handleSelectSubject(item)}
                   />}
@@ -80,7 +83,7 @@ const SubjectList = ({ list }) => {
                 ] : null}
               >
                 <Card.Meta
-                  title={item.showName}
+                  title={item.subjectCode}
                   description={item.description}
                   onClick={() => handleSelectSubject(item)}
                 />

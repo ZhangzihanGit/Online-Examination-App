@@ -1,10 +1,14 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Switch, Route, Link } from 'react-router-dom';
 import { Layout, Menu, Avatar, Breadcrumb } from 'antd';
 import { UserOutlined, HomeOutlined, LogoutOutlined } from '@ant-design/icons';
 import SubjectList from '../SubjectList';
-import Subject from '../TakeExam/subject';
+import Subject from '../Subject';
+// import Subject from '../TakeExam/subject';
+import { capitalizeFirstLetter } from '../../utils/helpers';
+import { logout } from '../../actions/user';
+import { getSubjectList } from '../../actions/subject';
 import styles from './index.module.less';
 
 const { Header, Sider, Content } = Layout;
@@ -12,8 +16,6 @@ const { Header, Sider, Content } = Layout;
 const renderDashboard = (identity) => (
   <h2>{`Welcome, ${identity ? identity.username : `XXX`}.`}</h2>
 );
-
-const capitalizeFirstLetter = (str) => str.charAt(0).toUpperCase() + str.slice(1);
 
 const extraBreadcrumbItems = location => {
   // Get current URL, split them and remove empty string
@@ -35,15 +37,27 @@ const extraBreadcrumbItems = location => {
 }
 
 const Dashboard = ({ location }) => {
+  const dispatch = useDispatch();
   const breadcrumbItems = [].concat(extraBreadcrumbItems(location));
   const { identity } = useSelector(state => state.user);
-  const { subjectList } = useSelector(state => state.subject);
-  console.log(subjectList)
 
   const menuList = [
-    { key: '/dashboard/subjects', name: 'Subjects', content: () => <SubjectList list={subjectList} /> },
+    { key: '/dashboard/subjects', name: 'Subjects', content: () => <SubjectList /> },
     { key: '/dashboard/settings', name: 'Settings', content: () => <h2>Settings</h2> },
   ];
+
+  const handleMenuClick = ({ _, key }) => {
+    if (key === '/dashboard/subjects') {
+      dispatch(getSubjectList({
+        userId: identity.userId,
+        userType: identity.userType,
+      }));
+    }
+  };
+
+  const handleLogout = () => {
+    // dispatch(logout());
+  }
 
   return (
     <Layout className={styles.container}>
@@ -51,15 +65,13 @@ const Dashboard = ({ location }) => {
         <div className={styles.avatarContainer}>
           <Avatar size="large" icon={<UserOutlined />} />
           {/** first line renders username, second line renders identity */}
-          <div>{identity && identity.username}</div>
-          <div>{identity && identity.username}</div>
+          <div>{identity && identity.showName}</div>
+          <div>{identity && capitalizeFirstLetter(identity.userType)}</div>
         </div>
         <Menu
           theme="dark"
           selectedKeys={[location.pathname]}
-          onClick={(item) => {
-            console.log(item);
-          }}
+          onClick={handleMenuClick}
         >
           {menuList.map(({ key, name }) => (
             <Menu.Item key={key}>
@@ -73,7 +85,7 @@ const Dashboard = ({ location }) => {
         <Header>
           <div className={styles.header}>
             <Link to="/">
-              <span>
+              <span onClick={handleLogout}>
                 <LogoutOutlined className={styles.logout} />
                 Log out
               </span>

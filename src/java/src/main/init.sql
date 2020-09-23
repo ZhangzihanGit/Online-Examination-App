@@ -1,6 +1,7 @@
 DROP SCHEMA IF EXISTS exam CASCADE;
 CREATE SCHEMA exam;
--- CREATE TYPE IF EXISTS usertype as ENUM('student','admin','instructor');
+-- Uncomment two lines when it's the first time running the script
+-- CREATE TYPE usertype as ENUM('student','admin','instructor');
 -- CREATE TYPE questiontype as ENUM('multiplechoice','shortanswer');
 CREATE TABLE IF NOT EXISTS exam.users(
 	id SERIAL UNIQUE,

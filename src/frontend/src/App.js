@@ -1,13 +1,12 @@
 import React from 'react';
-import { BrowserRouter } from 'react-router-dom';
 import Router from './router';
-import { RELATIVE_PATH } from './constants';
+import { history } from './configureStore';
+import { ConnectedRouter } from 'connected-react-router';
 
 const App = () => (
-  // In dev env replace: RELATIVE_PATH with ''
-  <BrowserRouter basename={process.env.REACT_APP_ROUTER_BASE || ''}>
+  <ConnectedRouter history={history}>
     <Router />
-  </BrowserRouter>
-)
+  </ConnectedRouter>
+);
 
 export default App;

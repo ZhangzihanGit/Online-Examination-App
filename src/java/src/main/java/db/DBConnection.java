@@ -57,15 +57,21 @@ public class DBConnection {
                 // URI used in production environment
 //                URI dbURI = new URI(System.getenv("DATABASE_URL"));
                 // URI used in local development environment
-                URI dbURI = new URI(Objects.requireNonNull(SecretLoader.getDBUri()));
+//                URI dbURI = new URI(Objects.requireNonNull(SecretLoader.getDBUri()));
+//
+//                String username = dbURI.getUserInfo().split(":")[0];
+//                String password = dbURI.getUserInfo().split(":")[1];
+//                String dbURL = "jdbc:postgresql://" + dbURI.getHost() + ':' + dbURI.getPort() + dbURI.getPath() +
+//                        "?sslmode=require";
 
-                String username = dbURI.getUserInfo().split(":")[0];
-                String password = dbURI.getUserInfo().split(":")[1];
-                String dbURL = "jdbc:postgresql://" + dbURI.getHost() + ':' + dbURI.getPort() + dbURI.getPath() +
-                        "?sslmode=require";
+                // Used in local database
+                String dbURL = "jdbc:postgresql://localhost:5432/myDB";
+                String username = "postgres";
+                String password = "123";
+
                 logger.info(dbURL);
                 dbConnection = DriverManager.getConnection(dbURL,username,password);
-            } catch (SQLException | URISyntaxException e) {
+            } catch (SQLException e) {
                 e.printStackTrace();
             }
         }

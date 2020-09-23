@@ -13,7 +13,7 @@ public class Instructor extends User{
     public Instructor(){
 
     }
-    public Instructor(int id, String name, List<Subject> subjects, UserType userType) {
-        super(id,name,userType,subjects);
+    public Instructor(int id, String name, List<Subject> subjects, UserType userType, String showName) {
+        super(id,name,userType,subjects,showName);
     }
 }

@@ -1,15 +1,21 @@
 package domain;
 
+import com.google.gson.annotations.Expose;
 import db.SubjectMapper;
 import util.UnitOfWork;
 
 import java.util.List;
 
 public class Subject {
+    @Expose(serialize = true,deserialize = true)
     private Integer id;
+    @Expose(serialize = true,deserialize = true)
     private String subjectCode;
+    @Expose(serialize = false,deserialize = false)
     private List<Exam> exams;
+    @Expose(serialize = false,deserialize = false)
     private List<Student> students;
+    @Expose(serialize = true,deserialize = true)
     private String description;
 
     public Subject() {

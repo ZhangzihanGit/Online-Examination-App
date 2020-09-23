@@ -2,6 +2,7 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
+  "homepage": "http://localhost:8080/online_examination_war_exploded",
   "proxy": "http://localhost:8080/online_examination_war_exploded",
   "dependencies": {
     "@material-ui/core": "^4.11.0",
@@ -11,6 +12,7 @@
     "@testing-library/user-event": "^7.2.1",
     "antd": "^4.6.4",
     "axios": "^0.20.0",
+    "connected-react-router": "^6.8.0",
     "http-proxy-middleware": "^1.0.5",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
