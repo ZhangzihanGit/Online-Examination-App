@@ -7,7 +7,7 @@ import {
   SettingOutlined,
   DeleteOutlined
 } from '@ant-design/icons';
-import { deleteSubject } from '../../actions/subject';
+import { getSubject } from '../../actions/subject';
 import styles from './index.module.less';
 
 const getRandomANumber = (min, max) => {
@@ -17,6 +17,7 @@ const getRandomANumber = (min, max) => {
 const SubjectList = () => {
   const dispatch = useDispatch();
   const { identity } = useSelector(state => state.user);
+  const { pathname } = useSelector(state => state.router.location);
   const { subjectList } = useSelector(state => state.subject);
   const [imgLoading, setImgLoading] = useState(true);
   const history = useHistory();
@@ -40,12 +41,17 @@ const SubjectList = () => {
   };
 
   const handleSelectSubject = (item) => {
+    console.log(item);
     // TODO: get subject content from server
-    history.push(`${url}/${item.subjectCode}`);
+    dispatch(getSubject({
+      userId: identity.userId,
+      userType: identity.userType,
+      subjectId: item.id,
+    }, `${pathname}/${item.subjectCode}`));
+    // history.push(`${url}/${item.subjectCode}`);
   };
 
   const handleDeleteSubject = (item) => {
-    dispatch(deleteSubject(item));
   };
 
   return (

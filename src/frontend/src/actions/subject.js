@@ -1,38 +1,34 @@
 import * as api from '../api/subject';
-import { DELETE_SUBJECT, GET_SUBJECT_LIST } from '../constants/actions';
+import { push } from 'connected-react-router';
+import { GET_SUBJECT, GET_SUBJECT_LIST } from '../constants/actions';
 
 export function getSubjectList(payload = {}) {
   return async (dispatch) => {
-    console.log(payload)
     const result = await api.getSubjectList(payload);
     console.log(result);
-
-    console.log(result.data.data);
 
     // TODO: if get subjects successfully
     if (true) {
       dispatch({
         type: GET_SUBJECT_LIST,
-        payload: result.data.data,
+        payload: result.data,
       });
     }
   }
-}
+};
 
-export function deleteSubject(payload = {}) {
+export function getSubject(payload = {}, pathname) {
   return async (dispatch) => {
-    // TODO:
-    // const result = await api.deleteSubect(payload);
-    // console.log(result);
+    const result = await api.getSubject(payload);
+    console.log(result);
 
-    console.log(payload);
-
-    // TODO: if delete successfully
+    // TODO: if get subjects successfully
     if (true) {
       dispatch({
-        type: DELETE_SUBJECT,
-        payload: payload,
+        type: GET_SUBJECT,
+        payload: result.data,
       });
+      dispatch(push(pathname));
     }
   }
 };

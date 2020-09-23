@@ -43,11 +43,9 @@ public class GetAllSubjectsServlet extends HttpServlet {
         }
 
         JSONObject data = new JSONObject ();
-        JSONObject subjectListJson = new JSONObject ();
         JSONArray subjectArr = new JSONArray(subjects);
-        subjectListJson.put("subjectList", subjectArr);
         data.put("message", "success");
-        data.put("data", subjectListJson);
+        data.put("subjectList", subjectArr);
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         response.setStatus(200);

@@ -11,6 +11,7 @@ public class Exam {
     private Integer id;
     private boolean isPublished=false;
     private List<Question> questions;
+    private String showName;
 
     public Exam() {
 
@@ -27,19 +28,29 @@ public class Exam {
         return isPublished;
     }
 
-    public Exam(Integer id, Integer subjectId, String description, List<Question> questions, boolean isPublished) {
+    public Exam(Integer id, Integer subjectId, String description, List<Question> questions, boolean isPublished, String showName) {
         this.description = description;
         this.questions = questions;
         this.id = id;
         this.isPublished = isPublished;
         this.subjectId = subjectId;
+        this.showName = showName;
 
         UnitOfWork.getInstance().registerNewObject(this);
     }
 
+    public String getShowName() {
+        return this.showName;
+    }
+
+    public void setShowName(String showName) {
+        this.showName = showName;
+        UnitOfWork.getInstance().registerDirtyObject(this);
+    }
+
     public void setId(Integer id) {
         this.id = id;
-        UnitOfWork.getInstance().registerDeletedObject(this);
+        UnitOfWork.getInstance().registerDirtyObject(this);
     }
 
     public Integer getId() {

@@ -1,9 +1,12 @@
 package service.impl;
 
+import db.ExamMapper;
 import db.SubjectMapper;
 import db.UserMapper;
+import domain.Exam;
 import domain.Subject;
 import domain.User;
+import domain.UserType;
 import service.UserService;
 
 import java.util.ArrayList;
@@ -20,6 +23,12 @@ public class UserServiceImpl implements UserService {
         List<Subject> subjects = new ArrayList<Subject>();
         subjects = SubjectMapper.loadAllSubjects();
         return subjects;
+    }
+
+    @Override
+    public List<Exam> viewAllExams(int subjectId, int userId, UserType userType) {
+        List<Exam> exams = ExamMapper.loadAllExams(subjectId, userId, userType);
+        return exams;
     }
 
     @Override

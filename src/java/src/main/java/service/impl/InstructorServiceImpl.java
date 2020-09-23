@@ -1,9 +1,11 @@
 package service.impl;
 
+import db.ExamMapper;
 import db.SubjectMapper;
 import domain.Exam;
 import domain.Subject;
 import domain.User;
+import domain.UserType;
 import service.InstructorService;
 import service.UserService;
 import util.UnitOfWork;
@@ -105,6 +107,13 @@ public class InstructorServiceImpl implements InstructorService {
         List<Subject> subjects = new ArrayList<Subject>();
         subjects = SubjectMapper.loadInstructorSubjects(userId);
         return subjects;
+    }
+
+    @Override
+    public List<Exam> viewAllExams(int subjectId, int userId, UserType userType) {
+//        List<Exam> exams = ExamMapper.loadIntructorExam(subjectId, userId);
+//        return exams;
+        return null;
     }
 
     @Override
