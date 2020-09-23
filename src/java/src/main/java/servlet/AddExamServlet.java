@@ -18,6 +18,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Add a new exam, that consisting a list of questions. Questions are also imported
+ * into the database.
+ */
 @WebServlet(urlPatterns = "/add-exam")
 public class AddExamServlet extends HttpServlet {
     private final static Logger logger = LogManager.getLogger(AddExamServlet.class);
@@ -29,20 +33,21 @@ public class AddExamServlet extends HttpServlet {
         JSONObject jsonObject = new JSONObject(requestData);
         int subjectId = Integer.parseInt(jsonObject.get("subjectId").toString());
         JSONArray jsonArray= jsonObject.getJSONArray("questions");
-        // TODO: 解析URL交给Servlet, 实例创建也是servlet？ 还是说在InstructorServiceImpl里面创建？
         List<Question> questions = new ArrayList<>();
-        for (int i=0; i< jsonArray.length(); i++) {
-            JSONObject objet = jsonArray.getJSONObject(i);
-            String description = objet.get("description").toString();
-            String options = objet.get("options").toString();
-            QuestionType questionType = QuestionType.valueOf(objet.get("questionType").toString().toUpperCase());
-            questions.add(new Question(description,options,questionType));
-        }
         Exam exam = new Exam(subjectId,questions, "Not too sure if needed");
         InstructorService service = new InstructorServiceImpl();
         service.addExam(exam);
 
-        ExamMapper.getExam(5,7);
+        int examId = exam.getId();
+        for (int i=0; i< jsonArray.length(); i++) {
+            JSONObject object = jsonArray.getJSONObject(i);
+            String description = object.get("description").toString();
+            String options = object.get("options").toString();
+            int mark = object.getInt("mark");
+            QuestionType questionType = QuestionType.valueOf(object.get("questionType").toString().toUpperCase());
+            questions.add(new Question(description,options,questionType,examId,mark));
+        }
+        exam.setQuestions(questions);
 
         jsonObject = new JSONObject();
         jsonObject.put("message","success");

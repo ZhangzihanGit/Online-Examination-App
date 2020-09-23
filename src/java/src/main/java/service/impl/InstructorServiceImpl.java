@@ -4,12 +4,16 @@ import db.SubjectMapper;
 import domain.Exam;
 import domain.Subject;
 import domain.User;
+import org.json.JSONObject;
 import service.InstructorService;
 import service.UserService;
 import util.UnitOfWork;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class InstructorServiceImpl implements InstructorService {
     /**
@@ -64,7 +68,13 @@ public class InstructorServiceImpl implements InstructorService {
      * @param examId    Exam Id
      */
     @Override
-    public void updateExam(int subjectId, int examId) {
+    public void updateExam(HttpServletRequest request) throws IOException {
+        String requestData = request.getReader()
+                .lines().collect(Collectors.joining(System.lineSeparator()));
+        JSONObject jsonObject = new JSONObject(requestData);
+        int subjectId = jsonObject.getInt("subjectId");
+        int examId = jsonObject.getInt("examId");
+
 
     }
 
