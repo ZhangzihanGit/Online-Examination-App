@@ -16,10 +16,10 @@ public class ExamMapper {
 
 
     public static Exam getExam(int userId, int subjectId) {
-        String sql = "SELECT exam.exam.description, exam.exam.subjectId FROM exam.exam INNER JOIN exam.subject ON exam.exam.subjectId " +
-                "= exam.subject.id INNER JOIN exam.student_subject_relation ON exam.subject.id = exam.student_subject_relation.subjectId" +
-                " INNER JOIN exam.users ON exam.users.id = exam.student_subject_relation.studentId WHERE exam.users.id=? and " +
-                "exam.subject.id = ?";
+        String sql = "SELECT e.description, e.subjectId FROM exam.exam as e INNER JOIN exam.subject AS s ON e.subjectId " +
+                "= s.id INNER JOIN exam.student_subject_relation AS n ON s.id = n.subjectId" +
+                " INNER JOIN exam.users as u ON u.id = n.studentId WHERE u.id=? and " +
+                "s.id = ?";
         try {
             PreparedStatement preparedStatement = DBConnection.prepare(sql);
             preparedStatement.setInt(1,userId);
