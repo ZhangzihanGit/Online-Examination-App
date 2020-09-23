@@ -14,8 +14,16 @@ import java.util.List;
 public class QuestionMapper {
     private static final Logger logger = LogManager.getLogger(QuestionMapper.class);
 
-    public static void addQuestion(Question question, int examId) {
-        String sql = "INSERT INTO exam.question ()";
+    /**
+     * Add a question to DB.
+     * @param question Question domain object
+     * @return id of the created object
+     */
+    public static void  addQuestion(Question question) {
+        String sql = "INSERT INTO exam.question (examid, question_type, " +
+                "description,mark, options) RETURNING id";
+
+
     }
 
     public static List<Question> loadQuestionsFromExamId(int examid) {

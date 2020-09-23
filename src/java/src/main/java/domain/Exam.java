@@ -15,8 +15,12 @@ public class Exam {
     public Exam() {
 
     }
-    public Exam(int subjectId, List<Question> questions) {
+    public Exam(int subjectId, List<Question> questions,String description) {
         this.questions = questions;
+        this.subjectId = subjectId;
+        this.description = description;
+
+        UnitOfWork.getInstance().registerNewObject(this);
     }
     public Exam(Integer id, Integer subjectId, String description, List<Question> questions,boolean isPublished) {
         this.description = description;
@@ -26,6 +30,15 @@ public class Exam {
         this.subjectId = subjectId;
 
         UnitOfWork.getInstance().registerNewObject(this);
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+        UnitOfWork.getInstance().registerDeletedObject(this);
+    }
+
+    public Integer getId() {
+        return id;
     }
 
     public String getDescription() {

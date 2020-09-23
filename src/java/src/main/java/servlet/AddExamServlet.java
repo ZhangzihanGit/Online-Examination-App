@@ -21,8 +21,10 @@ import java.util.stream.Collectors;
 public class AddExamServlet extends HttpServlet {
     private final static Logger logger = LogManager.getLogger(AddExamServlet.class);
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String requestData = request.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws IOException {
+        String requestData = request.getReader().lines().
+                collect(Collectors.joining(System.lineSeparator()));
         JSONObject jsonObject = new JSONObject(requestData);
         int subjectId = Integer.parseInt(jsonObject.get("subjectId").toString());
         JSONArray jsonArray= jsonObject.getJSONArray("questions");
@@ -32,10 +34,10 @@ public class AddExamServlet extends HttpServlet {
             JSONObject objet = jsonArray.getJSONObject(i);
             String description = objet.get("description").toString();
             String options = objet.get("options").toString();
-            QuestionType questionType = QuestionType.valueOf(objet.get("questionType").toString());
+            QuestionType questionType = QuestionType.valueOf(objet.get("questionType").toString().toUpperCase());
             questions.add(new Question(description,options,questionType));
         }
-        Exam exam = new Exam(subjectId,questions);
+        Exam exam = new Exam(subjectId,questions, "Not too sure if needed");
         InstructorService service = new InstructorServiceImpl();
         service.addExam(exam);
     }

@@ -15,9 +15,31 @@ public class ExamMapper {
     private static final Logger logger = LogManager.getLogger(ExamMapper.class);
 
     public static void addExam(Exam exam) {
-        String SQL = "INSERT INTO exam.exam (show_name, subjectId, description,isPublished)" +
-                "VALUES (?,?,?,?)";
+        String sql = "INSERT INTO exam.exam (show_name, subjectId, description,isPublished)" +
+                "VALUES (?,?,?,?) RETURNING id";
+        PreparedStatement statement = null;
+        try {
+            statement = DBConnection.prepare(sql);
+            // TODO： 这个字段是否需要不确定，现在写死了是因为db schema要求该字段not null
+            statement.setString(1, "exam");
+            statement.setInt(2,exam.getSubjectId());
+            statement.setString(3,exam.getDescription());
+            // TODO: 这个字段可能被删除
+            statement.setBoolean(4,false);
 
+            ResultSet resultSet = statement.executeQuery();
+            int examId=0;
+            while(resultSet.next()) {
+                examId = resultSet.getInt("id");
+            }
+            // Check if adding successfully
+            if (examId !=0 ) {
+                exam.setId(examId);
+            }
+            logger.info("the serial id is: " + examId);
+        } catch (SQLException e) {
+            logger.error(e.toString());
+        }
     }
 
     public static Exam loadWithId(Integer id) {
