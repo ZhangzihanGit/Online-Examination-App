@@ -41,7 +41,7 @@ export default class ExamQuestions extends Component {
             this.setState({
                 Qindex: this.state.Qindex + 1
             });
-            console.log(664, this.state.Qindex)
+
         } else {
 
             this.setState({
@@ -62,7 +62,7 @@ export default class ExamQuestions extends Component {
                 Qindex: this.state.Qindex - 1
             });
         } else {
-            console.log(886);
+            alert("You hace reached the first question!")
         }
     };
 

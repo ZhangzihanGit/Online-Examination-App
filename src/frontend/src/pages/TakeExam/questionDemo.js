@@ -3,6 +3,7 @@ export default [
     "Qid": "1",
     "questionText": "Suppose we are given a dataset where all the attributes of the instances are numeric. If we have to predict the value for a certain attribute for an unseen instance, which of the following method should be used?",
     "questionType": "MCQ",
+    "mark": 2,
     "selectionOptions": [
       "Clustering",
       "Regression",
@@ -12,11 +13,13 @@ export default [
   },
   {
     "Qid": "2",
+    "mark": 2,
     "questionText": "Do you have mid semester test",
     "questionType": "shortAnswer"
   },
   {
     "Qid": "3",
+    "mark": 2,
     "questionText": "3Which of the following can affect the evaluation of a model’s performance?",
     "questionType": "MCQ",
     "selectionOptions": [
@@ -29,6 +32,7 @@ export default [
   },
   {
     "Qid": "4",
+    "mark": 2,
     "questionText": "Which of the following can affect the evaluation of a model’s performance?Suppose we are given a dataset where all the attributes of the instances are numeric. If we have to predict the value for a certain attribute for an unseen instance, which of the following method should be used?",
     "questionType": "MCQ",
     "selectionOptions": [
@@ -41,6 +45,7 @@ export default [
   },
   {
     "Qid": "4",
+    "mark": 2,
     "questionText": "Which one is your favourite letter",
     "questionType": "MCQ",
     "selectionOptions": [
@@ -57,6 +62,7 @@ export default [
   },
   {
     "Qid": "5",
+    "mark": 2,
     "questionText": "Do you like math",
     "questionType": "shortAnswer"
   },
