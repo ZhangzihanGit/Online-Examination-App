@@ -13,13 +13,14 @@ public class Student extends User{
     private List<Subject> subjects;
     private boolean isInExam;
     private List<Map<Exam,Integer>> marks;
+    private String showName;
 
     public Student() {
 
     }
     public Student(int id, List<Subject> subjects, boolean isInExam, String name,
-                   UserType userType) {
-        super(id,name,userType,subjects);
+                   UserType userType, String showName) {
+        super(id,name,userType,subjects,showName);
         this.isInExam = isInExam;
     }
 
@@ -53,7 +54,7 @@ public class Student extends User{
     public void load() {
         super.load();
         logger.info("Reach Sub load, not only the parent load");
-        Student student = StudentMapper.loadWithId(this.id);
+        Student student = StudentMapper.loadWithId(this.userId);
         if (this.marks == null) {
 //            this.marks = student.marks;
             logger.info("marks is null");

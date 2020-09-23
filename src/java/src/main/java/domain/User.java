@@ -8,29 +8,29 @@ import util.UnitOfWork;
 
 import java.util.List;
 
-import static domain.UserType.*;
-
 public abstract class User {
     private static Logger logger = LogManager.getLogger(User.class);
-    public Integer id;
+    public Integer userId;
     public String name;
     public UserType userType;
     public List<Subject> subjects;
+    public String showName;
 
     public User(){}
 
-    public User(int id, String name, UserType userType, List<Subject> subjects) {
-        this.id = id;
+    public User(int userId, String name, UserType userType, List<Subject> subjects, String showName) {
+        this.userId = userId;
         this.name = name;
         this.userType = userType;
         this.subjects = subjects;
+        this.showName = showName;
     }
 
-    public Integer getId() {
-        if (id == null) {
+    public Integer getUserId() {
+        if (userId == null) {
             load();
         }
-        return id;
+        return userId;
     }
 
     public String getName() {
@@ -54,8 +54,20 @@ public abstract class User {
         return subjects;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public String getShowName () {
+        if (showName==null) {
+            load();
+        }
+        return showName;
+    }
+
+    public void setShowName(String showName) {
+        this.showName = showName;
+        UnitOfWork.getInstance().registerDirtyObject(this);
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
         UnitOfWork.getInstance().registerDirtyObject(this);
     }
 
@@ -77,8 +89,8 @@ public abstract class User {
     public void load() {
         logger.info("Reach the parent loader");
         // TODO: 有可能会有bug 具体连上数据库再测继承的效果（懒得本地mock测了）= =
-        User user = StudentMapper.loadWithId(this.id)==null ?InstructorMapper.loadWithId(this.id):
-                StudentMapper.loadWithId(this.id);
+        User user = StudentMapper.loadWithId(this.userId)==null ?InstructorMapper.loadWithId(this.userId):
+                StudentMapper.loadWithId(this.userId);
 //        if (this.userType == null) {
 //            this.userType = user.userType;
 //        }

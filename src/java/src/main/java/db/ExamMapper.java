@@ -2,6 +2,7 @@ package db;
 
 import domain.Exam;
 import domain.Question;
+import domain.UserType;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -77,17 +78,67 @@ public class ExamMapper {
         return exam;
     }
 
+    public static List<Exam> loadAllExams(int subjectId, int userId, UserType userType)  {
+        String sql;
+        PreparedStatement preparedStatement;
+        ResultSet resultSet;
+        List<Exam> exams = new ArrayList<>();
+
+        try {
+            switch(userType) {
+                case STUDENT:
+                    sql = "SELECT * FROM exam.exam as e INNER JOIN exam.subject AS s ON e.subjectId " +
+                            "= s.id INNER JOIN exam.student_subject_relation AS n ON s.id = n.subjectId" +
+                            " INNER JOIN exam.users as u ON u.id = n.studentId WHERE u.id=? and " +
+                            "s.id = ?";
+                    preparedStatement = DBConnection.prepare(sql);
+                    preparedStatement.setInt(1,userId);
+                    preparedStatement.setInt(2,subjectId);
+                    resultSet = preparedStatement.executeQuery();
+                    break;
+                case INSTRUCTOR:
+                    sql = "SELECT * FROM exam.exam as e INNER JOIN exam.subject AS s ON e.subjectId " +
+                            "= s.id WHERE s.instructorid=? and " +
+                            "s.id = ?";
+                    preparedStatement = DBConnection.prepare(sql);
+                    preparedStatement.setInt(1,userId);
+                    preparedStatement.setInt(2,subjectId);
+                    resultSet = preparedStatement.executeQuery();
+                    break;
+                case ADMIN:
+                    sql = "SELECT * FROM exam.exam WHERE subjectid = ?";
+                    preparedStatement = DBConnection.prepare(sql);
+                    preparedStatement.setInt(1,subjectId);
+                    resultSet = preparedStatement.executeQuery();
+                    break;
+                default:
+                    throw new IllegalStateException("Unexpected value: " + userType);
+            }
+
+            while (resultSet.next()) {
+                Exam exam = load(resultSet);
+                exams.add(exam);
+                logger.info("Hello " + resultSet.getString("description") + resultSet.getString("subjectid"));
+            }
+        } catch (SQLException e) {
+            logger.error(e.toString());
+        }
+
+        return exams;
+    }
+
     private static Exam load(ResultSet resultSet) {
         Exam exam = null;
         try {
             String showName = resultSet.getString("show_name");
             String description = resultSet.getString("description");
-            int subjectId = resultSet.getInt("subjectId");
+            int subjectId = resultSet.getInt("subjectid");
+
             int id = resultSet.getInt("id");
-            boolean isPublished = resultSet.getBoolean("isPublished");
+            boolean isPublished = resultSet.getBoolean("ispublished");
             List<Question> questions = new ArrayList<>();
             questions = QuestionMapper.loadQuestionsFromExamId(id);
-            exam = new Exam(id,subjectId,description,questions,isPublished);
+            exam = new Exam(id,subjectId,description,questions,isPublished,showName);
         } catch (SQLException e) {
             logger.error(e.getMessage());
         }

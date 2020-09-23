@@ -37,7 +37,7 @@ public class UserMapper {
 
             if (resultSet.next()) {
                 user = UserMapper.load(resultSet);
-                logger.info(user.getName() + user.getId() + user.getUserType());
+                logger.info(user.getName() + user.getUserId() + user.getUserType());
             } else {
                 // TODO: if username not found?
                 logger.error("User not found");
@@ -70,9 +70,10 @@ public class UserMapper {
             }
 
             String username = resultSet.getString("username");
-            String show_name = resultSet.getString("show_name");
-            user.setId(id);
+            String showName = resultSet.getString("show_name");
+            user.setUserId(id);
             user.setName(username);
+            user.setShowName(showName);
             user.setUserType(UserType.valueOf(usertype.toUpperCase()));
             user.setSubjects(subjects);
 

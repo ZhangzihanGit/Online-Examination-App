@@ -1,48 +1,9 @@
 import {
-  DELETE_SUBJECT,
-  GET_SUBJECT_LIST
+  GET_SUBJECT_LIST,
+  GET_SUBJECT,
 } from '../constants/actions';
 
-const initState = {
-  // subjectList: [
-  //   {
-  //     id: 1,
-  //     showName: 'SWEN90010',
-  //     description: 'High Integrity Systems Engineering',
-  //     cover: "https://picsum.photos/seed/1/300/180",
-  //   }, {
-  //     id: 2,
-  //     showName: 'SWEN90004',
-  //     description: 'Modelling Complex Software System',
-  //     cover: "https://picsum.photos/seed/2/300/180",
-  //   }, {
-  //     id: 3,
-  //     showName: 'SWEN90007',
-  //     description: 'Software Design and Architecture',
-  //     cover: "https://picsum.photos/seed/3/300/180",
-  //   }, {
-  //     id: 4,
-  //     showName: 'COMP90043',
-  //     description: 'Cryptography and Security',
-  //     cover: "https://picsum.photos/seed/4/300/180",
-  //   }, {
-  //     id: 5,
-  //     showName: 'COMP90048',
-  //     description: 'Declarative Programming',
-  //     cover: "https://picsum.photos/seed/5/300/180",
-  //   }, {
-  //     id: 6,
-  //     showName: 'COMP30027',
-  //     description: 'Machine Learning',
-  //     cover: "https://picsum.photos/seed/6/300/180",
-  //   }, {
-  //     id: 7,
-  //     showName: 'SWEN30006',
-  //     description: 'Software Modelling and Design',
-  //     cover: "https://picsum.photos/seed/7/300/180",
-  //   }
-  // ]
-};
+const initState = {};
 
 export default function reducer(state = initState, action) {
 
@@ -53,10 +14,12 @@ export default function reducer(state = initState, action) {
         ...state,
         subjectList: action.payload.subjectList,
       }
-    case DELETE_SUBJECT:
+    case GET_SUBJECT:
       return {
         ...state,
-        subjectList: state.subjectList.filter(subject => action.payload !== subject),
+        examList: action.payload.examList,
+        instructorList: action.payload.instructorList,
+        studentList: action.payload.studentList,
       }
     default:
       return state;

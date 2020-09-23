@@ -1,5 +1,6 @@
 import {
-  LOGIN
+  LOGIN,
+  LOGOUT,
 } from '../constants/actions';
 
 const initState = {};
@@ -11,6 +12,8 @@ export default function reducer(state = initState, action) {
         ...state,
         identity: action.payload
       }
+    // case LOGOUT:
+    //   return {}
     default:
       return state;
   }

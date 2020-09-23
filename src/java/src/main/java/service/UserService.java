@@ -1,11 +1,13 @@
 package service;
 
-import domain.Subject;
-import domain.User;
+import domain.*;
 
 import java.util.List;
 
 public interface UserService {
     List<Subject> viewAllSubjects(int userId);
+    List<Exam> viewAllExams(int subjectId, int userId, UserType userType);
     User getUser(String userName);
+    List<Student> viewAllStudents(int subjectId);
+    List<Instructor> viewAllInstructors(int subjectId);
 }

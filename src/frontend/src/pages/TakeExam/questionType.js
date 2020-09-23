@@ -89,7 +89,6 @@ export default class QuestionType extends React.Component {
                 </div>
             );
         } else if (item.questionType == "shortAnswer") {
-            console.log(552);
             return (
                 <div className="questionContainer">
 

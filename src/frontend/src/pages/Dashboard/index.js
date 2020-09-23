@@ -4,8 +4,10 @@ import { Switch, Route, Link } from 'react-router-dom';
 import { Layout, Menu, Avatar, Breadcrumb } from 'antd';
 import { UserOutlined, HomeOutlined, LogoutOutlined } from '@ant-design/icons';
 import SubjectList from '../SubjectList';
-import Subject from '../TakeExam/subject';
+import Subject from '../Subject';
+// import Subject from '../TakeExam/subject';
 import { capitalizeFirstLetter } from '../../utils/helpers';
+import { logout } from '../../actions/user';
 import { getSubjectList } from '../../actions/subject';
 import styles from './index.module.less';
 
@@ -51,6 +53,10 @@ const Dashboard = ({ location }) => {
         userType: identity.userType,
       }));
     }
+  };
+
+  const handleLogout = () => {
+    // dispatch(logout());
   }
 
   return (
@@ -59,7 +65,7 @@ const Dashboard = ({ location }) => {
         <div className={styles.avatarContainer}>
           <Avatar size="large" icon={<UserOutlined />} />
           {/** first line renders username, second line renders identity */}
-          <div>{identity && identity.username}</div>
+          <div>{identity && identity.showName}</div>
           <div>{identity && capitalizeFirstLetter(identity.userType)}</div>
         </div>
         <Menu
@@ -79,7 +85,7 @@ const Dashboard = ({ location }) => {
         <Header>
           <div className={styles.header}>
             <Link to="/">
-              <span>
+              <span onClick={handleLogout}>
                 <LogoutOutlined className={styles.logout} />
                 Log out
               </span>

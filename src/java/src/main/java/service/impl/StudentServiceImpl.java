@@ -1,10 +1,11 @@
 package service.impl;
 
+import db.ExamMapper;
+import db.StudentMapper;
 import db.SubjectMapper;
-import domain.Exam;
-import domain.Question;
-import domain.Subject;
-import domain.User;
+import domain.*;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import service.StudentService;
 import service.UserService;
 
@@ -12,6 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class StudentServiceImpl implements StudentService {
+    private static final Logger logger = LogManager.getLogger(StudentServiceImpl.class);
+
     /**
      * Update the answer given the subject ID, exam Id and questions ID.
      *
@@ -79,7 +82,26 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
+    public List<Exam> viewAllExams(int subjectId, int userId, UserType userType) {
+//        List<Exam> exams = ExamMapper.loadStudentExams(subjectId, userId);
+//        return exams;
+        return null;
+    }
+
+    @Override
     public User getUser(String userName) {
+        return null;
+    }
+
+    @Override
+    public List<Student> viewAllStudents(int subjectId) {
+        logger.info("reach here");
+        List<Student> students = StudentMapper.loadStudentsBySubject(subjectId);
+        return students;
+    }
+
+    @Override
+    public List<Instructor> viewAllInstructors(int subjectId) {
         return null;
     }
 
