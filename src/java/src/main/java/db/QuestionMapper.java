@@ -23,7 +23,6 @@ public class QuestionMapper {
         String sql = "INSERT INTO exam.question (examid, question_type, " +
                 "description,mark, options) RETURNING id";
 
-
     }
 
     public static List<Question> loadQuestionsFromExamId(int examid) {

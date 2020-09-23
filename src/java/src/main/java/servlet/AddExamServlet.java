@@ -1,5 +1,6 @@
 package servlet;
 
+import db.ExamMapper;
 import domain.*;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -40,6 +41,8 @@ public class AddExamServlet extends HttpServlet {
         Exam exam = new Exam(subjectId,questions, "Not too sure if needed");
         InstructorService service = new InstructorServiceImpl();
         service.addExam(exam);
+
+        ExamMapper.getExam(5,7);
 
         jsonObject = new JSONObject();
         jsonObject.put("message","success");
