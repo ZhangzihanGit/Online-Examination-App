@@ -101,14 +101,14 @@ public class ExamMapper {
                 case INSTRUCTOR:
                     sql = "SELECT * FROM exam.exam as e INNER JOIN exam.subject AS s ON e.subjectId " +
                             "= s.id WHERE s.instructorid=? and " +
-                            "s.subjectid = ?";
+                            "s.id = ?";
                     preparedStatement = DBConnection.prepare(sql);
                     preparedStatement.setInt(1,userId);
                     preparedStatement.setInt(2,subjectId);
                     resultSet = preparedStatement.executeQuery();
                     break;
                 case ADMIN:
-                    sql = "SELECT * FROM exam.exam WHERE s.subjectid = ?";
+                    sql = "SELECT * FROM exam.exam WHERE subjectid = ?";
                     preparedStatement = DBConnection.prepare(sql);
                     preparedStatement.setInt(1,subjectId);
                     resultSet = preparedStatement.executeQuery();
@@ -125,26 +125,6 @@ public class ExamMapper {
         } catch (SQLException e) {
             logger.error(e.toString());
         }
-
-        
-
-
-
-
-
-//        try {
-//            PreparedStatement preparedStatement = DBConnection.prepare(sql);
-//            preparedStatement.setInt(1,userId);
-//            preparedStatement.setInt(2,subjectId);
-//            ResultSet resultSet = preparedStatement.executeQuery();
-//            while (resultSet.next()) {
-//                Exam exam = load(resultSet);
-//                exams.add(exam);
-//                logger.info("Hello " + resultSet.getString("description") + resultSet.getString("subjectid"));
-//            }
-//        } catch (SQLException e) {
-//            logger.error(e.toString());
-//        }
 
         return exams;
     }

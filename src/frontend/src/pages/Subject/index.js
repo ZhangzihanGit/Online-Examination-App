@@ -38,22 +38,22 @@ const studentList = [
   }
 ];
 
-const examList = [
-  {
-    userId: 1,
-    userName: "Exam1",
-    userType: "XXX",
-  },
-  {
-    userId: 2,
-    userName: "Exam2",
-    userType: "XXX",
-  }, {
-    userId: 3,
-    userName: "Exam3",
-    userType: "XXX",
-  }
-];
+// const examList = [
+//   {
+//     userId: 1,
+//     userName: "Exam1",
+//     userType: "XXX",
+//   },
+//   {
+//     userId: 2,
+//     userName: "Exam2",
+//     userType: "XXX",
+//   }, {
+//     userId: 3,
+//     userName: "Exam3",
+//     userType: "XXX",
+//   }
+// ];
 
 const adminView = (instructorList, studentList) => (
   <>
@@ -67,6 +67,7 @@ const adminView = (instructorList, studentList) => (
 const Subject = () => {
   const { code } = useParams();
   const { identity } = useSelector(state => state.user);
+  const { examList } = useSelector(state => state.subject);
   const isAdmin = identity && identity.userType === "admin";
   const isInstructor = identity && identity.userType === "instructor";
 

@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useHistory, useRouteMatch } from 'react-router-dom';
 import { List, Card, Button } from 'antd';
 import {
   PlusOutlined,
@@ -20,9 +19,6 @@ const SubjectList = () => {
   const { pathname } = useSelector(state => state.router.location);
   const { subjectList } = useSelector(state => state.subject);
   const [imgLoading, setImgLoading] = useState(true);
-  const history = useHistory();
-  const { url } = useRouteMatch();
-
   const isAdmin = identity && identity.userType === "admin";
 
   const addSubjectButton = {
@@ -32,23 +28,16 @@ const SubjectList = () => {
   const renderList = subjectList ? (isAdmin ? [addSubjectButton, ...subjectList] : subjectList)
     : [];
 
-  // useEffect(() => {
-  //   dispatch(getSubjectList(10));
-  // }, [dispatch]);
-
   const handleAddSubject = () => {
     console.log("subject created!");
   };
 
   const handleSelectSubject = (item) => {
-    console.log(item);
-    // TODO: get subject content from server
     dispatch(getSubject({
       userId: identity.userId,
       userType: identity.userType,
       subjectId: item.id,
     }, `${pathname}/${item.subjectCode}`));
-    // history.push(`${url}/${item.subjectCode}`);
   };
 
   const handleDeleteSubject = (item) => {
