@@ -14,8 +14,6 @@ import java.util.List;
 
 public class ExamMapper {
     private static final Logger logger = LogManager.getLogger(ExamMapper.class);
-
-
     public static Exam getExam(int userId, int subjectId) {
         String sql = "SELECT e.description, e.subjectId FROM exam.exam as e INNER JOIN exam.subject AS s ON e.subjectId " +
                 "= s.id INNER JOIN exam.student_subject_relation AS n ON s.id = n.subjectId" +
