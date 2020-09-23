@@ -5,6 +5,7 @@ import { Layout, Menu, Avatar, Breadcrumb } from 'antd';
 import { UserOutlined, HomeOutlined, LogoutOutlined } from '@ant-design/icons';
 import SubjectList from '../SubjectList';
 import Subject from '../Subject';
+import ManageExam from '../manageExam/manageExam';
 // import Subject from '../TakeExam/subject';
 import { capitalizeFirstLetter } from '../../utils/helpers';
 import { logout } from '../../actions/user';
@@ -98,6 +99,7 @@ const Dashboard = ({ location }) => {
           </Breadcrumb>
           <div className={styles.content}>
             <Switch>
+              <Route path="/dashboard/subjects/:code/create-exam" component={ManageExam} />
               <Route path="/dashboard/subjects/:code" component={Subject} />
               {menuList.map(({ key, content }) => {
                 return (

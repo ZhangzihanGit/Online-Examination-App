@@ -1,9 +1,10 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { Divider, Button } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import ContentList from './ContentList';
+import ManageExam from '../manageExam/manageExam';
 import styles from './index.module.less';
 
 const adminView = (instructorList, studentList) => (
@@ -17,13 +18,14 @@ const adminView = (instructorList, studentList) => (
 
 const Subject = () => {
   const { code } = useParams();
+  const history = useHistory();
   const { identity } = useSelector(state => state.user);
   const { examList, instructorList, studentList } = useSelector(state => state.subject);
   const isAdmin = identity && identity.userType === "admin";
   const isInstructor = identity && identity.userType === "instructor";
 
   const handleCreateExam = () => {
-    console.log('create exam!');
+    history.push(`/dashboard/subjects/${code}/create-exam`);
   }
 
   return (
