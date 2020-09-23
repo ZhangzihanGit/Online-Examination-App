@@ -11,8 +11,11 @@ import { RELATIVE_PATH } from '../constants';
  */
 
 export const getSubjectList = (params) => {
-  console.log(params);
   return ajax.get(`/all-subjects`, { params });
+};
+
+export const getSubject = (params) => {
+  return ajax.get(`/subject`, { params });
 };
 
 export const deleteSubject = (params) => {

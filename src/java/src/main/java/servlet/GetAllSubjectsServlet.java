@@ -51,28 +51,6 @@ public class GetAllSubjectsServlet extends HttpServlet {
             subjects = userService.viewAllSubjects(Integer.parseInt(userId));
         }
 
-//        UserService userService = new InstructorServiceImpl();
-//        List<Subject> subjects = userService.viewAllSubjects(Integer.parseInt(userId));
-
-//        UserService userService1 = new StudentServiceImpl();
-//        List<Subject> subjects1 = userService1.viewAllSubjects(Integer.parseInt(userId));
-
-//        try{
-//            GsonBuilder builder = new GsonBuilder();
-//            builder.excludeFieldsWithoutExposeAnnotation();
-//            Gson gson = builder.create();
-////            Subject subject = subjects.get(0);
-//            String json = gson.toJson(subjects);
-////            logger.info(json);
-//            logger.info(gson.toJson(subjects1));
-////            [{"id":7,"subjectCode":"SWEN9007","description":"Software Design and Architecture"},{"id":8,"subjectCode":"SWEN90010","description":"High Integrity Systems Engineering"}]
-//            // TO add more field:
-//
-//        } catch (Exception e){
-//            e.printStackTrace();
-//            logger.error(e.getMessage());
-//        }
-
         JSONObject data = new JSONObject ();
         JSONObject subjectListJson = new JSONObject ();
         JSONArray subjectArr = new JSONArray(subjects);
@@ -83,6 +61,5 @@ public class GetAllSubjectsServlet extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         response.setStatus(200);
         response.getWriter().write(data.toString());
-
     }
 }

@@ -107,6 +107,11 @@ public class InstructorServiceImpl implements InstructorService {
     }
 
     @Override
+    public List<Exam> viewAllExams(int subjectId, int userId) {
+        return null;
+    }
+
+    @Override
     public User getUser(String userName) {
         return null;
     }

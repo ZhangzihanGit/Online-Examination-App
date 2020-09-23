@@ -1,6 +1,7 @@
 import {
   DELETE_SUBJECT,
-  GET_SUBJECT_LIST
+  GET_SUBJECT_LIST,
+  GET_SUBJECT,
 } from '../constants/actions';
 
 const initState = {
@@ -57,6 +58,11 @@ export default function reducer(state = initState, action) {
       return {
         ...state,
         subjectList: state.subjectList.filter(subject => action.payload !== subject),
+      }
+    case GET_SUBJECT:
+      return {
+        ...state,
+        examList: action.payload.examList,
       }
     default:
       return state;
