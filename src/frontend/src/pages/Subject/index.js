@@ -1,61 +1,10 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import { List, Typography, Divider, Button } from 'antd';
+import { useSelector } from 'react-redux';
+import { Divider, Button } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import ContentList from './ContentList';
 import styles from './index.module.less';
-
-// const instructorList = [
-//   {
-//     userId: 1,
-//     userName: "maria",
-//     userType: "XXX",
-//   },
-//   {
-//     userId: 2,
-//     userName: "AAA",
-//     userType: "XXX",
-//   }, {
-//     userId: 3,
-//     userName: "BBB",
-//     userType: "XXX",
-//   }
-// ];
-
-// const studentList = [
-//   {
-//     userId: 1,
-//     userName: "student1",
-//     userType: "XXX",
-//   },
-//   {
-//     userId: 2,
-//     userName: "student2",
-//     userType: "XXX",
-//   }, {
-//     userId: 3,
-//     userName: "student3",
-//     userType: "XXX",
-//   }
-// ];
-
-// const examList = [
-//   {
-//     userId: 1,
-//     userName: "Exam1",
-//     userType: "XXX",
-//   },
-//   {
-//     userId: 2,
-//     userName: "Exam2",
-//     userType: "XXX",
-//   }, {
-//     userId: 3,
-//     userName: "Exam3",
-//     userType: "XXX",
-//   }
-// ];
 
 const adminView = (instructorList, studentList) => (
   <>

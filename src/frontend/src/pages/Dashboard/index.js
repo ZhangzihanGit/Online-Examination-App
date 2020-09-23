@@ -7,6 +7,7 @@ import SubjectList from '../SubjectList';
 import Subject from '../Subject';
 // import Subject from '../TakeExam/subject';
 import { capitalizeFirstLetter } from '../../utils/helpers';
+import { logout } from '../../actions/user';
 import { getSubjectList } from '../../actions/subject';
 import styles from './index.module.less';
 
@@ -52,6 +53,10 @@ const Dashboard = ({ location }) => {
         userType: identity.userType,
       }));
     }
+  };
+
+  const handleLogout = () => {
+    // dispatch(logout());
   }
 
   return (
@@ -80,7 +85,7 @@ const Dashboard = ({ location }) => {
         <Header>
           <div className={styles.header}>
             <Link to="/">
-              <span>
+              <span onClick={handleLogout}>
                 <LogoutOutlined className={styles.logout} />
                 Log out
               </span>
