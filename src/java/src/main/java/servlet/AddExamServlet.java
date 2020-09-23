@@ -40,5 +40,13 @@ public class AddExamServlet extends HttpServlet {
         Exam exam = new Exam(subjectId,questions, "Not too sure if needed");
         InstructorService service = new InstructorServiceImpl();
         service.addExam(exam);
+
+        jsonObject = new JSONObject();
+        jsonObject.put("message","success");
+        jsonObject.put("examId", exam.getId().toString());
+        response.setContentType("application.json");
+        request.setCharacterEncoding("UTF-8");
+        response.setStatus(200);
+        response.getWriter().write(jsonObject.toString());
     }
 }
