@@ -76,7 +76,7 @@ public class QuestionMapper {
             int id = resultSet.getInt("id");
             String description = resultSet.getString("description");
             QuestionType questionType = QuestionType.valueOf(resultSet.
-                    getString("question_type"));
+                    getString("question_type").toUpperCase());
             // TODO: comma separated string. Current DB schema needs a fix on Options.
             String options = resultSet.getString("options");
             IdentityMap<Question> map = IdentityMap.getInstance(Question.class);
