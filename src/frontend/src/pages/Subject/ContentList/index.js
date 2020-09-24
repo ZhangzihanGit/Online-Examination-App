@@ -1,14 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useParams, useHistory, Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import { List, Button } from 'antd';
 import {
   PlayCircleOutlined,
   SettingOutlined,
   DeleteOutlined
 } from '@ant-design/icons';
+import { getExam } from '../../../actions/subject';
 
 const ContentList = ({ list, isExam }) => {
+  const dispatch = useDispatch();
   const { identity } = useSelector(state => state.user);
+  const { code } = useParams();
+  const history = useHistory();
+  const { pathname } = useSelector(state => state.router.location);
   // const { examList } = useSelector(state => state.subject);
   const [publisedList, setPublisedList] = useState([]);
   const isInstructor = identity && identity.userType === "instructor";
@@ -16,6 +22,7 @@ const ContentList = ({ list, isExam }) => {
 
   const handleEditExam = (item) => {
     console.log(item);
+    history.push(`/dashboard/subjects/${code}/edit-exam`);
   }
 
   const handleDeleteExam = (item) => {
@@ -25,6 +32,14 @@ const ContentList = ({ list, isExam }) => {
 
   const handlePublishExam = (item) => {
     console.log(item);
+  }
+
+  const handleClickExam = (item) => {
+    console.log(item);
+    dispatch(getExam({
+      examId: item.examId,
+    }, `${pathname}/${item.examId}`));
+    // history.push(`/dashboard/subjects/${code}/${item.id}`);
   }
 
   useEffect(() => {
@@ -69,8 +84,10 @@ const ContentList = ({ list, isExam }) => {
           ] : null}
         >
           <List.Item.Meta
-            title={<a href="#!">{item.showName}</a>}
+            style={{ cursor: 'pointer' }}
+            title={item.showName}
             description={isExam ? `${item.description}` : `id: ${item.userId}`}
+            onClick={() => handleClickExam(item)}
           />
         </List.Item>
       )}

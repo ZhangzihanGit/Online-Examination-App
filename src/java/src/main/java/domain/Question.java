@@ -1,12 +1,15 @@
 package domain;
 
 import db.QuestionMapper;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import util.UnitOfWork;
 
 import java.util.List;
 import java.util.Queue;
 
 public class Question {
+    private final static Logger logger = LogManager.getLogger(Question.class);
     private int questionID;
     private QuestionType questionType;
     private String description;
@@ -100,7 +103,7 @@ public class Question {
 
     public void setQuestionID(int questionID) {
         this.questionID = questionID;
-        UnitOfWork.getInstance().registerDirtyObject(this);
+//        UnitOfWork.getInstance().registerDirtyObject(this);
     }
 
     public void setOptions(String options) {

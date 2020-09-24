@@ -23,6 +23,8 @@ public interface InstructorService extends UserService{
      */
     public void addExam(Exam exam);
 
+    public void addQuestions();
+
     /**
      * View all exams under the subject.
      * @param subjectId Subject Id

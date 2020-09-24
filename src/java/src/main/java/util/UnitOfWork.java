@@ -74,11 +74,22 @@ public class UnitOfWork {
         for ( int i=0; i<newObjectList.size(); i++) {
             Object object = newObjectList.get(i);
             if (object instanceof Exam) {
+                logger.info("New exam is added");
                 ExamMapper.addExam((Exam)object);
             }
             if (object instanceof Question) {
+                logger.info("New question is added");
                 QuestionMapper.addQuestion((Question) object);
             }
         }
+        // Don't forget to clear the new objects after commit.
+        newObjectList.clear();
+        for ( int i=0; i<dirtyObjectList.size(); i++) {
+            Object object = dirtyObjectList.get(i);
+            if (object instanceof  Exam) {
+                ExamMapper.updateExam((Exam)object);
+            }
+        }
+        dirtyObjectList.clear();
     }
 }

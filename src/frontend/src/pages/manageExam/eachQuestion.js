@@ -1,5 +1,5 @@
 import React from 'react';
-import ExamDemo from "./examDemo";
+// import ExamDemo from "./examDemo";
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import UpdatingQuestion from "./updatingQuestion"
@@ -9,14 +9,14 @@ import {
     Card,
     CardContent,
     IconButton,
-    DialogTitle,
-    DialogContent,
-    TextField,
-    DialogContentText,
-    MenuItem,
-    Select,
-    FormControl,
-    InputLabel
+    // DialogTitle,
+    // DialogContent,
+    // TextField,
+    // DialogContentText,
+    // MenuItem,
+    // Select,
+    // FormControl,
+    // InputLabel
 } from '@material-ui/core';
 
 export default class EachQuestion extends React.Component {

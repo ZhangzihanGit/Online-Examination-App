@@ -1,18 +1,18 @@
 import React from 'react';
 import ExamDemo from "./examDemo";
 import EachQuestion from "./eachQuestion";
-import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+// import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import {
     Box,
-    Button,
-    DialogTitle,
-    DialogContent,
-    TextField,
-    DialogContentText,
-    MenuItem,
-    Select,
-    FormControl,
-    InputLabel
+    // Button,
+    // DialogTitle,
+    // DialogContent,
+    // TextField,
+    // DialogContentText,
+    // MenuItem,
+    // Select,
+    // FormControl,
+    // InputLabel
 } from '@material-ui/core';
 
 export default class UpdateExam extends React.Component {

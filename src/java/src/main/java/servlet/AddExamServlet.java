@@ -34,8 +34,9 @@ public class AddExamServlet extends HttpServlet {
         int subjectId = Integer.parseInt(jsonObject.get("subjectId").toString());
         JSONArray jsonArray= jsonObject.getJSONArray("questions");
         List<Question> questions = new ArrayList<>();
-        Exam exam = new Exam(subjectId,questions, "Not too sure if needed");
+        Exam exam = new Exam(subjectId,"Not too sure if needed");
         InstructorService service = new InstructorServiceImpl();
+        // Commit the exam to DB, get examid from DB.
         service.addExam(exam);
 
         int examId = exam.getId();
@@ -44,15 +45,18 @@ public class AddExamServlet extends HttpServlet {
             String description = object.get("description").toString();
             String options = object.get("options").toString();
             int mark = object.getInt("mark");
-            QuestionType questionType = QuestionType.valueOf(object.get("questionType").toString().toUpperCase());
+            QuestionType questionType = QuestionType.valueOf(object.
+                    get("questionType").toString().toUpperCase());
             questions.add(new Question(description,options,questionType,examId,mark));
         }
+        service.addQuestions();
+        // After questions are loaded into the exam, initialise it in the exam object.
         exam.setQuestions(questions);
 
         jsonObject = new JSONObject();
         jsonObject.put("message","success");
         jsonObject.put("examId", exam.getId().toString());
-        response.setContentType("application.json");
+        response.setContentType("application/json");
         request.setCharacterEncoding("UTF-8");
         response.setStatus(200);
         response.getWriter().write(jsonObject.toString());

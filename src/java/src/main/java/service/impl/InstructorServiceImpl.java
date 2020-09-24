@@ -43,6 +43,10 @@ public class InstructorServiceImpl implements InstructorService {
     public void addExam(Exam exam) {
         UnitOfWork.getInstance().commit();
     }
+    @Override
+    public void addQuestions(){
+        UnitOfWork.getInstance().commit();
+    }
 
     /**
      * View all exams under the subject.
@@ -80,8 +84,6 @@ public class InstructorServiceImpl implements InstructorService {
         JSONObject jsonObject = new JSONObject(requestData);
         int subjectId = jsonObject.getInt("subjectId");
         int examId = jsonObject.getInt("examId");
-
-
     }
 
     /**
@@ -125,7 +127,7 @@ public class InstructorServiceImpl implements InstructorService {
 
     @Override
     public List<Exam> viewAllExams(int subjectId, int userId, UserType userType) {
-//        List<Exam> exams = ExamMapper.loadIntructorExam(subjectId, userId);
+//        List<Exam> exams = ExamMapper.loadInstructorExam(subjectId, userId);
 //        return exams;
         return null;
     }
@@ -144,5 +146,10 @@ public class InstructorServiceImpl implements InstructorService {
     public List<Instructor> viewAllInstructors(int subjectId) {
         List<Instructor> instructors = InstructorMapper.loadInstructorsBySubject(subjectId);
         return instructors;
+    }
+
+    @Override
+    public Exam getExam(int examId) {
+        return null;
     }
 }
