@@ -35,6 +35,7 @@ export function getSubject(payload = {}, pathname) {
 
 export function createExam(payload = {}) {
   return async (dispatch) => {
+    console.log(payload)
     const result = await api.createExam(payload);
     console.log(result);
   }

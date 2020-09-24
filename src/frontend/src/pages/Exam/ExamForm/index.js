@@ -46,7 +46,7 @@ const ExamForm = () => {
       userType: identity.userType,
     };
     console.log(data);
-    // dispatch(createExam(data));
+    dispatch(createExam(data));
   };
 
   return (
