@@ -43,4 +43,10 @@ public class UserServiceImpl implements UserService {
     public List<Instructor> viewAllInstructors(int subjectId) {
         return null;
     }
+
+    @Override
+    public Exam getExam(int examId) {
+        Exam exam = ExamMapper.loadWithId(examId);
+        return exam;
+    }
 }

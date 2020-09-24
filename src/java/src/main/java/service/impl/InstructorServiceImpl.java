@@ -147,4 +147,9 @@ public class InstructorServiceImpl implements InstructorService {
         List<Instructor> instructors = InstructorMapper.loadInstructorsBySubject(subjectId);
         return instructors;
     }
+
+    @Override
+    public Exam getExam(int examId) {
+        return null;
+    }
 }

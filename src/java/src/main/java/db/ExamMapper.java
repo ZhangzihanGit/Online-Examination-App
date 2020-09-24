@@ -19,13 +19,6 @@ public class ExamMapper {
 
     }
 
-//    public static List<Exam> loadInstructorExam(int subjectId, int  userId) {
-//        String sql = "SELECT * FROM exam.exam as e INNER JOIN exam.subject as s " +
-//                " ON e.subjectId = s.id WHERE s.id = ? AND s.instructorId = ?";
-//
-//        return null;
-//    }
-
     public static void addExam(Exam exam) {
         String sql = "INSERT INTO exam.exam (show_name, subjectId, description,isPublished)" +
                 "VALUES (?,?,?,?) RETURNING id";
@@ -60,11 +53,14 @@ public class ExamMapper {
         try {
             preparedStatement = DBConnection.prepare(sql);
             preparedStatement.setInt(1,id);
-            IdentityMap<Exam> map = IdentityMap.getInstance(Exam.class);
-            exam = map.get(id);
-            if (exam == null) {
-                exam = ExamMapper.load(preparedStatement.executeQuery());
+//            IdentityMap<Exam> map = IdentityMap.getInstance(Exam.class);
+//            exam = map.get(id);
+//            if (exam == null) {
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                exam = ExamMapper.load(resultSet);
             }
+//            }
         } catch (SQLException e) {
             logger.error(e.getMessage());
         }

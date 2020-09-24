@@ -10,4 +10,5 @@ public interface UserService {
     User getUser(String userName);
     List<Student> viewAllStudents(int subjectId);
     List<Instructor> viewAllInstructors(int subjectId);
+    Exam getExam(int examId);
 }
