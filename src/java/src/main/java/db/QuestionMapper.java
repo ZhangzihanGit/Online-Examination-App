@@ -14,6 +14,28 @@ import java.util.List;
 public class QuestionMapper {
     private static final Logger logger = LogManager.getLogger(QuestionMapper.class);
 
+    public static void updateQuestion(Question question) {
+        String sql = "UPDATE exam.question SET " +
+                "examId=?, question_type=?::questiontype, description=?, mark=?, options=? WHERE id = ?";
+        PreparedStatement preparedStatement = DBConnection.prepare(sql);
+        try {
+            preparedStatement.setInt(1,question.getExamId());
+            preparedStatement.setString(2,question.getQuestionType().toString().toLowerCase());
+            preparedStatement.setString(3,question.getDescription());
+            preparedStatement.setInt(4,question.getMark());
+            preparedStatement.setInt(6,question.getQuestionID());
+            if (question.getOptions() !=null) {
+                preparedStatement.setString(5,question.getOptions());
+            }
+            else {
+                preparedStatement.setString(5,null);
+            }
+            ResultSet resultSet = preparedStatement.executeQuery();
+            logger.info("the question is updated, id is " + question.getQuestionID());
+        } catch (SQLException e) {
+            logger.error(e.getMessage());
+        }
+    }
     /**
      * Add a question to DB.
      * @param question Question domain object
@@ -70,22 +92,20 @@ public class QuestionMapper {
         }
         return questions;
     }
+
     private static Question load(ResultSet resultSet) {
         Question question = new Question();
         try {
             int id = resultSet.getInt("id");
             String description = resultSet.getString("description");
+            int examId = resultSet.getInt("examid");
+            int mark = resultSet.getInt("mark");
             QuestionType questionType = QuestionType.valueOf(resultSet.
                     getString("question_type").toUpperCase());
             // TODO: comma separated string. Current DB schema needs a fix on Options.
             String options = resultSet.getString("options");
-//            IdentityMap<Question> map = IdentityMap.getInstance(Question.class);
-//
-//            question = map.get(id);
-//            if (question == null) {
-                logger.info("create new questions, ");
-                question = new Question(id,description,options,questionType);
-//            }
+                logger.info("create new question object here ");
+                question = new Question(id,description,options,questionType,examId,mark);
 
         }catch (SQLException e) {
             logger.error(e.getMessage());
@@ -94,7 +114,18 @@ public class QuestionMapper {
     }
 
     public static Question loadWithId(Integer id) {
-        // need a non-null assertion here.
-        return null;
+        Question question = new Question();
+        String sql = "SELECT * FROM exam.question WHERE id = ?";
+        PreparedStatement preparedStatement = DBConnection.prepare(sql);
+        try {
+            preparedStatement.setInt(1,id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                question = QuestionMapper.load(resultSet);
+            }
+        } catch (SQLException e) {
+            logger.error(e.getMessage());
+        }
+        return question;
     }
 }

@@ -87,7 +87,12 @@ public class UnitOfWork {
         for ( int i=0; i<dirtyObjectList.size(); i++) {
             Object object = dirtyObjectList.get(i);
             if (object instanceof Exam) {
+                logger.info("exam object is being updated with id: " + ((Exam) object).getId());
                 ExamMapper.updateExam((Exam)object);
+            }
+            if (object instanceof Question) {
+                logger.info("question object is being updated with id: "+((Question) object).getQuestionID());
+                QuestionMapper.updateQuestion((Question) object);
             }
         }
         dirtyObjectList.clear();

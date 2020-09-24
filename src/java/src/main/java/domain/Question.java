@@ -45,11 +45,14 @@ public class Question {
      * @param options
      * @param questionType
      */
-    public Question(int questionID, String description, String options, QuestionType questionType) {
+    public Question(int questionID, String description, String options, QuestionType questionType, int examId,
+                    int mark) {
         this.questionID = questionID;
         this.questionType = questionType;
         this.description = description;
         this.options = options;
+        this.examId = examId;
+        this.mark = mark;
 
 //        UnitOfWork.getInstance().registerNewObject(this);
     }
@@ -103,7 +106,6 @@ public class Question {
 
     public void setQuestionID(int questionID) {
         this.questionID = questionID;
-//        UnitOfWork.getInstance().registerDirtyObject(this);
     }
 
     public void setOptions(String options) {

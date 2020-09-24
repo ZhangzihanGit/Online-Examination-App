@@ -16,7 +16,25 @@ public class ExamMapper {
     private static final Logger logger = LogManager.getLogger(ExamMapper.class);
 
     public static void updateExam(Exam exam) {
+        String sql = "UPDATE exam.exam SET " +
+                "show_name=?, subjectId=?, ispublished=?,isstart=?,description=? " +
+                "WHERE id=?";
+        PreparedStatement preparedStatement = null;
+        try{
+            preparedStatement =  DBConnection.prepare(sql);
+            preparedStatement.setString(1,exam.getShowName());
+            preparedStatement.setInt(2,exam.getSubjectId());
+            preparedStatement.setBoolean(3,exam.isPublished());
+            // TODO: 需要修改db schema，这个字段不需要了
+            preparedStatement.setBoolean(4,false);
+            preparedStatement.setString(5,exam.getDescription());
+            preparedStatement.setInt(6,exam.getId());
 
+//            ResultSet resultSet = preparedStatement.executeQuery();
+            logger.info("The exam is successfully updated, with id " + exam.getId());
+        } catch (SQLException e) {
+            logger.info(e.getMessage());
+        }
     }
 
     public static void addExam(Exam exam) {
@@ -124,7 +142,9 @@ public class ExamMapper {
             List<Question> questions = new ArrayList<>();
             logger.info("Loading questions from Exam: ");
             questions = QuestionMapper.loadQuestionsFromExamId(id);
-
+            for (int i=0; i< questions.size();i ++ ) {
+                logger.info(questions.get(i).getQuestionID());
+            }
             exam = new Exam(id,subjectId,description,questions,isPublished,showName);
         } catch (SQLException e) {
             logger.error(e.getMessage());

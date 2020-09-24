@@ -1,6 +1,7 @@
 package service;
 
 import domain.Exam;
+import domain.Question;
 import domain.Subject;
 
 import javax.servlet.http.HttpServletRequest;
@@ -46,6 +47,8 @@ public interface InstructorService extends UserService{
      * @param examId Exam Id
      */
     public void updateExam(Exam exam);
+
+    public void updateQuestions(List<Question> questions);
 
     /**
      * Update the marks of the student.

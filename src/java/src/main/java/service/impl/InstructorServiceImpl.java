@@ -79,7 +79,16 @@ public class InstructorServiceImpl implements InstructorService {
      */
     @Override
     public void updateExam(Exam exam) {
-        ExamMapper.updateExam(exam);
+//        ExamMapper.updateExam(exam);
+        UnitOfWork.getInstance().commit();
+    }
+
+    @Override
+    public void updateQuestions(List<Question> questions) {
+        for(Question q: questions) {
+            UnitOfWork.getInstance().registerDirtyObject(q);
+        }
+        UnitOfWork.getInstance().commit();
     }
 
     /**
