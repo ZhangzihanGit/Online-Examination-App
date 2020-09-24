@@ -29,7 +29,7 @@ const Subject = () => {
   }
 
   return (
-    <>
+    <div className={styles.examListContaner}>
       {isAdmin ? adminView(instructorList, studentList) : null}
       <Divider orientation="center">Exams</Divider>
       <ContentList
@@ -47,7 +47,7 @@ const Subject = () => {
         </Button>
         </div>
       )}
-    </>
+    </div>
   )
 };
 

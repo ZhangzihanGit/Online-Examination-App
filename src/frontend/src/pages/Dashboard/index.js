@@ -12,6 +12,7 @@ import { logout } from '../../actions/user';
 import { getSubjectList } from '../../actions/subject';
 import styles from './index.module.less';
 import UpdateExam from '../manageExam/updateExam';
+import CreateExam from '../Exam/CreateExam';
 
 
 const { Header, Sider, Content } = Layout;
@@ -101,7 +102,7 @@ const Dashboard = ({ location }) => {
           </Breadcrumb>
           <div className={styles.content}>
             <Switch>
-              <Route path="/dashboard/subjects/:code/create-exam" component={AddExam} />
+              <Route path="/dashboard/subjects/:code/create-exam" component={CreateExam} />
               <Route path="/dashboard/subjects/:code/edit-exam" component={UpdateExam} />
               <Route path="/dashboard/subjects/:code" component={Subject} />
               {menuList.map(({ key, content }) => {
