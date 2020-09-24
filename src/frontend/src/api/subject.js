@@ -22,6 +22,14 @@ export const deleteSubject = (params) => {
   return ajax.post(`/delete`, { data: params });
 };
 
+export const getExam = (params) => {
+  return ajax.get(`/get-exam`, { params });
+};
+
 export const createExam = (params) => {
   return ajax.post(`/add-exam`, { data: params });
+};
+
+export const submitExam = (params) => {
+  return ajax.post(`/submission`, { data: params });
 };

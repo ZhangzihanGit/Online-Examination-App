@@ -26,6 +26,9 @@ public class GetExamServlet extends HttpServlet {
         JSONObject data = new JSONObject();
         JSONArray questions = new JSONArray(questionLists);
         data.put("questions",questions);
+        data.put("showName", exam.getShowName());
+        data.put("description", exam.getDescription());
+        data.put("published", exam.isPublished());
         data.put("message", "success");
         data.put("subjectId", exam.getSubjectId());
         data.put("examId", examId);

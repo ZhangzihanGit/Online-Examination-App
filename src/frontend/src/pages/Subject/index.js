@@ -26,7 +26,8 @@ const Subject = () => {
 
   const handleCreateExam = () => {
     history.push(`/dashboard/subjects/${code}/create-exam`);
-  }
+  };
+  console.log(examList);
 
   return (
     <div className={styles.examListContaner}>

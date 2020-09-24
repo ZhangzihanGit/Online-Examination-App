@@ -37,5 +37,9 @@ VALUES ('2020 Mid Semester Test 1', 1, true, true, 'This is exam description'),
        ('2020 Quiz 2', 2, false, false, 'This is exam description'),
        ('2020 Quiz 3', 2, true, true, 'This is exam description');
 
+-- INSERT INTO exam.question (examid, question_type, description, mark, options)
+-- VALUES (1134, "shortanswer", "Question Description1", 2, null);
+
 
 -- ALTER TYPE questiontype ADD VALUE 'multiplechoice' BEFORE 'multiple_choice';
+ALTER TYPE questiontype ADD VALUE 'shortanswer' BEFORE 'short_answer';

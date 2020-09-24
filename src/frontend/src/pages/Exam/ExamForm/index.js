@@ -8,6 +8,8 @@ import QuestionForm from '../QuestionForm';
 import { findSubjectByCode } from '../../../utils/helpers';
 import styles from './index.module.less';
 
+import { CREATE_EXAM } from '../../../constants/actions';
+
 const ExamForm = () => {
   const dispatch = useDispatch();
   const { code } = useParams();
@@ -17,6 +19,10 @@ const ExamForm = () => {
 
   const onFinish = values => {
     console.log('Received values of form:', values);
+    // dispatch({
+    //   type: CREATE_EXAM,
+    //   payload: values
+    // });
 
     if (!values.questions || values.questions.length === 0) {
       message.error('Please add at least one question!');
@@ -38,7 +44,7 @@ const ExamForm = () => {
       transformedQuestions.push({
         questionType,
         description: questionDescription,
-        mark: questionMark,
+        mark: Number(questionMark),
         options: newOptions,
       });
     });
@@ -47,10 +53,9 @@ const ExamForm = () => {
       ...values,
       questions: transformedQuestions,
       subjectId: findSubjectByCode(subjectList, code).id,
-      userId: identity.userId,
-      userType: identity.userType,
+      // userId: identity.userId,
+      // userType: identity.userType,
     };
-    console.log(data);
     dispatch(createExam(data));
   };
 

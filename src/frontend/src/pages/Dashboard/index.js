@@ -13,6 +13,7 @@ import { getSubjectList } from '../../actions/subject';
 import styles from './index.module.less';
 import UpdateExam from '../manageExam/updateExam';
 import ExamForm from '../Exam/ExamForm';
+import Exam from '../Exam';
 
 
 const { Header, Sider, Content } = Layout;
@@ -103,8 +104,10 @@ const Dashboard = ({ location }) => {
           <div className={styles.content}>
             <Switch>
               <Route path="/dashboard/subjects/:code/create-exam" component={ExamForm} />
-              <Route path="/dashboard/subjects/:code/edit-exam" component={UpdateExam} />
-              <Route path="/dashboard/subjects/:code" component={Subject} />
+              <Route path="/dashboard/subjects/:code/edit-exam" component={ExamForm} />
+              <Route exact path="/dashboard/subjects/:code" component={Subject} />
+              <Route exact path="/dashboard/subjects/:code/:examId" component={Exam} />
+
               {menuList.map(({ key, content }) => {
                 return (
                   <Route key={key} path={key} component={content} />

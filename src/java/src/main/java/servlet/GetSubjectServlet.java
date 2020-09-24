@@ -42,7 +42,17 @@ public class GetSubjectServlet extends HttpServlet {
                 Integer.parseInt(userId), UserType.valueOf(userType.toUpperCase()));
 
         JSONObject data = new JSONObject ();
-        JSONArray examArr = new JSONArray(exams);
+        JSONArray examArr = new JSONArray();
+
+        for (Exam e : exams) {
+            JSONObject d = new JSONObject ();
+            d.put("showName", e.getShowName());
+            d.put("description", e.getDescription());
+            d.put("published", e.isPublished());
+            d.put("subjectId", e.getSubjectId());
+            d.put("examId", e.getId());
+            examArr.put(d);
+        }
         data.put("message", "success");
         data.put("examList", examArr);
 
