@@ -21,3 +21,7 @@ export const getSubject = (params) => {
 export const deleteSubject = (params) => {
   return ajax.post(`/delete`, { data: params });
 };
+
+export const createExam = (params) => {
+  return ajax.post(`/add-exam`, { data: params });
+};

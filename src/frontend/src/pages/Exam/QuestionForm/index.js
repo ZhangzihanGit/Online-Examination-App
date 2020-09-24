@@ -1,13 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Form, Input, Button, Select } from 'antd';
 import { MinusCircleOutlined, PlusSquareOutlined } from '@ant-design/icons';
 
 const { Option } = Select;
 
-const QuestionSelector = ({ field, questionCount }) => {
+const QuestionForm = ({ field }) => {
   const [questionType, setQuestionType] = useState(null);
-  // const [optionCount, setOptionCount] = useState(2);
-  // const [optionCountArr, setoptionCountArr] = useState([]);
 
   const onQuestionTypeChange = (value) => {
     if (value === "multipleChoice") {
@@ -16,13 +14,6 @@ const QuestionSelector = ({ field, questionCount }) => {
       setQuestionType("shortAnswer");
     }
   };
-  // console.log(field)
-  // console.log(questionCount)
-  // console.log(optionCount)
-
-  // useEffect(() => {
-  //   setoptionCountArr([...optionCountArr, optionCount])
-  // }, [optionCount]);
 
   return (
     <>
@@ -71,7 +62,6 @@ const QuestionSelector = ({ field, questionCount }) => {
           <Form.List
             {...field}
             key={`options${field.key}`}  // override key
-            name="options"
             name={[field.name, 'options']}
             fieldKey={[field.fieldKey, 'options']}
           >
@@ -130,10 +120,8 @@ const QuestionSelector = ({ field, questionCount }) => {
           </Form.List>
         </>
       )}
-
-
     </>
   )
 };
 
-export default QuestionSelector;
+export default QuestionForm;

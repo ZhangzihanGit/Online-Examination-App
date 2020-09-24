@@ -5,14 +5,14 @@ import { Layout, Menu, Avatar, Breadcrumb } from 'antd';
 import { UserOutlined, HomeOutlined, LogoutOutlined } from '@ant-design/icons';
 import SubjectList from '../SubjectList';
 import Subject from '../Subject';
-import AddExam from '../manageExam/addExam';
+// import AddExam from '../manageExam/addExam';
 // import Subject from '../TakeExam/subject';
 import { capitalizeFirstLetter } from '../../utils/helpers';
-import { logout } from '../../actions/user';
+// import { logout } from '../../actions/user';
 import { getSubjectList } from '../../actions/subject';
 import styles from './index.module.less';
 import UpdateExam from '../manageExam/updateExam';
-import CreateExam from '../Exam/CreateExam';
+import ExamForm from '../Exam/ExamForm';
 
 
 const { Header, Sider, Content } = Layout;
@@ -102,7 +102,7 @@ const Dashboard = ({ location }) => {
           </Breadcrumb>
           <div className={styles.content}>
             <Switch>
-              <Route path="/dashboard/subjects/:code/create-exam" component={CreateExam} />
+              <Route path="/dashboard/subjects/:code/create-exam" component={ExamForm} />
               <Route path="/dashboard/subjects/:code/edit-exam" component={UpdateExam} />
               <Route path="/dashboard/subjects/:code" component={Subject} />
               {menuList.map(({ key, content }) => {

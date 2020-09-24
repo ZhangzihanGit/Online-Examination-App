@@ -1,38 +1,53 @@
-import React, { useEffect, useState } from 'react';
-import { Form, Input, Button, Select, Row, Col, Divider, Space } from 'antd';
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { Form, Input, Button, Divider, Space, InputNumber } from 'antd';
 import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
-import CreateQuestion from '../CreateQuestion';
+import { createExam } from '../../../actions/subject';
+import QuestionForm from '../QuestionForm';
 import styles from './index.module.less';
-import QuestionSelector from '../QuestionSelector';
 
-const { Option } = Select;
-
-const formItemLayout = {
-  labelCol: {
-    sm: { span: 8 },
-  },
-  wrapperCol: {
-    sm: { span: 16 },
-  },
-};
-const formItemLayoutWithOutLabel = {
-  wrapperCol: {
-    xs: { span: 24, offset: 0 },
-    sm: { span: 20, offset: 4 },
-  },
-};
-
-const NewQuestionForm = () => {
+const ExamForm = () => {
+  const dispatch = useDispatch();
+  const { code } = useParams();
+  console.log(code);
+  const { identity } = useSelector(state => state.user);
   // const [questionCount, setQuestionCount] = useState(1);
   // const [questionCountArr, setquestionCountArr] = useState([]);
 
   const onFinish = values => {
     console.log('Received values of form:', values);
-  };
+    const transformedQuestions = [];
+    values.questions.forEach(({
+      questionType, questionDescription, questionMark,
+      options, option1, option2
+    }) => {
+      let newOptions = [];
+      if (options) {
+        options.forEach(option => newOptions = [...newOptions, ...Object.values(option)]);
+      }
+      if (option1 && option2) {
+        newOptions = [...newOptions, option1, option2];
+      }
+      transformedQuestions.push({
+        questionType,
+        description: questionDescription,
+        mark: questionMark,
+        options: newOptions,
+      });
+    });
 
-  // useEffect(() => {
-  //   setquestionCountArr([...questionCountArr, questionCount])
-  // }, [questionCount]);
+    console.log(transformedQuestions);
+    const data = {
+      ...values,
+      questions: transformedQuestions,
+      subjectId: code,
+      userId: identity.userId,
+      userType: identity.userType,
+    };
+    console.log(data);
+    // dispatch(createExam(data));
+  };
 
   return (
     <div className={styles.formContainer}>
@@ -88,7 +103,30 @@ const NewQuestionForm = () => {
                         <Input.TextArea autoSize placeholder="Question description..." />
                       </Form.Item>
 
-                      <QuestionSelector
+                      <Form.Item
+                        {...field}
+                        label="Mark"
+                        name={[field.name, 'questionMark']}
+                        fieldKey={[field.fieldKey, 'questionMark']}
+                        rules={[
+                          {
+                            required: true,
+                            message: "Please enter question mark",
+                          }, {
+                            type: "number",
+                            min: 1,
+                            max: 100,
+                            transform(value) {
+                              return Number(value);
+                            },
+                            message: "The mark must between 1 - 100"
+                          }
+                        ]}
+                      >
+                        <Input placeholder="Question mark..." />
+                      </Form.Item>
+
+                      <QuestionForm
                         key={field.key}
                         field={field}
                         questionCount={index + 1}
@@ -137,4 +175,4 @@ const NewQuestionForm = () => {
   )
 };
 
-export default NewQuestionForm;
+export default ExamForm;

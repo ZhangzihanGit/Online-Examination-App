@@ -32,3 +32,10 @@ export function getSubject(payload = {}, pathname) {
     }
   }
 };
+
+export function createExam(payload = {}) {
+  return async (dispatch) => {
+    const result = await api.createExam(payload);
+    console.log(result);
+  }
+}
