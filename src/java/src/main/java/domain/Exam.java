@@ -16,8 +16,9 @@ public class Exam {
     public Exam() {
 
     }
-    public Exam(int subjectId, List<Question> questions,String description) {
-        this.questions = questions;
+    public Exam(int subjectId, String description) {
+        System.out.println("Exam partial constructor");
+//        this.questions = questions;
         this.subjectId = subjectId;
         this.description = description;
 
@@ -29,6 +30,7 @@ public class Exam {
     }
 
     public Exam(Integer id, Integer subjectId, String description, List<Question> questions, boolean isPublished, String showName) {
+        System.out.println("Exam full constructor");
         this.description = description;
         this.questions = questions;
         this.id = id;
@@ -50,7 +52,6 @@ public class Exam {
 
     public void setId(Integer id) {
         this.id = id;
-        UnitOfWork.getInstance().registerDirtyObject(this);
     }
 
     public Integer getId() {
@@ -89,9 +90,12 @@ public class Exam {
         UnitOfWork.getInstance().registerDirtyObject(this);
     }
 
+
     public void setQuestions(List<Question> questions) {
         this.questions = questions;
-        UnitOfWork.getInstance().registerDirtyObject(this);
+        // Update questions should not update the exam itself, because exam doesn't
+        // have the reference of questions in DB.
+//        UnitOfWork.getInstance().registerDirtyObject(this);
     }
 
     public void deleteExam() {
@@ -99,6 +103,7 @@ public class Exam {
     }
 
     private void load() {
+        System.out.println("Exma is reloaded");
         Exam exam = ExamMapper.loadWithId(this.id);
         if (this.description == null) {
             this.description = exam.getDescription();

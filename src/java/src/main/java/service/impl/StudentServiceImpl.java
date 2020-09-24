@@ -15,6 +15,11 @@ import java.util.List;
 public class StudentServiceImpl implements StudentService {
     private static final Logger logger = LogManager.getLogger(StudentServiceImpl.class);
 
+    @Override
+    public Exam getExam(int examId) {
+        return null;
+    }
+
     /**
      * Update the answer given the subject ID, exam Id and questions ID.
      *

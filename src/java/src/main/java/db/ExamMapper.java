@@ -14,25 +14,11 @@ import java.util.List;
 
 public class ExamMapper {
     private static final Logger logger = LogManager.getLogger(ExamMapper.class);
-    public static Exam getExam(int userId, int subjectId) {
-        String sql = "SELECT e.description, e.subjectId FROM exam.exam as e INNER JOIN exam.subject AS s ON e.subjectId " +
-                "= s.id INNER JOIN exam.student_subject_relation AS n ON s.id = n.subjectId" +
-                " INNER JOIN exam.users as u ON u.id = n.studentId WHERE u.id=? and " +
-                "s.id = ?";
-        try {
-            PreparedStatement preparedStatement = DBConnection.prepare(sql);
-            preparedStatement.setInt(1,userId);
-            preparedStatement.setInt(2,subjectId);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                logger.info("Hello " + resultSet.getString("description") + resultSet.getString("subjectId"));
-            }
-        } catch (SQLException e) {
-            logger.error(e.toString());
-        }
 
-        return null;
+    public static void updateExam(Exam exam) {
+
     }
+
     public static void addExam(Exam exam) {
         String sql = "INSERT INTO exam.exam (show_name, subjectId, description,isPublished)" +
                 "VALUES (?,?,?,?) RETURNING id";
@@ -67,11 +53,14 @@ public class ExamMapper {
         try {
             preparedStatement = DBConnection.prepare(sql);
             preparedStatement.setInt(1,id);
-            IdentityMap<Exam> map = IdentityMap.getInstance(Exam.class);
-            exam = map.get(id);
-            if (exam == null) {
-                exam = ExamMapper.load(preparedStatement.executeQuery());
+//            IdentityMap<Exam> map = IdentityMap.getInstance(Exam.class);
+//            exam = map.get(id);
+//            if (exam == null) {
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                exam = ExamMapper.load(resultSet);
             }
+//            }
         } catch (SQLException e) {
             logger.error(e.getMessage());
         }

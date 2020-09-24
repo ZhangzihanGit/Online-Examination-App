@@ -21,7 +21,7 @@ public class QuestionMapper {
      */
     public static void  addQuestion(Question question) {
         String sql = "INSERT INTO exam.question (examid, question_type, " +
-                "description,mark, options) RETURNING id";
+                "description,mark, options) VALUES(?,?::questiontype,?,?,?) RETURNING id";
         int questionId = 0;
         int examId =question.getExamId();
         String description = question.getDescription();
@@ -30,8 +30,10 @@ public class QuestionMapper {
         QuestionType type = question.getQuestionType();
 
         try {
+            logger.info("Hello");
             PreparedStatement statement = DBConnection.prepare(sql);
             statement.setInt(1,examId);
+//            statement.set
             statement.setString(2,type.toString().toLowerCase());
             statement.setString(3,description);
             statement.setInt(4,mark);
@@ -74,7 +76,7 @@ public class QuestionMapper {
             int id = resultSet.getInt("id");
             String description = resultSet.getString("description");
             QuestionType questionType = QuestionType.valueOf(resultSet.
-                    getString("question_type"));
+                    getString("question_type").toUpperCase());
             // TODO: comma separated string. Current DB schema needs a fix on Options.
             String options = resultSet.getString("options");
             IdentityMap<Question> map = IdentityMap.getInstance(Question.class);
