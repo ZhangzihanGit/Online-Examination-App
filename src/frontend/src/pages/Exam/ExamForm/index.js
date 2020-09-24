@@ -5,6 +5,7 @@ import { Form, Input, Button, Divider, Space, InputNumber } from 'antd';
 import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import { createExam } from '../../../actions/subject';
 import QuestionForm from '../QuestionForm';
+import { findSubjectByCode } from '../../../utils/helpers';
 import styles from './index.module.less';
 
 const ExamForm = () => {
@@ -12,6 +13,7 @@ const ExamForm = () => {
   const { code } = useParams();
   console.log(code);
   const { identity } = useSelector(state => state.user);
+  const { subjectList } = useSelector(state => state.subject);
   // const [questionCount, setQuestionCount] = useState(1);
   // const [questionCountArr, setquestionCountArr] = useState([]);
 
@@ -37,11 +39,13 @@ const ExamForm = () => {
       });
     });
 
-    console.log(transformedQuestions);
+    // console.log(transformedQuestions);
+    // console.log(findSubjectByCode(subjectList, code));
+
     const data = {
       ...values,
       questions: transformedQuestions,
-      subjectId: code,
+      subjectId: findSubjectByCode(subjectList, code).id,
       userId: identity.userId,
       userType: identity.userType,
     };
