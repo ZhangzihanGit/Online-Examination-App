@@ -78,12 +78,8 @@ public class InstructorServiceImpl implements InstructorService {
      * @param examId    Exam Id
      */
     @Override
-    public void updateExam(HttpServletRequest request) throws IOException {
-        String requestData = request.getReader()
-                .lines().collect(Collectors.joining(System.lineSeparator()));
-        JSONObject jsonObject = new JSONObject(requestData);
-        int subjectId = jsonObject.getInt("subjectId");
-        int examId = jsonObject.getInt("examId");
+    public void updateExam(Exam exam) {
+        ExamMapper.updateExam(exam);
     }
 
     /**

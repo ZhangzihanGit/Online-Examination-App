@@ -98,11 +98,11 @@ public class SubjectMapper {
     private static Subject load(ResultSet resultSet) {
         Subject subject = new Subject();
         try {
-            IdentityMap<Subject> map = IdentityMap.getInstance(subject.getClass());
+//            IdentityMap<Subject> map = IdentityMap.getInstance(subject.getClass());
             Integer id = resultSet.getInt("id");
             System.out.println(id);
             // If not previously loaded, load from DB.
-            if (map.get(id) == null) {
+//            if (map.get(id) == null) {
                 String showName = resultSet.getString("show_name");
                 String description = resultSet.getString("description");
                 Integer instructorId = resultSet.getInt("instructorId");
@@ -115,7 +115,7 @@ public class SubjectMapper {
                 subject.setSubjectCode(showName);
                 subject.setDescription(description);
 //                map.put()
-            }
+//            }
         }catch (SQLException e) {
             logger.error(e.getMessage());
         }

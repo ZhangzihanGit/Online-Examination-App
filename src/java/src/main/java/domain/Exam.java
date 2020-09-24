@@ -38,7 +38,7 @@ public class Exam {
         this.subjectId = subjectId;
         this.showName = showName;
 
-        UnitOfWork.getInstance().registerNewObject(this);
+//        UnitOfWork.getInstance().registerNewObject(this);
     }
 
     public String getShowName() {
@@ -103,7 +103,7 @@ public class Exam {
     }
 
     private void load() {
-        System.out.println("Exma is reloaded");
+        System.out.println("Exam is reloaded");
         Exam exam = ExamMapper.loadWithId(this.id);
         if (this.description == null) {
             this.description = exam.getDescription();

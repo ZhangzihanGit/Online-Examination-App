@@ -86,7 +86,7 @@ public class UnitOfWork {
         newObjectList.clear();
         for ( int i=0; i<dirtyObjectList.size(); i++) {
             Object object = dirtyObjectList.get(i);
-            if (object instanceof  Exam) {
+            if (object instanceof Exam) {
                 ExamMapper.updateExam((Exam)object);
             }
         }

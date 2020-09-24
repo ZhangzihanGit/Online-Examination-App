@@ -45,7 +45,7 @@ public interface InstructorService extends UserService{
      * @param subjectId Subject Id
      * @param examId Exam Id
      */
-    public void updateExam(HttpServletRequest request) throws IOException;
+    public void updateExam(Exam exam);
 
     /**
      * Update the marks of the student.

@@ -79,12 +79,13 @@ public class QuestionMapper {
                     getString("question_type").toUpperCase());
             // TODO: comma separated string. Current DB schema needs a fix on Options.
             String options = resultSet.getString("options");
-            IdentityMap<Question> map = IdentityMap.getInstance(Question.class);
-
-            question = map.get(id);
-            if (question == null) {
+//            IdentityMap<Question> map = IdentityMap.getInstance(Question.class);
+//
+//            question = map.get(id);
+//            if (question == null) {
+                logger.info("create new questions, ");
                 question = new Question(id,description,options,questionType);
-            }
+//            }
 
         }catch (SQLException e) {
             logger.error(e.getMessage());

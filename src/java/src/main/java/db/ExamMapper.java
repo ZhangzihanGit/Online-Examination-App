@@ -53,14 +53,10 @@ public class ExamMapper {
         try {
             preparedStatement = DBConnection.prepare(sql);
             preparedStatement.setInt(1,id);
-//            IdentityMap<Exam> map = IdentityMap.getInstance(Exam.class);
-//            exam = map.get(id);
-//            if (exam == null) {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 exam = ExamMapper.load(resultSet);
             }
-//            }
         } catch (SQLException e) {
             logger.error(e.getMessage());
         }
@@ -126,7 +122,9 @@ public class ExamMapper {
             int id = resultSet.getInt("id");
             boolean isPublished = resultSet.getBoolean("ispublished");
             List<Question> questions = new ArrayList<>();
+            logger.info("Loading questions from Exam: ");
             questions = QuestionMapper.loadQuestionsFromExamId(id);
+
             exam = new Exam(id,subjectId,description,questions,isPublished,showName);
         } catch (SQLException e) {
             logger.error(e.getMessage());

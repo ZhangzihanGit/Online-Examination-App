@@ -51,7 +51,7 @@ public class Question {
         this.description = description;
         this.options = options;
 
-        UnitOfWork.getInstance().registerNewObject(this);
+//        UnitOfWork.getInstance().registerNewObject(this);
     }
 
     public void setMark(Integer mark) {
@@ -122,17 +122,22 @@ public class Question {
     }
 
     private void load() {
+        logger.info("Loading questions...");
         Question question = QuestionMapper.loadWithId(this.questionID);
         if (options == null ){
+            logger.info("Loading options");
             this.options = question.options;
         }
         if (questionType == null) {
+            logger.info("Loading type");
             this.questionType = question.questionType;
         }
         if (description == null) {
+            logger.info("loading description");
             this.description = question.description;
         }
         if (examId == null) {
+            logger.info("loading examid");
             this.examId = examId;
         }
 
