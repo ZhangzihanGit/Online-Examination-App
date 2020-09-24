@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { Form, Input, Button, Divider, Space, InputNumber } from 'antd';
+import { Form, Input, Button, Divider, Space, message } from 'antd';
 import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import { createExam } from '../../../actions/subject';
 import QuestionForm from '../QuestionForm';
@@ -14,11 +14,15 @@ const ExamForm = () => {
   console.log(code);
   const { identity } = useSelector(state => state.user);
   const { subjectList } = useSelector(state => state.subject);
-  // const [questionCount, setQuestionCount] = useState(1);
-  // const [questionCountArr, setquestionCountArr] = useState([]);
 
   const onFinish = values => {
     console.log('Received values of form:', values);
+
+    if (!values.questions || values.questions.length === 0) {
+      message.error('Please add at least one question!');
+      return;
+    }
+
     const transformedQuestions = [];
     values.questions.forEach(({
       questionType, questionDescription, questionMark,
@@ -38,9 +42,6 @@ const ExamForm = () => {
         options: newOptions,
       });
     });
-
-    // console.log(transformedQuestions);
-    // console.log(findSubjectByCode(subjectList, code));
 
     const data = {
       ...values,

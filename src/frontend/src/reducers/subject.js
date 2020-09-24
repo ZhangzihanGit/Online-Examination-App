@@ -21,6 +21,11 @@ export default function reducer(state = initState, action) {
         instructorList: action.payload.instructorList,
         studentList: action.payload.studentList,
       }
+    // case CREATE_EXAM:
+    //     return {
+    //       ...state,
+    //       examList
+    //     }
     default:
       return state;
   }

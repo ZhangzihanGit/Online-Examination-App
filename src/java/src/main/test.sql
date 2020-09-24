@@ -36,3 +36,6 @@ VALUES ('2020 Mid Semester Test 1', 1, true, true, 'This is exam description'),
        ('2020 Quiz 1', 2, true, true, 'This is exam description'),
        ('2020 Quiz 2', 2, false, false, 'This is exam description'),
        ('2020 Quiz 3', 2, true, true, 'This is exam description');
+
+
+-- ALTER TYPE questiontype ADD VALUE 'multiplechoice' BEFORE 'multiple_choice';
