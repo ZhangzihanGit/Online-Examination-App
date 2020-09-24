@@ -21,6 +21,13 @@ public class Subject {
     public Subject() {
     }
 
+    public Subject(String description ,String subjectCode, List<Exam> exams, List<Student> students) {
+        this.description = description;
+        this.subjectCode = subjectCode;
+        this.exams = exams;
+        this.students = students;
+    }
+
     public Subject(int id, String description, String subjectCode, List<Exam> exams, List<Student> students) {
         this.subjectCode = subjectCode;
         this.exams = exams;
@@ -28,7 +35,7 @@ public class Subject {
         this.id = id;
         this.description = description;
 
-        UnitOfWork.getInstance().registerNewObject(this);
+//        UnitOfWork.getInstance().registerNewObject(this);
     }
 
     public void setDescription(String description) {
@@ -45,7 +52,6 @@ public class Subject {
 
     public void setId(Integer id) {
         this.id = id;
-        UnitOfWork.getInstance().registerDirtyObject(this);
     }
 
     public String getSubjectCode() {

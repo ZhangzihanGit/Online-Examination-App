@@ -16,6 +16,10 @@ public class SubjectMapper {
         return null;
     }
 
+
+    public static void addSubject(int subjectId) {
+
+    }
     /**
      * Student loads subjects by id
      * @param userid
