@@ -17,8 +17,28 @@ public class SubjectMapper {
     }
 
 
-    public static void addSubject(int subjectId) {
-
+    public static void addSubject(Subject subject) {
+        String sql = "INSERT INTO exam.subject (show_name, description, instructorid) " +
+                " VALUES (?,?,?) RETURNING id";
+        String showName = subject.getSubjectCode();
+        String description = subject.getDescription();
+        int userid = subject.getAdminId();
+        PreparedStatement statement = DBConnection.prepare(sql);
+        int subjectId = 0;
+        try {
+            statement.setString(1,showName);
+            statement.setString(2,description);
+            statement.setInt(3,userid);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                subjectId = resultSet.getInt("id");
+            }
+            if (subjectId!=0) {
+                subject.setId(subjectId);
+            }
+        } catch (SQLException e) {
+            logger.error(e.getMessage());
+        }
     }
     /**
      * Student loads subjects by id

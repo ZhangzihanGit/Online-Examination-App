@@ -2,8 +2,10 @@ package util;
 
 import db.ExamMapper;
 import db.QuestionMapper;
+import db.SubjectMapper;
 import domain.Exam;
 import domain.Question;
+import domain.Subject;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -80,6 +82,10 @@ public class UnitOfWork {
             if (object instanceof Question) {
                 logger.info("New question is added");
                 QuestionMapper.addQuestion((Question) object);
+            }
+            if (object instanceof Subject) {
+                logger.info("New subject is added");
+                SubjectMapper.addSubject((Subject) object);
             }
         }
         // Don't forget to clear the new objects after commit.
