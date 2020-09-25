@@ -1,6 +1,7 @@
 import * as api from '../api/subject';
 import { push } from 'connected-react-router';
-import { GET_SUBJECT, GET_SUBJECT_LIST, GET_EXAM } from '../constants/actions';
+import { GET_SUBJECT, GET_SUBJECT_LIST, GET_EXAM, PUBLISH_EXAM } from '../constants/actions';
+import { message } from 'antd';
 
 export function getSubjectList(payload = {}) {
   return async (dispatch) => {
@@ -64,6 +65,25 @@ export function submitExam(payload = {}, pathname) {
     //   });
     //   dispatch(push(pathname));
     // }
+  }
+};
+
+export function publishExam(payload = {}) {
+  return async (dispatch) => {
+    console.log(payload)
+    const result = await api.publishExam(payload);
+    console.log(result);
+
+    // TODO: if publish exam successfully
+    if (result.status === 200) {
+      dispatch({
+        type: PUBLISH_EXAM,
+        payload: payload.examId,
+      });
+      message.success('Publish exam successfully');
+    } else {
+      message.success('Fail to publish exam');
+    }
   }
 };
 

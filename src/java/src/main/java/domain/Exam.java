@@ -10,6 +10,7 @@ public class Exam {
     private String description;
     private Integer id;
     private boolean isPublished=false;
+    private boolean isClosed=false;
     private List<Question> questions;
     private String showName;
 
@@ -29,12 +30,18 @@ public class Exam {
         return isPublished;
     }
 
-    public Exam(Integer id, Integer subjectId, String description, List<Question> questions, boolean isPublished, String showName) {
+    public boolean isClosed() {
+        return isClosed;
+    }
+
+    public Exam(Integer id, Integer subjectId, String description, List<Question> questions, boolean isPublished,
+                Boolean isClosed, String showName) {
         System.out.println("Exam full constructor");
         this.description = description;
         this.questions = questions;
         this.id = id;
         this.isPublished = isPublished;
+        this.isClosed = isClosed;
         this.subjectId = subjectId;
         this.showName = showName;
 
@@ -67,6 +74,16 @@ public class Exam {
 
     public void setSubjectId(Integer subjectId) {
         this.subjectId = subjectId;
+        UnitOfWork.getInstance().registerDirtyObject(this);
+    }
+
+    public void setPublished(Boolean published) {
+        this.isPublished = published;
+        UnitOfWork.getInstance().registerDirtyObject(this);
+    }
+
+    public void setClosed(Boolean closed) {
+        this.isClosed = closed;
         UnitOfWork.getInstance().registerDirtyObject(this);
     }
 

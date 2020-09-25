@@ -63,7 +63,7 @@ const Exam = () => {
 
   return (
     <div className={styles.examContainer}>
-      <Title level={4}>Exam Title</Title>
+      <Title level={4}>{exam ? exam.showName : `Exam Title`}</Title>
       <Divider type="horizontal" />
 
       <Pagination

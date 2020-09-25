@@ -5,9 +5,10 @@ import { List, Button } from 'antd';
 import {
   PlayCircleOutlined,
   SettingOutlined,
-  DeleteOutlined
+  DeleteOutlined,
+  StopOutlined
 } from '@ant-design/icons';
-import { getExam } from '../../../actions/subject';
+import { getExam, publishExam } from '../../../actions/subject';
 
 const ContentList = ({ list, isExam }) => {
   const dispatch = useDispatch();
@@ -30,7 +31,18 @@ const ContentList = ({ list, isExam }) => {
     console.log(item);
   }
 
+  const handleCloseExam = (item) => {
+    // TODO: send request
+    console.log('exam closed');
+    console.log(item);
+  }
+
   const handlePublishExam = (item) => {
+
+    dispatch(publishExam({
+      userId: identity.userId,
+      examId: item.examId,
+    }));
     console.log(item);
   }
 
@@ -38,7 +50,7 @@ const ContentList = ({ list, isExam }) => {
     console.log(item);
     dispatch(getExam({
       examId: item.examId,
-    }, `${pathname}/${item.examId}`));
+    }, `${pathname}/exam-${item.examId}`));
     // history.push(`/dashboard/subjects/${code}/${item.id}`);
   }
 
@@ -64,6 +76,15 @@ const ContentList = ({ list, isExam }) => {
               icon={<PlayCircleOutlined />}
             >
               {item.published ? "Publised" : "Publish"}
+            </Button>,
+            <Button
+              size="small"
+              type="ghost"
+              disabled={item.closed}
+              onClick={() => handleCloseExam(item)}
+              icon={<StopOutlined />}
+            >
+              {item.closed ? "Closed" : "Close"}
             </Button>,
             <Button
               size="small"

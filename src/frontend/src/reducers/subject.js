@@ -5,6 +5,7 @@ import {
   CREATE_EXAM,
   GET_EXAM,
   SAVE_ANSWER,
+  PUBLISH_EXAM
 } from '../constants/actions';
 
 const initState = {};
@@ -36,6 +37,19 @@ export default function reducer(state = initState, action) {
           ...oldExamList.slice(0, examIndex),
           updateExam,
           ...oldExamList.slice(examIndex + 1),
+        ]
+      }
+    case PUBLISH_EXAM:
+      console.log(action.payload);
+      const old = state.examList;
+      const index = old.findIndex(({ examId }) => examId === action.payload);
+      const newExam = { ...old[index], published: true };
+      return {
+        ...state,
+        examList: [
+          ...old.slice(0, index),
+          newExam,
+          ...old.slice(index + 1),
         ]
       }
     case SAVE_ANSWER:

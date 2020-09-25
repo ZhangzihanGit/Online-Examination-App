@@ -125,9 +125,10 @@ public class ExamMapper {
 
             int id = resultSet.getInt("id");
             boolean isPublished = resultSet.getBoolean("ispublished");
+            boolean isClosed = resultSet.getBoolean(("isclosed"));
             List<Question> questions = new ArrayList<>();
             questions = QuestionMapper.loadQuestionsFromExamId(id);
-            exam = new Exam(id,subjectId,description,questions,isPublished,showName);
+            exam = new Exam(id,subjectId,description,questions,isPublished,isClosed,showName);
         } catch (SQLException e) {
             logger.error(e.getMessage());
         }

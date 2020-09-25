@@ -50,6 +50,7 @@ public class GetSubjectServlet extends HttpServlet {
             d.put("description", e.getDescription());
             d.put("published", e.isPublished());
             d.put("subjectId", e.getSubjectId());
+            d.put("closed", e.isClosed());
             d.put("examId", e.getId());
             examArr.put(d);
         }

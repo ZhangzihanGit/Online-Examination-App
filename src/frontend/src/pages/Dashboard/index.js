@@ -106,7 +106,7 @@ const Dashboard = ({ location }) => {
               <Route path="/dashboard/subjects/:code/create-exam" component={ExamForm} />
               <Route path="/dashboard/subjects/:code/edit-exam" component={ExamForm} />
               <Route exact path="/dashboard/subjects/:code" component={Subject} />
-              <Route exact path="/dashboard/subjects/:code/:examId" component={Exam} />
+              <Route exact path="/dashboard/subjects/:code/exam-:examId" component={Exam} />
 
               {menuList.map(({ key, content }) => {
                 return (
