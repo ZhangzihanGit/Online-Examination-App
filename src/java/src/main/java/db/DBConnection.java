@@ -65,9 +65,9 @@ public class DBConnection {
 //                        "?sslmode=require";
 
                 // Used in local database
-                String dbURL = "jdbc:postgresql://localhost:5432/myDB";
+                String dbURL = "jdbc:postgresql://localhost:5433/postgres";
                 String username = "postgres";
-                String password = "123";
+                String password = "postgres";
 
                 logger.info(dbURL);
                 dbConnection = DriverManager.getConnection(dbURL,username,password);

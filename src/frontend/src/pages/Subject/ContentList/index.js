@@ -23,7 +23,7 @@ const ContentList = ({ list, isExam }) => {
 
   const handleEditExam = (item) => {
     console.log(item);
-    history.push(`/dashboard/subjects/${code}/edit-exam`);
+    history.push(`/dashboard/subjects/${code}/edit-exam/${item.examId}`);
   }
 
   const handleDeleteExam = (item) => {

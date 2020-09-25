@@ -44,10 +44,10 @@ export default class EachQuestion extends React.Component {
             <div>
                 <Box p={1}><Card>
                     <CardContent>
-                        <h1>{question.Qid}.{question.questionText.substring(0, 50)}......</h1>
+                        <h1>{question.questionID}.{question.description.substring(0, 50)}......</h1>
 
                         <div className="right_align">
-                            <IconButton color="secondary" onClick={() => this.props.handleDelete(question.Qid)} >
+                            <IconButton color="secondary" onClick={() => this.props.handleDelete(question.questionID)} >
                                 <DeleteIcon fontSize="small" />
                             </IconButton>
 

@@ -21,21 +21,21 @@ VALUES ('SWEN30006', 'Software Modelling and Design', 10),
        ('COMP30027', 'Machine Learning', 10);
 
 INSERT INTO exam.student_subject_relation (studentid, subjectid)
-VALUES (13, 1),
-       (14, 2),
-       (15, 3),
-       (17, 4),
-       (18, 5),
-       (13, 2),
-       (14, 3);
+VALUES (2, 4),
+       (2, 5),
+       (5, 5),
+       (7, 4),
+       (3, 5),
+       (3, 4),
+       (4, 5);
 
 INSERT INTO exam.exam (show_name, subjectid, ispublished, isclosed, description)
-VALUES ('2020 Mid Semester Test 1', 1, true, true, 'This is exam description'),
-       ('2020 Mid Semester Test 2', 1, true, false, 'This is exam description'),
-       ('2020 Final Exam', 1, false, false, 'This is exam description'),
-       ('2020 Quiz 1', 2, true, true, 'This is exam description'),
-       ('2020 Quiz 2', 2, false, false, 'This is exam description'),
-       ('2020 Quiz 3', 2, true, false, 'This is exam description');
+VALUES ('2020 Mid Semester Test 1', 4, true, true, 'This is exam description'),
+       ('2020 Mid Semester Test 2', 4, true, false, 'This is exam description'),
+       ('2020 Final Exam', 4, false, false, 'This is exam description'),
+       ('2020 Quiz 1', 5, true, true, 'This is exam description'),
+       ('2020 Quiz 2', 5, false, false, 'This is exam description'),
+       ('2020 Quiz 3', 5, true, false, 'This is exam description');
 
 INSERT INTO exam.exam (show_name, subjectid, ispublished, isclosed, description)
 VALUES ('2020 SWEN30006 Mid Semester Test 1', 4, true, true, 'This is exam description'),

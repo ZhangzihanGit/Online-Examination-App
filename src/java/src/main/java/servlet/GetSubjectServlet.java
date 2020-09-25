@@ -24,7 +24,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet(name = "GetSubjectServlet", urlPatterns = "/subject")
+@WebServlet("/subject")
+//@WebServlet(name = "GetSubjectServlet", urlPatterns = "/subject")
 public class GetSubjectServlet extends HttpServlet {
     private static final Logger logger = LogManager.getLogger(GetSubjectServlet.class);
 

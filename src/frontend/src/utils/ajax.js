@@ -9,6 +9,7 @@ const getAxiosInstance = (option) => {
 
 const makeGet = () => {
   return (url, option) => {
+    console.log(112, url)
     const instance = getAxiosInstance(option);
     return instance({
       url,

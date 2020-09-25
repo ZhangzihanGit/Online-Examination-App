@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(name = "AllSubjectsServlet", urlPatterns = "/all-subjects")
+@WebServlet("/all-subjects")
 public class GetAllSubjectsServlet extends HttpServlet {
     private final static Logger logger = LogManager.getLogger(GetAllSubjectsServlet.class);
 

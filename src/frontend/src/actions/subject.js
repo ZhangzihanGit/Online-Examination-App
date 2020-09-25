@@ -26,8 +26,9 @@ export function getSubjectList(payload = {}) {
 
 export function getSubject(payload = {}, pathname) {
   return async (dispatch) => {
+    console.log(222, payload);
     const result = await api.getSubject(payload);
-    console.log(result);
+    console.log(223, result);
 
     // TODO: if get subjects successfully
     if (true) {
@@ -44,7 +45,7 @@ export function getExam(payload = {}, pathname) {
   return async (dispatch) => {
     console.log(payload)
     const result = await api.getExam(payload);
-    console.log(result);
+    console.log(99999999999, result);
 
     // TODO: if get subjects successfully
     if (result.status === 200) {

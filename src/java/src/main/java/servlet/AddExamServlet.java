@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
  * Add a new exam, that consisting a list of questions. Questions are also imported
  * into the database.
  */
-@WebServlet(urlPatterns = "/add-exam")
+@WebServlet("/add-exam")
 public class AddExamServlet extends HttpServlet {
     private final static Logger logger = LogManager.getLogger(AddExamServlet.class);
 
