@@ -21,7 +21,8 @@ public class AddSubjectServlet extends HttpServlet {
         JSONObject jsonObject = new JSONObject(requestData);
         int adminId = jsonObject.getInt("userId");
         String showName = jsonObject.getString("showName");
-        String description = jsonObject.getString("HIS");
+        String description = jsonObject.getString("description");
 
+        // TODO: 创建完subject之后需要返回字段description, show_name, id用于前端显示
     }
 }

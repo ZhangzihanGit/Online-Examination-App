@@ -18,6 +18,10 @@ export const getSubject = (params) => {
   return ajax.get(`/subject`, { params });
 };
 
+export const createSubject = (params) => {
+  return ajax.get(`/add-subject`, { params });
+};
+
 export const deleteSubject = (params) => {
   return ajax.post(`/delete`, { data: params });
 };

@@ -14,7 +14,6 @@ const ExamForm = () => {
   const dispatch = useDispatch();
   const { code } = useParams();
   console.log(code);
-  const { identity } = useSelector(state => state.user);
   const { subjectList } = useSelector(state => state.subject);
 
   const onFinish = values => {

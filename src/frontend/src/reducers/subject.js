@@ -7,7 +7,8 @@ import {
   SAVE_ANSWER,
   PUBLISH_EXAM,
   CLOSE_EXAM,
-  DELETE_EXAM
+  DELETE_EXAM,
+  CREATE_SUBJECT
 } from '../constants/actions';
 
 const initState = {};
@@ -21,6 +22,11 @@ export default function reducer(state = initState, action) {
       return {
         ...state,
         subjectList: action.payload.subjectList,
+      }
+    case CREATE_SUBJECT:
+      return {
+        ...state,
+        subjectList: [action.payload, ...state.subjectList],
       }
     case GET_SUBJECT:
       return {

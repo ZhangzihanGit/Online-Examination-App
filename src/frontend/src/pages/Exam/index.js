@@ -50,14 +50,14 @@ const Exam = () => {
         userId: identity.userId,
         examId,
         questions: studentAnswer,
-      }));
+      }, `/dashboard/subjects/${code}`));
     } else {
       const defaultAnswer = generateDefaultSubmission(exam.questions);
       dispatch(submitExam({
         userId: identity.userId,
         examId,
         questions: defaultAnswer,
-      }))
+      }, `/dashboard/subjects/${code}`))
     }
   };
 

@@ -7,6 +7,7 @@ import {
   PUBLISH_EXAM,
   CLOSE_EXAM,
   DELETE_EXAM,
+  CREATE_SUBJECT,
 } from '../constants/actions';
 import { message } from 'antd';
 
@@ -39,6 +40,24 @@ export function getSubject(payload = {}, pathname) {
   }
 };
 
+export function createSubject(payload = {}, pathname) {
+  return async (dispatch) => {
+    const result = await api.createSubject(payload);
+    console.log(result);
+
+    if (result.status === 200) {
+      dispatch({
+        type: CREATE_SUBJECT,
+        payload: result.data,
+      });
+      message.success('Create subject successfully');
+      dispatch(push(pathname));
+    } else {
+      message.error('Fail to create subject');
+    }
+  }
+};
+
 export function getExam(payload = {}, pathname) {
   return async (dispatch) => {
     const result = await api.getExam(payload);
@@ -60,12 +79,16 @@ export function submitExam(payload = {}, pathname) {
     console.log(result);
 
     if (result.status === 200) {
-      dispatch({
-        type: GET_EXAM,
-        payload: result.data,
-      });
-      //TODO: after submission, goes back to exam page
-      // dispatch(push(pathname));
+      // TODO: current submit exam does not need to update store
+      // dispatch({
+      //   type: GET_EXAM,
+      //   payload: result.data,
+      // });
+      message.success('Submit exam successfully');
+      // goes back to exam page
+      dispatch(push(pathname));
+    } else {
+      message.error('Fail to submit exam');
     }
   }
 };
@@ -82,7 +105,7 @@ export function publishExam(payload = {}) {
       });
       message.success('Publish exam successfully');
     } else {
-      message.success('Fail to publish exam');
+      message.error('Fail to publish exam');
     }
   }
 };
@@ -99,7 +122,7 @@ export function closeExam(payload = {}) {
       });
       message.success('Close exam successfully');
     } else {
-      message.success('Fail to close exam');
+      message.error('Fail to close exam');
     }
   }
 };
@@ -123,7 +146,7 @@ export function deleteExam(payload = {}) {
       });
       message.success('Delete exam successfully');
     } else {
-      message.success('Fail to delete exam');
+      message.error('Fail to delete exam');
     }
   }
 };

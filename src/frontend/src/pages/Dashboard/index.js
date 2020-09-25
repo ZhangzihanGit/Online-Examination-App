@@ -14,6 +14,7 @@ import styles from './index.module.less';
 import UpdateExam from '../manageExam/updateExam';
 import ExamForm from '../Exam/ExamForm';
 import Exam from '../Exam';
+import SubjectForm from '../Subject/SubjectForm';
 
 
 const { Header, Sider, Content } = Layout;
@@ -103,10 +104,12 @@ const Dashboard = ({ location }) => {
           </Breadcrumb>
           <div className={styles.content}>
             <Switch>
+              <Route exact path="/dashboard/subjects/create-subject" component={SubjectForm} />
               <Route path="/dashboard/subjects/:code/create-exam" component={ExamForm} />
               <Route path="/dashboard/subjects/:code/edit-exam" component={ExamForm} />
               <Route exact path="/dashboard/subjects/:code" component={Subject} />
               <Route exact path="/dashboard/subjects/:code/exam-:examId" component={Exam} />
+
 
               {menuList.map(({ key, content }) => {
                 return (
