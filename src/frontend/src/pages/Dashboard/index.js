@@ -8,7 +8,7 @@ import Subject from '../Subject';
 // import AddExam from '../manageExam/addExam';
 // import Subject from '../TakeExam/subject';
 import { capitalizeFirstLetter } from '../../utils/helpers';
-// import { logout } from '../../actions/user';
+import { logout } from '../../actions/user';
 import { getSubjectList } from '../../actions/subject';
 import styles from './index.module.less';
 import UpdateExam from '../manageExam/updateExam';
@@ -62,7 +62,7 @@ const Dashboard = ({ location }) => {
   };
 
   const handleLogout = () => {
-    // dispatch(logout());
+    dispatch(logout());
   }
 
   return (
