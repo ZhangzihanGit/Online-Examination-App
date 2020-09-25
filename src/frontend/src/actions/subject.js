@@ -8,7 +8,8 @@ import {
   CLOSE_EXAM,
   DELETE_EXAM,
   CREATE_SUBJECT,
-  CREATE_EXAM
+  CREATE_EXAM,
+  UPDATE_EXAM
 } from '../constants/actions';
 import { message } from 'antd';
 
@@ -16,11 +17,13 @@ export function getSubjectList(payload = {}) {
   return async (dispatch) => {
     const result = await api.getSubjectList(payload);
 
-    if (true) {
+    if (result.status === 200) {
       dispatch({
         type: GET_SUBJECT_LIST,
         payload: result.data,
       });
+    } else {
+      message.error('Fail to fetch subject list');
     }
   }
 };
@@ -29,12 +32,14 @@ export function getSubject(payload = {}, pathname) {
   return async (dispatch) => {
     const result = await api.getSubject(payload);
 
-    if (true) {
+    if (result.status === 200) {
       dispatch({
         type: GET_SUBJECT,
         payload: result.data,
       });
       dispatch(push(pathname));
+    } else {
+      message.error('Fail to fetch subject');
     }
   }
 };
@@ -66,6 +71,9 @@ export function getExam(payload = {}, pathname) {
         payload: result.data,
       });
       dispatch(push(pathname));
+      message.success('Fetching exam successfully');
+    } else {
+      message.error('Fail to fetch exam');
     }
   }
 };
@@ -75,16 +83,33 @@ export function submitExam(payload = {}, pathname) {
     const result = await api.submitExam(payload);
 
     if (result.status === 200) {
-      // TODO: current submit exam does not need to update store
-      // dispatch({
-      //   type: GET_EXAM,
-      //   payload: result.data,
-      // });
+      // submit exam does not need to update store
       message.success('Submit exam successfully');
       // goes back to exam page
       dispatch(push(pathname));
     } else {
       message.error('Fail to submit exam');
+    }
+  }
+};
+
+export function updateExam(payload = {}, pathname) {
+  return async (dispatch) => {
+    const result = await api.updateExam(payload);
+    console.log(payload)
+
+    //TODO: result should contain exam info
+
+    if (result.status === 200) {
+      dispatch({
+        type: UPDATE_EXAM,
+        payload: result.data,
+      });
+      message.success('Update exam successfully');
+      // goes back to exam page
+      dispatch(push(pathname));
+    } else {
+      message.error('Fail to update exam');
     }
   }
 };

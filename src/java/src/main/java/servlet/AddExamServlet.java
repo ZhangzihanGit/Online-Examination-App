@@ -32,8 +32,8 @@ public class AddExamServlet extends HttpServlet {
                 collect(Collectors.joining(System.lineSeparator()));
         JSONObject jsonObject = new JSONObject(requestData);
         int subjectId = Integer.parseInt(jsonObject.get("subjectId").toString());
-        String showName = jsonObject.get("title").toString();
-        String examDescription = jsonObject.get("examDescription").toString();
+        String showName = jsonObject.get("showName").toString();
+        String examDescription = jsonObject.get("description").toString();
         JSONArray jsonArray= jsonObject.getJSONArray("questions");
 
         logger.info(showName);

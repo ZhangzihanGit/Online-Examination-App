@@ -106,7 +106,7 @@ const Dashboard = ({ location }) => {
             <Switch>
               <Route exact path="/dashboard/subjects/create-subject" component={SubjectForm} />
               <Route path="/dashboard/subjects/:code/create-exam" component={ExamForm} />
-              <Route path="/dashboard/subjects/:code/edit-exam" component={ExamForm} />
+              <Route exact path="/dashboard/subjects/:code/edit-exam-:examId" component={ExamForm} />
               <Route exact path="/dashboard/subjects/:code" component={Subject} />
               <Route exact path="/dashboard/subjects/:code/exam-:examId" component={Exam} />
 

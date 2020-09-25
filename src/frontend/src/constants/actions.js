@@ -13,5 +13,6 @@ export const GET_EXAM = 'subject/GET_EXAM';
 export const PUBLISH_EXAM = 'subject/PUBLISH_EXAM';
 export const CLOSE_EXAM = 'subject/CLOSE_EXAM';
 export const DELETE_EXAM = 'subject/DELETE_EXAM';
+export const UPDATE_EXAM = 'subject/UPDATE_EXAM';
 
 export const SAVE_ANSWER = 'subject/SAVE_ANSWER';

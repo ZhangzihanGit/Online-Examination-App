@@ -34,6 +34,10 @@ export const createExam = (params) => {
   return ajax.post(`/add-exam`, { data: params });
 };
 
+export const updateExam = (params) => {
+  return ajax.post(`/update-exam`, { data: params });
+};
+
 export const deleteExam = (params) => {
   return ajax.post(`/delete-exam`, { data: params });
 };

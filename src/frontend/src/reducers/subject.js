@@ -8,7 +8,8 @@ import {
   PUBLISH_EXAM,
   CLOSE_EXAM,
   DELETE_EXAM,
-  CREATE_SUBJECT
+  CREATE_SUBJECT,
+  UPDATE_EXAM
 } from '../constants/actions';
 
 const initState = {};
@@ -84,6 +85,19 @@ export default function reducer(state = initState, action) {
       return {
         ...state,
         examList: [action.payload, ...state.examList],
+      }
+    case UPDATE_EXAM:
+      console.log(state.examList)
+      newList = state.examList.map(exam => {
+        if (exam.examId === action.payload.examId) {
+          console.log(action.payload)
+          return { ...exam, ...action.payload };
+        }
+        return exam;
+      });
+      return {
+        ...state,
+        examList: newList,
       }
     default:
       return state;

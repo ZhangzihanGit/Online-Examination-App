@@ -27,7 +27,10 @@ const ContentList = ({ list, isExam }) => {
   const isStudent = identity && identity.userType === "student";
 
   const handleEditExam = (item) => {
-    history.push(`/dashboard/subjects/${code}/edit-exam`);
+    // when click edith exam, first get the exam
+    dispatch(getExam({
+      examId: item.examId,
+    }, `${pathname}/edit-exam-${item.examId}`));
   }
 
   const handleDeleteExam = (item) => {
@@ -57,7 +60,6 @@ const ContentList = ({ list, isExam }) => {
     dispatch(getExam({
       examId: item.examId,
     }, `${pathname}/exam-${item.examId}`));
-    // history.push(`/dashboard/subjects/${code}/${item.id}`);
   }
 
   useEffect(() => {
