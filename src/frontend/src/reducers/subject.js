@@ -7,6 +7,7 @@ import {
   SAVE_ANSWER,
   PUBLISH_EXAM,
   CLOSE_EXAM,
+  DELETE_EXAM
 } from '../constants/actions';
 
 const initState = {};
@@ -62,6 +63,11 @@ export default function reducer(state = initState, action) {
       return {
         ...state,
         examList: newList,
+      };
+    case DELETE_EXAM:
+      return {
+        ...state,
+        examList: state.examList.filter(exam => exam.examId !== action.payload.examId),
       }
     case SAVE_ANSWER:
       return {

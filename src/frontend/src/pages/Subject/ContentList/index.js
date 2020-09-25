@@ -8,7 +8,12 @@ import {
   DeleteOutlined,
   StopOutlined
 } from '@ant-design/icons';
-import { getExam, publishExam, closeExam } from '../../../actions/subject';
+import {
+  getExam,
+  publishExam,
+  closeExam,
+  deleteExam
+} from '../../../actions/subject';
 
 const ContentList = ({ list, isExam }) => {
   const dispatch = useDispatch();
@@ -22,19 +27,19 @@ const ContentList = ({ list, isExam }) => {
   const isStudent = identity && identity.userType === "student";
 
   const handleEditExam = (item) => {
-    console.log(item);
     history.push(`/dashboard/subjects/${code}/edit-exam`);
   }
 
   const handleDeleteExam = (item) => {
-    // TODO: send request
     console.log(item);
+    dispatch(deleteExam({
+      userId: identity.userId,
+      examId: item.examId,
+      subjectId: item.subjectId,
+    }));
   }
 
   const handleCloseExam = (item) => {
-    // TODO: send request
-    console.log('exam closed');
-    console.log(item);
     dispatch(closeExam({
       userId: identity.userId,
       examId: item.examId,
