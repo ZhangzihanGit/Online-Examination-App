@@ -75,7 +75,7 @@ export default class AddExam extends React.Component {
 
         formObject.Qid = this.state.Qid;
 
-        if (formObject.questionType === "MCQ") {
+        if (formObject.questionType === "multiplechoice") {
             selectionOptions = formObject.selectionOptions.split("///");
             formObject.selectionOptions = selectionOptions
         }
@@ -138,16 +138,16 @@ export default class AddExam extends React.Component {
                                     required
                                     labelId="demo-simple-select-label"
                                     id="demo-simple-select"
-                                    defaultValue="MCQ"
+                                    defaultValue="multiplechoice"
                                     name="questionType"
                                     onChange={this.handleSelect}
                                 >
-                                    <MenuItem value={'MCQ'}>Multiple Choice</MenuItem>
+                                    <MenuItem value={'multiplechoice'}>Multiple Choice</MenuItem>
                                     <MenuItem value={'shortAnswer'}>Short Answer</MenuItem>
                                 </Select>
                             </FormControl>
 
-                            {questionType === 'MCQ' ? (
+                            {questionType === 'multiplechoice' ? (
                                 <div>
                                     <DialogContentText >Enter selection options below, separate each option by "///"</DialogContentText>
                                     <TextField

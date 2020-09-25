@@ -35,7 +35,7 @@ public class Exam {
     }
 
     public Exam(Integer id, Integer subjectId, String description, List<Question> questions, boolean isPublished,
-                Boolean isClosed, String showName) {
+                String showName) {
         System.out.println("Exam full constructor");
         this.description = description;
         this.questions = questions;

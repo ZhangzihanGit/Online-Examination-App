@@ -21,8 +21,6 @@ import {
     // InputLabel
 } from '@material-ui/core';
 
-import { getSubject } from "../../api/subject";
-
 
 // export default class UpdateExam extends React.Component {
 export default function UpdateExam() {
@@ -32,76 +30,70 @@ export default function UpdateExam() {
     const { examList } = useSelector(state => state.subject);
     const { examId } = useParams();
 
+    const [currentExam, setCurrentExam] = useState(null);
+    const [updatedQuestions, setUpdatedQuestions] = useState({});
+
 
 
 
 
 
     const handleSubmit = async () => {
-        alert("Exam updated, message POST:");
-        alert(JSON.stringify(this.state.updatedQuestions));
-        window.location.reload();
+        let questions = [];
+        let dataOut = {}
+        const changedQuestions = Object.values(updatedQuestions);
+        changedQuestions.forEach((value, key) => { questions.push(value) });
+
+        dataOut["subjectId"] = currentExam.subjectId;
+        dataOut["examId"] = currentExam.examId;
+        dataOut["questions"] = questions;
+
+
+        alert("Request POST:");
+        alert(JSON.stringify(dataOut));
+        api.updateExam(dataOut);
     }
 
     const handleSave = async (newQuestion) => {
-        let updatedQuestions = this.state.updatedQuestions;
-        updatedQuestions[newQuestion.Qid] = newQuestion;
-        this.setState({
-            updatedQuestions: updatedQuestions
-        });
-        alert("Change applied. Don't forget to click UPDATE EXAM after apllying all changes");
+
+        updatedQuestions[newQuestion.questionId] = newQuestion;
+        setUpdatedQuestions(updatedQuestions);
+
     }
 
 
     const handleDelete = async (Qid) => {
-        let updatedQuestions = this.state.updatedQuestions;
-        let exam = this.state.exam;
-        let qIndex = 0;
-        let qLocation = 0;
-        exam.questions.forEach(question => {
-            if (question.Qid === Qid) {
-                qLocation = qIndex;
-            }
-            qIndex += 1;
-        });
+        alert("API not ready yet")
+        // let updatedQuestions = this.state.updatedQuestions;
+        // let exam = this.state.exam;
+        // let qIndex = 0;
+        // let qLocation = 0;
+        // exam.questions.forEach(question => {
+        //     if (question.Qid === Qid) {
+        //         qLocation = qIndex;
+        //     }
+        //     qIndex += 1;
+        // });
 
-        exam.questions.splice(qLocation, 1);
+        // exam.questions.splice(qLocation, 1);
 
-        updatedQuestions[Qid] = "DELETED";
-        await this.setState({
-            updatedQuestions: updatedQuestions,
-            exam: exam,
-            isLoaded: false
-        });
+        // updatedQuestions[Qid] = "DELETED";
+        // await this.setState({
+        //     updatedQuestions: updatedQuestions,
+        //     exam: exam,
+        //     isLoaded: false
+        // });
 
-        this.setState({
-            isLoaded: true
-        });
+        // this.setState({
+        //     isLoaded: true
+        // });
     }
 
 
-    // useEffect(async () => {
-    //     const result = await api.getExam({ "examId": examId });
-    //     console.log(77777777777, result.data);
-    // });
-
-
-    const getExam = async () => {
-        const result = await api.getExam({ "examId": examId });
-        console.log(8888888888, result.data);
-        return result.data;
-    }
-
-    const [currentExam, setCurrentExam] = useState(null);
     useEffect(() => {
-
-
         async function fetchData() {
-            // You can await here
             const result = await api.getExam({ "examId": examId });
-            console.log(77777777777, result.data);
             setCurrentExam(result.data);
-            // ...
         }
         fetchData();
     }, []);
@@ -109,15 +101,10 @@ export default function UpdateExam() {
 
 
     if (currentExam === null) {
-        console.log(778, currentExam)
         return (
             <div>Loading...</div>
         );
     } else {
-        console.log(779, currentExam)
-        // return (
-        //     <div>Loading2...</div>
-        // );
         return (
             <div>
                 <h2>Exam ID: {currentExam.examId}</h2>

@@ -3,16 +3,19 @@ import React from 'react';
 
 import {
     Button,
+    Select,
     // DialogTitle,
     DialogContent,
     TextField,
     DialogContentText,
     MenuItem,
-    Select,
     FormControl,
     InputLabel
 } from '@material-ui/core';
 import SaveIcon from '@material-ui/icons/Save';
+// import { Form, Input, Button, Select } from 'antd';
+import { MinusCircleOutlined, PlusSquareOutlined } from '@ant-design/icons';
+
 
 
 export default class UpdatingQuestion extends React.Component {
@@ -40,10 +43,13 @@ export default class UpdatingQuestion extends React.Component {
         const dataForm = new FormData(event.target);
         var formObject = {};
         dataForm.forEach((value, key) => { formObject[key] = value; });
-        formObject.Qid = this.state.question.Qid;
-
+        formObject.questionId = this.state.question.questionID;
+        if (formObject.questionType === "shortAnswer") {
+            formObject.options = []
+        } else {
+            formObject.options = formObject.options.split("///");
+        }
         this.props.handleSave(formObject);
-
     }
 
 
@@ -61,10 +67,10 @@ export default class UpdatingQuestion extends React.Component {
                         <TextField
                             multiline
                             fullWidth
-                            name="questionText"
+                            name="description"
                             required
                             rows={5}
-                            defaultValue={question.questionText}
+                            defaultValue={question.description}
                             label="New Question Description"
                             variant="outlined"
                         />
@@ -88,19 +94,19 @@ export default class UpdatingQuestion extends React.Component {
                                 defaultValue={question.questionType}
                                 onChange={this.handleSelect}
                             >
-                                <MenuItem value={'MCQ'}>Multiple Choice</MenuItem>
+                                <MenuItem value={'multiplechoice'}>Multiple Choice</MenuItem>
                                 <MenuItem value={'shortAnswer'}>Short Answer</MenuItem>
                             </Select>
                         </FormControl>
 
-                        {questionType === 'MCQ' ? (
+                        {questionType === 'multiplechoice' ? (
                             <div>
                                 <DialogContentText >Enter selection options below, separate each option by "///"</DialogContentText>
                                 <TextField
                                     multiline
                                     fullWidth
-                                    name="selectionOptions"
-                                    defaultValue={question.selectionOptions}
+                                    name="options"
+                                    defaultValue={question.options}
                                     required
                                     rows={5}
                                     label="Selection Options"
@@ -108,6 +114,7 @@ export default class UpdatingQuestion extends React.Component {
                                 />
                             </div>
                         ) : null}
+
 
                     </DialogContent>
                     <div className="center_align">

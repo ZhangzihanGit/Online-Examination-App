@@ -63,7 +63,7 @@ export default class QuestionType extends React.Component {
     render() {
         const { item, selected } = this.state;
 
-        if (item.questionType == "MCQ") {
+        if (item.questionType == "multiplechoice") {
             return (
                 <div className="questionContainer">
                     <div className="composite-scale-container">
