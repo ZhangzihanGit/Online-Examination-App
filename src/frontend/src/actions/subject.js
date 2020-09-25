@@ -80,7 +80,7 @@ export function publishExam(payload = {}) {
     const result = await api.publishExam(payload);
     console.log(result);
 
-    // TODO: if publish exam successfully
+    // if publish exam successfully
     if (result.status === 200) {
       dispatch({
         type: PUBLISH_EXAM,

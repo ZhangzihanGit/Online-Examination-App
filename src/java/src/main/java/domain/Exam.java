@@ -17,9 +17,10 @@ public class Exam {
     public Exam() {
 
     }
-    public Exam(int subjectId, String description) {
+    public Exam(int subjectId, String showName, String description) {
         System.out.println("Exam partial constructor");
 //        this.questions = questions;
+        this.showName = showName;
         this.subjectId = subjectId;
         this.description = description;
 

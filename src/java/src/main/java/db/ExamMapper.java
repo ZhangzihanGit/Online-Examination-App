@@ -94,17 +94,18 @@ public class ExamMapper {
      * @param exam
      */
     public static void addExam(Exam exam) {
-        String sql = "INSERT INTO exam.exam (show_name, subjectId, description,isPublished)" +
-                "VALUES (?,?,?,?) RETURNING id";
+        String sql = "INSERT INTO exam.exam (show_name, subjectId, description,isPublished,isClosed)" +
+                "VALUES (?,?,?,?,?) RETURNING id";
         PreparedStatement statement = null;
         int examId=0;
         try {
             statement = DBConnection.prepare(sql);
             // TODO： 这个字段是否需要不确定，现在写死了是因为db schema要求该字段not null
-            statement.setString(1, "exam");
+            statement.setString(1, exam.getShowName());
             statement.setInt(2,exam.getSubjectId());
             statement.setString(3,exam.getDescription());
             statement.setBoolean(4,false);
+            statement.setBoolean(5,false);
 
             ResultSet resultSet = statement.executeQuery();
             while(resultSet.next()) {
