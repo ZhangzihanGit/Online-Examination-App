@@ -27,7 +27,10 @@ public class InstructorServiceImpl implements InstructorService {
      */
     @Override
     public void deleteExam(int subjectId, int examId) {
-
+        Exam exam = ExamMapper.loadWithId(examId);
+        Subject subject = SubjectMapper.loadSubject(subjectId);
+        exam.deleteExam();
+        UnitOfWork.getInstance().commit();
     }
 
     /**

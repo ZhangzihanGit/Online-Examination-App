@@ -16,6 +16,27 @@ public class ExamMapper {
     private static final Logger logger = LogManager.getLogger(ExamMapper.class);
 
     /**
+     * Delete the exam given the exam object, also delete the related list of questions.
+     * @param exam
+     */
+    public static void deleteExam(Exam exam) {
+        String sql = "DELETE FROM exam.exam " +
+                " WHERE id = ?";
+        int id = exam.getId();
+        List<Question> questions = exam.getQuestions();
+        for (Question q: questions) {
+            QuestionMapper.deleteQuestion(q);
+        }
+        PreparedStatement statement = null;
+        try {
+            statement = DBConnection.prepare(sql);
+            statement.setInt(1,id);
+            ResultSet resultSet = statement.executeQuery();
+        } catch (SQLException e) {
+            logger.error(e.getMessage());
+        }
+    }
+    /**
      * close the exam. Performed by the instructor.
      * @param exam
      */
@@ -87,6 +108,24 @@ public class ExamMapper {
         } catch (SQLException e) {
             logger.info(e.getMessage());
         }
+    }
+
+    public static List<Exam> loadExamListWithSubject(int subjectId) {
+        List<Exam> exams= new ArrayList<>();
+        String sql = "SELECT * FROM exam.exam as e INNER JOIN exam.subject as s " +
+                " ON e.subjectId = s.id WHERE s.id= ?";
+        PreparedStatement statement = null;
+        try {
+            statement = DBConnection.prepare(sql);
+            statement.setInt(1,subjectId);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                exams.add(load(resultSet));
+            }
+        } catch (SQLException e) {
+            logger.error(e.getMessage());
+        }
+        return exams;
     }
 
     /**

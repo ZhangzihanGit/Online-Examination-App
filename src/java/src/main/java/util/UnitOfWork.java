@@ -100,6 +100,7 @@ public class UnitOfWork {
             Object object = deletedObjectList.get(i);
             if (object instanceof Exam) {
                 logger.info("exam object is deleted with id: " + ((Exam) object).getId());
+                ExamMapper.deleteExam((Exam) object);
             }
             if (object instanceof Question) {
                 logger.info("question object is deleted with id: " + ((Question) object).getQuestionID());
