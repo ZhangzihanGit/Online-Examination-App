@@ -9,7 +9,8 @@ import {
   CLOSE_EXAM,
   DELETE_EXAM,
   CREATE_SUBJECT,
-  UPDATE_EXAM
+  UPDATE_EXAM,
+  SAVE_MARK,
 } from '../constants/actions';
 
 const initState = {};
@@ -87,7 +88,6 @@ export default function reducer(state = initState, action) {
         examList: [action.payload, ...state.examList],
       }
     case UPDATE_EXAM:
-      console.log(state.examList)
       newList = state.examList.map(exam => {
         if (exam.examId === action.payload.examId) {
           console.log(action.payload)
@@ -98,6 +98,31 @@ export default function reducer(state = initState, action) {
       return {
         ...state,
         examList: newList,
+      }
+    case SAVE_MARK:
+      // if the state does not have submissions, then create one
+      if (state.submissions) {
+        const found = state.submissions.find(s => s.submissionId === action.payload.submissionId);
+        if (found) {
+          // if the submission already exist, then update the value
+          newList = state.submissions.map(s => {
+            if (s.submissionId === action.payload.submissionId) {
+              console.log(action.payload)
+              console.log({ ...s, ...action.payload })
+              return { ...s, ...action.payload };
+            }
+            return s;
+          });
+        } else {
+          // otherwise just concatenate it
+          newList = [...state.submissions, action.payload];
+        }
+      } else {
+        newList = [action.payload];
+      }
+      return {
+        ...state,
+        submissions: newList,
       }
     default:
       return state;

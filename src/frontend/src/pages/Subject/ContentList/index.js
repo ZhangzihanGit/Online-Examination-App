@@ -1,25 +1,24 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { List, Button } from 'antd';
 import {
   PlayCircleOutlined,
-  SettingOutlined,
+  EditOutlined,
   DeleteOutlined,
-  StopOutlined
+  StopOutlined,
+  CheckOutlined
 } from '@ant-design/icons';
 import {
   getExam,
   publishExam,
   closeExam,
-  deleteExam
+  deleteExam,
+  getSubmissions
 } from '../../../actions/subject';
 
 const ContentList = ({ list, isExam }) => {
   const dispatch = useDispatch();
   const { identity } = useSelector(state => state.user);
-  const { code } = useParams();
-  const history = useHistory();
   const { pathname } = useSelector(state => state.router.location);
   // const { examList } = useSelector(state => state.subject);
   const [publisedList, setPublisedList] = useState([]);
@@ -62,6 +61,13 @@ const ContentList = ({ list, isExam }) => {
     }, `${pathname}/exam-${item.examId}`));
   }
 
+  const handleMarkExam = (item) => {
+    dispatch(getSubmissions({
+      examId: item.examId,
+      subjectId: item.subjectId
+    }, `${pathname}/mark-exam-${item.examId}`));
+  }
+
   useEffect(() => {
     if (list) {
       const filteredList = list.filter(exam => exam.published);
@@ -97,8 +103,16 @@ const ContentList = ({ list, isExam }) => {
             <Button
               size="small"
               type="ghost"
+              onClick={() => handleMarkExam(item)}
+              icon={<CheckOutlined />}
+            >
+              Mark
+          </Button>,
+            <Button
+              size="small"
+              type="ghost"
               onClick={() => handleEditExam(item)}
-              icon={<SettingOutlined />}
+              icon={<EditOutlined />}
             >
               Edit
             </Button>,

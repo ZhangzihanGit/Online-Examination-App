@@ -43,7 +43,6 @@ const Exam = () => {
   }
 
   const handleExamSubmit = () => {
-    console.log('exam submitted');
     if (studentAnswer) {
       console.log(studentAnswer);
       dispatch(submitExam({

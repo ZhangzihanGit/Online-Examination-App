@@ -16,3 +16,5 @@ export const DELETE_EXAM = 'subject/DELETE_EXAM';
 export const UPDATE_EXAM = 'subject/UPDATE_EXAM';
 
 export const SAVE_ANSWER = 'subject/SAVE_ANSWER';
+export const SAVE_MARK = 'subject/SAVE_MARK';
+export const GET_SUBMISSIONS = 'subject/GET_SUBMISSIONS';

@@ -19,7 +19,7 @@ export const getSubject = (params) => {
 };
 
 export const createSubject = (params) => {
-  return ajax.get(`/add-subject`, { params });
+  return ajax.post(`/add-subject`, { data: params });
 };
 
 export const deleteSubject = (params) => {
@@ -52,4 +52,8 @@ export const publishExam = (params) => {
 
 export const closeExam = (params) => {
   return ajax.post(`/close-exam`, { data: params });
+};
+
+export const getSubmissions = (params) => {
+  return ajax.get(`/all-submissions`, { params });
 };

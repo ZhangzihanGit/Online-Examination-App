@@ -9,7 +9,8 @@ import {
   DELETE_EXAM,
   CREATE_SUBJECT,
   CREATE_EXAM,
-  UPDATE_EXAM
+  UPDATE_EXAM,
+  GET_SUBMISSIONS
 } from '../constants/actions';
 import { message } from 'antd';
 
@@ -176,5 +177,22 @@ export function deleteExam(payload = {}) {
     } else {
       message.error('Fail to delete exam');
     }
+  }
+};
+
+export function getSubmissions(payload = {}, pathname) {
+  return async (dispatch) => {
+    console.log(payload);
+    // const result = await api.getSubmissions(payload);
+
+    // if (result.status === 200) {
+    //   dispatch({
+    //     type: GET_SUBMISSIONS,
+    //     payload: result.data,
+    //   });
+    dispatch(push(pathname));
+    // } else {
+    //   message.error('Fail to delete exam');
+    // }
   }
 };
