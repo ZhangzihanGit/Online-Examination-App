@@ -33,6 +33,8 @@ public class AddExamServlet extends HttpServlet {
         JSONObject jsonObject = new JSONObject(requestData);
         int subjectId = Integer.parseInt(jsonObject.get("subjectId").toString());
         JSONArray jsonArray= jsonObject.getJSONArray("questions");
+
+
         List<Question> questions = new ArrayList<>();
         Exam exam = new Exam(subjectId,"Not too sure if needed");
         InstructorService service = new InstructorServiceImpl();

@@ -45,7 +45,6 @@ public class Exam {
         this.subjectId = subjectId;
         this.showName = showName;
 
-        UnitOfWork.getInstance().registerNewObject(this);
     }
 
     public String getShowName() {
@@ -112,7 +111,7 @@ public class Exam {
         this.questions = questions;
         // Update questions should not update the exam itself, because exam doesn't
         // have the reference of questions in DB.
-//        UnitOfWork.getInstance().registerDirtyObject(this);
+        UnitOfWork.getInstance().registerDirtyObject(this);
     }
 
     public void deleteExam() {
@@ -120,7 +119,7 @@ public class Exam {
     }
 
     private void load() {
-        System.out.println("Exma is reloaded");
+        System.out.println("Exam is reloaded");
         Exam exam = ExamMapper.loadWithId(this.id);
         if (this.description == null) {
             this.description = exam.getDescription();
