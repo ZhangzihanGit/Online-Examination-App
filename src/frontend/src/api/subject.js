@@ -37,3 +37,7 @@ export const submitExam = (params) => {
 export const publishExam = (params) => {
   return ajax.post(`/publish-exam`, { data: params });
 };
+
+export const closeExam = (params) => {
+  return ajax.post(`/close-exam`, { data: params });
+};

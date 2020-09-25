@@ -8,7 +8,7 @@ import {
   DeleteOutlined,
   StopOutlined
 } from '@ant-design/icons';
-import { getExam, publishExam } from '../../../actions/subject';
+import { getExam, publishExam, closeExam } from '../../../actions/subject';
 
 const ContentList = ({ list, isExam }) => {
   const dispatch = useDispatch();
@@ -35,19 +35,20 @@ const ContentList = ({ list, isExam }) => {
     // TODO: send request
     console.log('exam closed');
     console.log(item);
+    dispatch(closeExam({
+      userId: identity.userId,
+      examId: item.examId,
+    }));
   }
 
   const handlePublishExam = (item) => {
-
     dispatch(publishExam({
       userId: identity.userId,
       examId: item.examId,
     }));
-    console.log(item);
   }
 
   const handleClickExam = (item) => {
-    console.log(item);
     dispatch(getExam({
       examId: item.examId,
     }, `${pathname}/exam-${item.examId}`));

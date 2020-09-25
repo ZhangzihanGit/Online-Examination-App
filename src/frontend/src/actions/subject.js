@@ -1,6 +1,12 @@
 import * as api from '../api/subject';
 import { push } from 'connected-react-router';
-import { GET_SUBJECT, GET_SUBJECT_LIST, GET_EXAM, PUBLISH_EXAM } from '../constants/actions';
+import {
+  GET_SUBJECT,
+  GET_SUBJECT_LIST,
+  GET_EXAM,
+  PUBLISH_EXAM,
+  CLOSE_EXAM,
+} from '../constants/actions';
 import { message } from 'antd';
 
 export function getSubjectList(payload = {}) {
@@ -78,11 +84,30 @@ export function publishExam(payload = {}) {
     if (result.status === 200) {
       dispatch({
         type: PUBLISH_EXAM,
-        payload: payload.examId,
+        payload: payload,
       });
       message.success('Publish exam successfully');
     } else {
       message.success('Fail to publish exam');
+    }
+  }
+};
+
+export function closeExam(payload = {}) {
+  return async (dispatch) => {
+    console.log(payload)
+    const result = await api.closeExam(payload);
+    console.log(result);
+
+    // TODO: if close exam successfully
+    if (result.status === 200) {
+      dispatch({
+        type: CLOSE_EXAM,
+        payload: payload,
+      });
+      message.success('Close exam successfully');
+    } else {
+      message.success('Fail to close exam');
     }
   }
 };

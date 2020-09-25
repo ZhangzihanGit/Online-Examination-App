@@ -8,3 +8,4 @@ export const CREATE_EXAM = 'subject/CREATE_EXAM';
 export const GET_EXAM = 'subject/GET_EXAM';
 export const SAVE_ANSWER = 'subject/SAVE_ANSWER';
 export const PUBLISH_EXAM = 'subject/PUBLISH_EXAM';
+export const CLOSE_EXAM = 'subject/CLOSE_EXAM';

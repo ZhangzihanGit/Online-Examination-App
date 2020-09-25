@@ -5,12 +5,14 @@ import {
   CREATE_EXAM,
   GET_EXAM,
   SAVE_ANSWER,
-  PUBLISH_EXAM
+  PUBLISH_EXAM,
+  CLOSE_EXAM,
 } from '../constants/actions';
 
 const initState = {};
 
 export default function reducer(state = initState, action) {
+  let newList = [];
 
   switch (action.type) {
     case GET_SUBJECT_LIST:
@@ -40,17 +42,26 @@ export default function reducer(state = initState, action) {
         ]
       }
     case PUBLISH_EXAM:
-      console.log(action.payload);
-      const old = state.examList;
-      const index = old.findIndex(({ examId }) => examId === action.payload);
-      const newExam = { ...old[index], published: true };
+      newList = state.examList.map(exam => {
+        if (exam.examId === action.payload.examId) {
+          return { ...exam, published: true };
+        }
+        return exam;
+      });
       return {
         ...state,
-        examList: [
-          ...old.slice(0, index),
-          newExam,
-          ...old.slice(index + 1),
-        ]
+        examList: newList,
+      }
+    case CLOSE_EXAM:
+      newList = state.examList.map(exam => {
+        if (exam.examId === action.payload.examId) {
+          return { ...exam, closed: true };
+        }
+        return exam;
+      });
+      return {
+        ...state,
+        examList: newList,
       }
     case SAVE_ANSWER:
       return {
