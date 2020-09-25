@@ -25,11 +25,11 @@ export function login(payload = {}) {
 export function logout(payload = {}) {
   return async (dispatch) => {
     // TODO:
-    // const { data, status } = await api.login(payload);
+    // const { data, status } = await api.logout(payload);
     // the result should contain the user identity
     // console.log(data);
 
-    // TODO: currently just clear the Redux store
+    // clear the Redux store
     dispatch({
       type: LOGOUT,
       payload: {},

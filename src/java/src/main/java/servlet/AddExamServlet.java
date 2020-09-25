@@ -60,7 +60,12 @@ public class AddExamServlet extends HttpServlet {
 
         jsonObject = new JSONObject();
         jsonObject.put("message","success");
-        jsonObject.put("examId", exam.getId().toString());
+        jsonObject.put("examId", exam.getId());
+        jsonObject.put("showName", exam.getShowName());
+        jsonObject.put("closed", exam.isClosed());
+        jsonObject.put("description", exam.getDescription());
+        jsonObject.put("published", exam.isPublished());
+        jsonObject.put("subjectId", exam.getSubjectId());
         response.setContentType("application/json");
         request.setCharacterEncoding("UTF-8");
         response.setStatus(200);

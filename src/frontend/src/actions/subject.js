@@ -8,13 +8,13 @@ import {
   CLOSE_EXAM,
   DELETE_EXAM,
   CREATE_SUBJECT,
+  CREATE_EXAM
 } from '../constants/actions';
 import { message } from 'antd';
 
 export function getSubjectList(payload = {}) {
   return async (dispatch) => {
     const result = await api.getSubjectList(payload);
-    console.log(result);
 
     if (true) {
       dispatch({
@@ -28,7 +28,6 @@ export function getSubjectList(payload = {}) {
 export function getSubject(payload = {}, pathname) {
   return async (dispatch) => {
     const result = await api.getSubject(payload);
-    console.log(result);
 
     if (true) {
       dispatch({
@@ -43,7 +42,6 @@ export function getSubject(payload = {}, pathname) {
 export function createSubject(payload = {}, pathname) {
   return async (dispatch) => {
     const result = await api.createSubject(payload);
-    console.log(result);
 
     if (result.status === 200) {
       dispatch({
@@ -61,7 +59,6 @@ export function createSubject(payload = {}, pathname) {
 export function getExam(payload = {}, pathname) {
   return async (dispatch) => {
     const result = await api.getExam(payload);
-    console.log(result);
 
     if (result.status === 200) {
       dispatch({
@@ -76,7 +73,6 @@ export function getExam(payload = {}, pathname) {
 export function submitExam(payload = {}, pathname) {
   return async (dispatch) => {
     const result = await api.submitExam(payload);
-    console.log(result);
 
     if (result.status === 200) {
       // TODO: current submit exam does not need to update store
@@ -96,7 +92,6 @@ export function submitExam(payload = {}, pathname) {
 export function publishExam(payload = {}) {
   return async (dispatch) => {
     const result = await api.publishExam(payload);
-    console.log(result);
 
     if (result.status === 200) {
       dispatch({
@@ -113,7 +108,6 @@ export function publishExam(payload = {}) {
 export function closeExam(payload = {}) {
   return async (dispatch) => {
     const result = await api.closeExam(payload);
-    console.log(result);
 
     if (result.status === 200) {
       dispatch({
@@ -127,17 +121,26 @@ export function closeExam(payload = {}) {
   }
 };
 
-export function createExam(payload = {}) {
+export function createExam(payload = {}, pathname) {
   return async (dispatch) => {
     const result = await api.createExam(payload);
-    console.log(result);
+
+    if (result.status === 200) {
+      dispatch({
+        type: CREATE_EXAM,
+        payload: result.data,
+      });
+      message.success('Create exam successfully');
+      dispatch(push(pathname));
+    } else {
+      message.error('Fail to create exam');
+    }
   }
 };
 
 export function deleteExam(payload = {}) {
   return async (dispatch) => {
     const result = await api.deleteExam(payload);
-    console.log(result);
 
     if (result.status === 200) {
       dispatch({

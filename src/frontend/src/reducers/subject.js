@@ -80,11 +80,11 @@ export default function reducer(state = initState, action) {
         ...state,
         studentAnswer: action.payload,
       }
-    // case CREATE_EXAM:
-    //   return {
-    //     ...state,
-    //     newExam: action.payload,
-    //   }
+    case CREATE_EXAM:
+      return {
+        ...state,
+        examList: [action.payload, ...state.examList],
+      }
     default:
       return state;
   }
