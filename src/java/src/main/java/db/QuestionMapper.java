@@ -14,6 +14,21 @@ import java.util.List;
 public class QuestionMapper {
     private static final Logger logger = LogManager.getLogger(QuestionMapper.class);
 
+    public static void deleteQuestion(Question question) {
+        String sql = "DELETE FROM exam.question " +
+                " WHERE id=?";
+        int id = question.getQuestionID();
+        PreparedStatement statement = null;
+        try {
+            statement = DBConnection.prepare(sql);
+            statement.setInt(1,id);
+            ResultSet resultSet = statement.executeQuery();
+            // TODO: future error handling may need?
+        } catch (SQLException e) {
+            logger.error(e.getMessage());
+        }
+    }
+
     public static void updateQuestion(Question question) {
         String sql = "UPDATE exam.question SET " +
                 "examId=?, question_type=?::questiontype, description=?, mark=?, options=? WHERE id = ?";

@@ -96,5 +96,16 @@ public class UnitOfWork {
             }
         }
         dirtyObjectList.clear();
+        for (int i=0; i<deletedObjectList.size(); i++) {
+            Object object = deletedObjectList.get(i);
+            if (object instanceof Exam) {
+                logger.info("exam object is deleted with id: " + ((Exam) object).getId());
+            }
+            if (object instanceof Question) {
+                logger.info("question object is deleted with id: " + ((Question) object).getQuestionID());
+                QuestionMapper.deleteQuestion((Question) object);
+            }
+        }
+        deletedObjectList.clear();
     }
 }

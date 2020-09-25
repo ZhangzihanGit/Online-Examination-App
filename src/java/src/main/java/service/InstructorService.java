@@ -2,10 +2,8 @@ package service;
 
 import domain.Exam;
 import domain.Question;
-import domain.Subject;
+import org.json.JSONArray;
 
-import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 import java.util.List;
 
 // 接口可以是在controller层面解析parameter，把id发过来。
@@ -47,6 +45,8 @@ public interface InstructorService extends UserService{
      * @param examId Exam Id
      */
     public void updateExam(Exam exam);
+
+    public void updatedQuestions(List<Question> originalQuestions, JSONArray newQuestionsObj, Exam exam);
 
     public void updateQuestions(List<Question> questions);
 

@@ -17,6 +17,11 @@ public class DBConnection {
     private static final String USERNAME =   null;
     private static final String PASSWORD = null;
 
+    /**
+     * Generate the query from input sql.
+     * @param string SQL query in string
+     * @return prepare statement.
+     */
     public static PreparedStatement prepare(String string) {
         PreparedStatement statement = null;
         try {
@@ -28,24 +33,10 @@ public class DBConnection {
         return statement;
     }
 
-    public static String mockDataTest() {
-        String sql = "SELECT * FROM userlists WHERE userid = 1234";
-        try{
-            PreparedStatement ps = prepare(sql);
-            ResultSet rs = ps.executeQuery();
-            int id=0;
-            String username = null;
-            while (rs.next()) {
-                id = rs.getInt(1);
-                username = rs.getString("username");
-            }
-            return username;
-        }catch (SQLException e){
-            e.printStackTrace();
-        }
-        return "error";
-    }
-
+    /**
+     * Return a DB connection
+     * @return
+     */
     public static Connection getDBConnection() {
         try {
             Class.forName("org.postgresql.Driver");
