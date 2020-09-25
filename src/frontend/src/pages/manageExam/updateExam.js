@@ -58,6 +58,7 @@ export default function UpdateExam() {
 
         updatedQuestions[newQuestion.questionId] = newQuestion;
         setUpdatedQuestions(updatedQuestions);
+        alert("Change staged, click update exam button to push to the database")
 
     }
 
