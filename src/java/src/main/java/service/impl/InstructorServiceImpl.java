@@ -78,12 +78,17 @@ public class InstructorServiceImpl implements InstructorService {
      * @param examId    Exam Id
      */
     @Override
-    public void updateExam(HttpServletRequest request) throws IOException {
-        String requestData = request.getReader()
-                .lines().collect(Collectors.joining(System.lineSeparator()));
-        JSONObject jsonObject = new JSONObject(requestData);
-        int subjectId = jsonObject.getInt("subjectId");
-        int examId = jsonObject.getInt("examId");
+    public void updateExam(Exam exam) {
+//        ExamMapper.updateExam(exam);
+        UnitOfWork.getInstance().commit();
+    }
+
+    @Override
+    public void updateQuestions(List<Question> questions) {
+        for(Question q: questions) {
+            UnitOfWork.getInstance().registerDirtyObject(q);
+        }
+        UnitOfWork.getInstance().commit();
     }
 
     /**
@@ -103,8 +108,14 @@ public class InstructorServiceImpl implements InstructorService {
      * @param examId
      */
     @Override
-    public void closeExam(int subjectId, int examId) {
-
+    public void closeExam(int userId, int examId) {
+        try {
+            Exam exam = ExamMapper.loadWithId(examId);
+            ExamMapper.closeExam(exam);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            // TODO: error handling
+        }
     }
 
     /**
@@ -114,7 +125,14 @@ public class InstructorServiceImpl implements InstructorService {
      * @param examId
      */
     @Override
-    public void publishExam(int subjectId, int examId) {
+    public void publishExam(int userId, int examId) {
+        try {
+            Exam exam = ExamMapper.loadWithId(examId);
+            ExamMapper.publishExam(exam);
+        }catch (Exception e) {
+            logger.error(e.getMessage());
+            // TODO: error handling needed.
+        }
 
     }
 
