@@ -108,8 +108,14 @@ public class InstructorServiceImpl implements InstructorService {
      * @param examId
      */
     @Override
-    public void closeExam(int subjectId, int examId) {
-
+    public void closeExam(int userId, int examId) {
+        try {
+            Exam exam = ExamMapper.loadWithId(examId);
+            ExamMapper.closeExam(exam);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            // TODO: error handling
+        }
     }
 
     /**

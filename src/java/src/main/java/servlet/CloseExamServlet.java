@@ -25,6 +25,13 @@ public class CloseExamServlet extends HttpServlet {
         int examId = jsonObject.getInt("examId");
 
         InstructorService service = new InstructorServiceImpl();
-        service.publishExam(userId,examId);
+        service.closeExam(userId,examId);
+
+        JSONObject data = new JSONObject();
+        data.put("message", "success");
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        response.setStatus(200);
+        response.getWriter().write(data.toString());
     }
 }

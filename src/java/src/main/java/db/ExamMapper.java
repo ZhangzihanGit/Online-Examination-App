@@ -15,6 +15,34 @@ import java.util.List;
 public class ExamMapper {
     private static final Logger logger = LogManager.getLogger(ExamMapper.class);
 
+    /**
+     * close the exam. Performed by the instructor.
+     * @param exam
+     */
+    public static void closeExam(Exam exam) {
+        String sql = "UPDATE exam.exam SET " +
+                " isclosed =? WHERE id=?";
+        int examId = exam.getId();
+        PreparedStatement statement = null;
+        try {
+            statement = DBConnection.prepare(sql);
+            statement.setBoolean(1,true);
+            statement.setInt(2, examId);
+
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                logger.info("Exam with id: " + + resultSet.
+                        getInt("id") +" is closed");
+            }
+        } catch (SQLException e) {
+            logger.error(e.getMessage());
+        }
+    }
+
+    /**
+     * Publish the exam. Performed by instructor
+     * @param exam
+     */
     public static void publishExam(Exam exam) {
         String sql = "UPDATE exam.exam SET " +
                 " ispublished = ? WHERE id = ? RETURNING id";
