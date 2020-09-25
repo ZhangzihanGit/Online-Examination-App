@@ -61,11 +61,6 @@ const QuestionCard = ({ exam, current, currentQuestion }) => {
       prevAnswer = found.answer;
     }
   }
-  console.log(prevAnswer)
-
-  console.log(currentQuestion);
-  console.log(`current question is ${current}`);
-  console.log(options);
   splitOptions(options);
 
   // store the answer to redux store

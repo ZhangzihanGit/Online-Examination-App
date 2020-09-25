@@ -5,7 +5,6 @@ import { Pagination, Typography, Divider, Button } from 'antd';
 import { CloudUploadOutlined } from '@ant-design/icons';
 import { submitExam } from '../../actions/subject';
 import { findExamById } from '../../utils/helpers';
-
 import QuestionCard from './QuestionCard';
 import styles from './index.module.less';
 
@@ -34,11 +33,7 @@ const Exam = () => {
     }
   }, [examList]);
 
-  console.log(exam)
-
-  const handlePageChange = (page, pageSize) => {
-    console.log(page);
-
+  const handlePageChange = (page) => {
     setCurrent(page)
   }
 
