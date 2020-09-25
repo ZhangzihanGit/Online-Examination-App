@@ -15,6 +15,30 @@ import java.util.List;
 public class ExamMapper {
     private static final Logger logger = LogManager.getLogger(ExamMapper.class);
 
+    public static void publishExam(Exam exam) {
+        String sql = "UPDATE exam.exam SET " +
+                " ispublished = ? WHERE id = ? RETURNING id";
+        PreparedStatement statement = null;
+        int examId = exam.getId();
+        try {
+            statement = DBConnection.prepare(sql);
+            statement.setBoolean(1,true);
+            statement.setInt(2,examId);
+
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                logger.info("Exam with id: " + + resultSet.
+                        getInt("id") +" is published");
+            }
+        } catch (SQLException e) {
+            logger.error(e.getMessage());
+        }
+    }
+    /**
+     * Update the exam by writing data from exam object to DB.
+     * TODO: Need a proper error handling
+     * @param exam
+     */
     public static void updateExam(Exam exam) {
         String sql = "UPDATE exam.exam SET " +
                 "show_name=?, subjectId=?, ispublished=?,isstart=?,description=? " +
@@ -37,6 +61,10 @@ public class ExamMapper {
         }
     }
 
+    /**
+     *
+     * @param exam
+     */
     public static void addExam(Exam exam) {
         String sql = "INSERT INTO exam.exam (show_name, subjectId, description,isPublished)" +
                 "VALUES (?,?,?,?) RETURNING id";
@@ -64,6 +92,11 @@ public class ExamMapper {
         }
     }
 
+    /**
+     * Load the exam instance given the exam id.
+     * @param id
+     * @return
+     */
     public static Exam loadWithId(Integer id) {
         String sql = "SELECT * FROM exam.exam WHERE id = ?";
         Exam exam = new Exam();
@@ -81,6 +114,16 @@ public class ExamMapper {
         return exam;
     }
 
+    /**
+     * Load lists of exams under the subject, given the userId and userType.
+     * This will be the full retrieval of list of exams, and maybe later refactored or broke into
+     * smaller servlets.
+     * TODO: Possible refactoring.
+     * @param subjectId
+     * @param userId
+     * @param userType
+     * @return
+     */
     public static List<Exam> loadAllExams(int subjectId, int userId, UserType userType)  {
         String sql;
         PreparedStatement preparedStatement;
@@ -130,6 +173,11 @@ public class ExamMapper {
         return exams;
     }
 
+    /**
+     * Load the exam instance from the DB returning result.
+     * @param resultSet
+     * @return
+     */
     private static Exam load(ResultSet resultSet) {
         Exam exam = null;
         try {

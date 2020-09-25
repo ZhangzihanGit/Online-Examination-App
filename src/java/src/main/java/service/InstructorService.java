@@ -68,6 +68,6 @@ public interface InstructorService extends UserService{
      * @param subjectId
      * @param examId
      */
-    public void publishExam(int subjectId, int examId);
+    public void publishExam(int userId, int examId);
 
 }

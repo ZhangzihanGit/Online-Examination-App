@@ -118,6 +118,7 @@ public class SubjectMapper {
 //                subject.setExams(ExamMapper.loadWithId());
                 subject.setSubjectCode(showName);
                 subject.setDescription(description);
+
 //                map.put()
 //            }
         }catch (SQLException e) {

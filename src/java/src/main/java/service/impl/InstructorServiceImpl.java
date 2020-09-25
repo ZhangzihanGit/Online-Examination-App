@@ -119,7 +119,14 @@ public class InstructorServiceImpl implements InstructorService {
      * @param examId
      */
     @Override
-    public void publishExam(int subjectId, int examId) {
+    public void publishExam(int userId, int examId) {
+        try {
+            Exam exam = ExamMapper.loadWithId(examId);
+            ExamMapper.publishExam(exam);
+        }catch (Exception e) {
+            logger.error(e.getMessage());
+            // TODO: error handling needed.
+        }
 
     }
 
