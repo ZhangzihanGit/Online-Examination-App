@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { List, Card, Button } from 'antd';
@@ -8,7 +8,6 @@ import {
   DeleteOutlined
 } from '@ant-design/icons';
 import { getSubject } from '../../actions/subject';
-import { ALL_INSTRUCTORS, ALL_STUDENTS } from '../../constants/actions';
 import styles from './index.module.less';
 
 const getRandomANumber = (min, max) => {
@@ -24,23 +23,6 @@ const SubjectList = () => {
   const [imgLoading, setImgLoading] = useState(true);
   const isAdmin = identity && identity.userType === "admin";
 
-  // TODO: display all instructors and students to admin
-  useEffect(() => {
-    if (identity && isAdmin === "admin") {
-      // const instructors = [];
-      // const instructorList = subjectList.forEach(subject => )
-
-      // dispatch({
-      //   type: ALL_INSTRUCTORS,
-      //   payload:
-      // });
-      // dispatch({
-      //   type: ALL_STUDENTS,
-      //   payload: 
-      // });
-    }
-  }, [identity]);
-
   const addSubjectButton = {
     name: "Add Subject"
   };
@@ -49,7 +31,6 @@ const SubjectList = () => {
     : [];
 
   const handleAddSubject = () => {
-    console.log("subject created!");
     history.push(`/dashboard/subjects/create-subject`);
   };
 

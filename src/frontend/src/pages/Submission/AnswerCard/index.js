@@ -77,7 +77,7 @@ const AnswerCard = ({ currentQuestion, userId }) => {
         totalMark: newTotalMark,
       }
     })
-  }, [detailedMarks]);
+  }, [detailedMarks, submissionId, dispatch, userId]);
 
   return (
     <div className={styles.cardContainer}>

@@ -11,7 +11,6 @@ import {
   CREATE_EXAM,
   UPDATE_EXAM,
   GET_SUBMISSIONS,
-  SUBMIT_MARKS
 } from '../constants/actions';
 import { message } from 'antd';
 
@@ -183,74 +182,71 @@ export function deleteExam(payload = {}) {
 
 export function getSubmissions(payload = {}, pathname) {
   return async (dispatch) => {
-    console.log(payload);
-    // const result = await api.getSubmissions(payload);
-    // console.log(result)
+    const result = await api.getSubmissions(payload);
+    console.log(result)
 
-    const fakeReponse = {
-      "examId": 1,
-      "totalMark": 120,
-      "submissions": [
-        {
-          "submissionId": 1,
-          "userId": 111,
-          "questions": [{
-            "questionId": 1,
-            "description": "question 1 description",
-            "mark": 3,
-            "answer": "student's answer 1"
-          }, {
-            "questionId": 2,
-            "description": "question 2 description",
-            "mark": 5,
-            "answer": "student's answer 2"
-          }]
-        }, {
-          "submissionId": 2,
-          "userId": 222,
-          "questions": [{
-            "questionId": 1,
-            "description": "question 1 description",
-            "mark": 3,
-            "answer": "student's answer 1"
-          }, {
-            "questionId": 2,
-            "description": "question 2 description",
-            "mark": 5,
-            "answer": "student's answer 2"
-          }]
-        }
-      ]
-    }
-
-    // if (result.status === 200) {
-    dispatch({
-      type: GET_SUBMISSIONS,
-      payload: fakeReponse,
-    });
-    dispatch(push(pathname));
-    // } else {
-    //   message.error('Fail to delete exam');
+    // const fakeReponse = {
+    //   "examId": 1,
+    //   "totalMark": 120,
+    //   "submissions": [
+    //     {
+    //       "submissionId": 1,
+    //       "userId": 111,
+    //       "questions": [{
+    //         "questionId": 1,
+    //         "description": "question 1 description",
+    //         "mark": 3,
+    //         "answer": "student's answer 1"
+    //       }, {
+    //         "questionId": 2,
+    //         "description": "question 2 description",
+    //         "mark": 5,
+    //         "answer": "student's answer 2"
+    //       }]
+    //     }, {
+    //       "submissionId": 2,
+    //       "userId": 222,
+    //       "questions": [{
+    //         "questionId": 1,
+    //         "description": "question 1 description",
+    //         "mark": 3,
+    //         "answer": "student's answer 1"
+    //       }, {
+    //         "questionId": 2,
+    //         "description": "question 2 description",
+    //         "mark": 5,
+    //         "answer": "student's answer 2"
+    //       }]
+    //     }
+    //   ]
     // }
+
+    if (result.status === 200) {
+      dispatch({
+        type: GET_SUBMISSIONS,
+        payload: result.data,
+      });
+      dispatch(push(pathname));
+    } else {
+      message.error('Fail to delete exam');
+    }
   }
 };
 
 export function submitMarks(payload = {}, pathname) {
   return async (dispatch) => {
-    console.log(payload)
-    console.log(pathname)
-    // const result = await api.submitMarks(payload);
+    const result = await api.submitMarks(payload);
 
-    // if (result.status === 200) {
-    // TODO: no need to update the store when submit ?
-    // dispatch({
-    //   type: SUBMIT_MARKS,
-    //   payload: payload,
-    // });
-    message.success('Submit marks successfully');
-    dispatch(push(pathname));
-    // } else {
-    //   message.error('Fail to submit marks');
-    // }
+    if (result.status === 200) {
+      // TODO: no need to update the store when submit ?
+      // dispatch({
+      //   type: SUBMIT_MARKS,
+      //   payload: payload,
+      // });
+      message.success('Submit marks successfully');
+      dispatch(push(pathname));
+    } else {
+      message.error('Fail to submit marks');
+    }
   }
 };

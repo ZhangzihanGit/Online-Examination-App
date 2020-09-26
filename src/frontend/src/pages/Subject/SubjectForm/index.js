@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Form, Input, Button, Select } from 'antd';
+import { Form, Input, Button } from 'antd';
 import { createSubject } from '../../../actions/subject';
 import styles from './index.module.less';
 
@@ -11,7 +11,6 @@ const SubjectForm = () => {
   const { identity } = useSelector(state => state.user);
 
   const onFinish = values => {
-    console.log(values);
     dispatch(createSubject({
       ...values,
       userId: identity.userId,

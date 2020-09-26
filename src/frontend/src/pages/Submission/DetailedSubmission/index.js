@@ -1,20 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { push } from 'connected-react-router';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { Pagination, Typography, Divider, Button, message } from 'antd';
 import AnswerCard from '../AnswerCard';
-import { submitMarks } from '../../../actions/subject';
 import styles from './index.module.less';
 
 const { Title } = Typography;
 
-
-
 const DetailedSubmission = () => {
   const { code, examId, submissionId } = useParams();
   const dispatch = useDispatch();
-  const { submissionList, totalMarks, detailedMarks } = useSelector(state => state.subject);
+  const { submissionList } = useSelector(state => state.subject);
   const [current, setCurrent] = useState(1);
   const [studentSubmission, setStudentSubmission] = useState(null);
 
@@ -24,7 +21,7 @@ const DetailedSubmission = () => {
         s.submissionId === Number(submissionId));
       setStudentSubmission(submission);
     }
-  }, [submissionId]);
+  }, [submissionId, submissionList]);
 
   const handlePageChange = (page) => {
     setCurrent(page)
