@@ -1,7 +1,5 @@
 export const LOGIN = 'user/LOGIN';
 export const LOGOUT = 'user/LOGOUT';
-export const ALL_INSTRUCTORS = 'user/ALL_INSTRUCTORS';
-export const ALL_STUDENTS = 'user/ALL_STUDENTS';
 
 export const GET_SUBJECT_LIST = 'subject/GET_SUBJECT_LIST';
 export const DELETE_SUBJECT = 'subject/DELETE_SUBJECT';

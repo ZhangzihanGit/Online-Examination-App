@@ -17,7 +17,6 @@ const Register = () => {
   const [form] = Form.useForm();
 
   const handleRegisterUser = (values) => {
-    console.log(values);
     // TODO: add real register
     // console.log('register success');
     // dispatch(register(values));

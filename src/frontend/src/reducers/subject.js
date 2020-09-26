@@ -22,7 +22,6 @@ export default function reducer(state = initState, action) {
 
   switch (action.type) {
     case GET_SUBJECT_LIST:
-      console.log(action.payload.subjectList)
       return {
         ...state,
         subjectList: action.payload.subjectList,
@@ -92,7 +91,6 @@ export default function reducer(state = initState, action) {
     case UPDATE_EXAM:
       newList = state.examList.map(exam => {
         if (exam.examId === action.payload.examId) {
-          console.log(action.payload)
           return { ...exam, ...action.payload };
         }
         return exam;

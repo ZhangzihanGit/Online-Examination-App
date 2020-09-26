@@ -27,8 +27,6 @@ const Submission = () => {
 
 
   const handleSubmitMarks = () => {
-    console.log("Submit mark");
-
     if (totalMarks.length !== detailedMarks.length) {
       message.error('Please mark each question, not just a total mark!');
       return;
@@ -51,7 +49,6 @@ const Submission = () => {
   const handleSaveMark = (e, item) => {
     // validate the input mark not exceeding the total mark 
     const totalMark = submissionList ? submissionList.totalMark : 100;
-    console.log(item)
     if (isValidateNumber(e.target.value, 0, totalMark)) {
       dispatch({
         type: SAVE_TOTAL_MARK,

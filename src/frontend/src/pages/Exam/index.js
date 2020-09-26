@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { Pagination, Typography, Divider, Button } from 'antd';
 import { CloudUploadOutlined } from '@ant-design/icons';
 import { submitExam } from '../../actions/subject';
@@ -28,10 +28,9 @@ const Exam = () => {
   useEffect(() => {
     if (examList) {
       const exam = findExamById(examList, Number(examId));
-      console.log(exam);
       setExam(exam);
     }
-  }, [examList]);
+  }, [examList, examId]);
 
   const handlePageChange = (page) => {
     setCurrent(page)
@@ -39,7 +38,6 @@ const Exam = () => {
 
   const handleExamSubmit = () => {
     if (studentAnswer) {
-      console.log(studentAnswer);
       dispatch(submitExam({
         userId: identity.userId,
         examId,

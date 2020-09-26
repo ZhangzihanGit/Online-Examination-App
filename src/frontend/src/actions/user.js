@@ -6,7 +6,6 @@ import { LOGIN, LOGOUT } from '../constants/actions';
 export function login(payload = {}) {
   return async (dispatch) => {
     const { data, status } = await api.login(payload);
-    console.log(data);
 
     // authenticate the user
     if (status === 200) {

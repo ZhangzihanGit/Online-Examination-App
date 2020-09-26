@@ -33,7 +33,6 @@ const ContentList = ({ list, isExam }) => {
   }
 
   const handleDeleteExam = (item) => {
-    console.log(item);
     dispatch(deleteExam({
       userId: identity.userId,
       examId: item.examId,

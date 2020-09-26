@@ -15,7 +15,6 @@ const Router = () => (
     <Switch>
       <Route exact path="/" component={Home} />
       <Route path="/dashboard" component={Dashboard} />
-      {/* <Route path="/updateExam/:id" component={Home} /> */}
     </Switch>
   </Suspense>
 );

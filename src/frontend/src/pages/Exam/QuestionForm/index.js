@@ -69,9 +69,7 @@ const QuestionForm = ({ field }) => {
               return (
                 <div>
                   {optionFields.map((optionField, index) => {
-                    console.log(optionField)
                     return (
-
                       <Form.Item
                         label={`option${index + 3}`}
                         key={`option${optionField.key}`}

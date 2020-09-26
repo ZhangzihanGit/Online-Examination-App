@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Card, Form, Radio, Input, Button, Checkbox } from 'antd';
+import { Card, Radio, Input } from 'antd';
 import { splitOptions, findAnswerById } from '../../../utils/helpers';
 import { SAVE_ANSWER } from '../../../constants/actions';
 import styles from './index.module.less';

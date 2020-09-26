@@ -15,13 +15,9 @@ const ExamForm = () => {
   const { subjectList, examList } = useSelector(state => state.subject);
   const [initialData, setInitialData] = useState(null);
 
-  console.log(examId);
-  console.log(initialData);
-
   useEffect(() => {
     if (examId && examList) {
       const exam = examList.find(e => e.examId === Number(examId));
-      console.log(exam);
       const { showName, description, questions } = exam;
 
       // de-transform the value from the server so that it can be set 
@@ -58,11 +54,9 @@ const ExamForm = () => {
         questions: deTransformedQuestions,
       })
     }
-  }, [examId]);
+  }, [examId, examList]);
 
   const onFinish = values => {
-    console.log('Received values of form:', values);
-
     if (!values.questions || values.questions.length === 0) {
       message.error('Please add at least one question!');
       return;
@@ -101,7 +95,6 @@ const ExamForm = () => {
     // if has examId, it means we are updating the exam, not creating a new one
     if (examId) {
       data.examId = Number(examId);
-      console.log(data);
       dispatch(updateExam(data, `/dashboard/subjects/${code}`));
       return;
     }
