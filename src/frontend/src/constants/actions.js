@@ -17,4 +17,5 @@ export const UPDATE_EXAM = 'subject/UPDATE_EXAM';
 
 export const SAVE_ANSWER = 'subject/SAVE_ANSWER';
 export const SAVE_TOTAL_MARK = 'subject/SAVE_TOTAL_MARK';
+export const SAVE_INDIVIDUAL_MARK = 'subject/SAVE_INDIVIDUAL_MARK';
 export const GET_SUBMISSIONS = 'subject/GET_SUBMISSIONS';

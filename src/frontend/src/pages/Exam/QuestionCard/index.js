@@ -48,7 +48,7 @@ const getNewState = (studentAnswer, questionID, e) => {
   return newState;
 }
 
-const QuestionCard = ({ exam, current, currentQuestion }) => {
+const QuestionCard = ({ currentQuestion }) => {
   const dispatch = useDispatch();
   const { studentAnswer } = useSelector(state => state.subject);
   const { questionType, options, description, questionID } = currentQuestion;

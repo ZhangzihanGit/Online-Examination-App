@@ -195,18 +195,28 @@ export function getSubmissions(payload = {}, pathname) {
           "userId": 111,
           "questions": [{
             "questionId": 1,
-            "description": "question description",
+            "description": "question 1 description",
             "mark": 3,
-            "answer": "student's answer"
+            "answer": "student's answer 1"
+          }, {
+            "questionId": 2,
+            "description": "question 2 description",
+            "mark": 5,
+            "answer": "student's answer 2"
           }]
         }, {
           "submissionId": 2,
           "userId": 222,
           "questions": [{
             "questionId": 1,
-            "description": "question description",
+            "description": "question 1 description",
             "mark": 3,
-            "answer": "student's answer"
+            "answer": "student's answer 1"
+          }, {
+            "questionId": 2,
+            "description": "question 2 description",
+            "mark": 5,
+            "answer": "student's answer 2"
           }]
         }
       ]

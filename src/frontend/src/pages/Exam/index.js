@@ -68,7 +68,7 @@ const Exam = () => {
         total={exam ? exam.questions.length : 0}
       />
 
-      {exam && <QuestionCard exam={exam} current={current} currentQuestion={exam.questions[current - 1]} />}
+      {exam && <QuestionCard currentQuestion={exam.questions[current - 1]} />}
 
       {exam && (exam.questions.length === current) ? (
         <Button

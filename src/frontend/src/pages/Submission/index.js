@@ -35,9 +35,9 @@ import styles from './index.module.less';
 // ];
 
 // get recent total mark from the store
-const getDefaultTotalMark = (marks, submissionId) => {
-  if (!marks) return 0;
-  const found = marks.find(s => s.submissionId === submissionId);
+const getDefaultTotalMark = (totalMarks, submissionId) => {
+  if (!totalMarks) return 0;
+  const found = totalMarks.find(s => s.submissionId === submissionId);
   if (found) {
     return found.totalMark;
   }
@@ -48,7 +48,7 @@ const Submission = () => {
   const dispatch = useDispatch();
   const { examId } = useParams();
   const { pathname } = useSelector(state => state.router.location);
-  const { submissionList, marks } = useSelector(state => state.subject);
+  const { submissionList, totalMarks } = useSelector(state => state.subject);
 
   const handleSubmitMark = () => {
     console.log("save mark");
@@ -83,7 +83,7 @@ const Submission = () => {
             actions={[
               <Input
                 className={styles.markInput}
-                defaultValue={getDefaultTotalMark(marks, item.submissionId)}
+                defaultValue={getDefaultTotalMark(totalMarks, item.submissionId)}
                 prefix="Total:  "
                 suffix={submissionList ? `/ ${submissionList.totalMark}` : 100}
                 onBlur={(e) => handleSaveMark(e, item)}

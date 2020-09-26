@@ -12,6 +12,7 @@ import {
   UPDATE_EXAM,
   SAVE_TOTAL_MARK,
   GET_SUBMISSIONS,
+  SAVE_INDIVIDUAL_MARK
 } from '../constants/actions';
 
 const initState = {};
@@ -107,29 +108,116 @@ export default function reducer(state = initState, action) {
       }
     case SAVE_TOTAL_MARK:
       // if the state does not have marks, then create one
-      if (state.marks) {
-        const found = state.marks.find(s => s.submissionId === action.payload.submissionId);
+      if (state.totalMarks) {
+        const found = state.totalMarks.find(s => s.submissionId === action.payload.submissionId);
         if (found) {
           // if the mark already exist, then update the value
-          newList = state.marks.map(s => {
+          newList = state.totalMarks.map(s => {
             if (s.submissionId === action.payload.submissionId) {
-              console.log(action.payload)
-              console.log({ ...s, ...action.payload })
               return { ...s, ...action.payload };
             }
             return s;
           });
         } else {
           // otherwise just concatenate it
-          newList = [...state.marks, action.payload];
+          newList = [...state.totalMarks, action.payload];
         }
       } else {
         newList = [action.payload];
       }
       return {
         ...state,
-        marks: newList,
+        totalMarks: newList,
       }
+    case SAVE_INDIVIDUAL_MARK:
+
+      if (state.detailedMarks) {
+        const found = state.detailedMarks.find(d => d.submissionId === action.payload.submissionId);
+        if (found) {
+          // if the mark for that question already exist, then update the value
+          newList = state.detailedMarks.map(d => {
+            if (d.submissionId === action.payload.submissionId) {
+              // try to see if the question is in the questions list
+              const foundQuestion = d.questions.find(q => q.questionId === action.payload.questionId);
+              let newQuestions = [];
+              if (foundQuestion) {
+                newQuestions = d.questions.map(q => {
+                  if (q.questionId === action.payload.questionId) {
+                    return { ...q, mark: action.payload.mark };
+                  }
+                  return q;
+                })
+              } else {
+                // question not in the list yet, so just concatenate it
+                newQuestions = [...d.questions, {
+                  questionId: action.payload.questionId,
+                  mark: action.payload.mark,
+                }]
+              }
+
+              return { ...d, questions: newQuestions }
+            }
+            return d;
+          })
+        } else {
+          // otherwise just concatenate it
+          newList = [...state.detailedMarks, {
+            submissionId: action.payload.submissionId,
+            questions: [{
+              questionId: action.payload.questionId,
+              mark: action.payload.mark,
+            }]
+          }];
+        }
+      } else {
+        newList = [{
+          submissionId: action.payload.submissionId,
+          questions: [{
+            questionId: action.payload.questionId,
+            mark: action.payload.mark,
+          }]
+        }];
+      }
+
+
+      // const submission = state.marks.find(o => o.submissionId === action.payload.submissionId);
+      // console.log(submission);
+      // // if (submission) {
+      // let newSubmission = {};
+      // if (submission.questions) {
+      //   const newQuestions = submission.questions.map(q => {
+      //     if (q.questionId === action.payload.questionId) {
+      //       return { ...q, mark: action.payload.mark };
+      //     }
+      //     return q;
+      //   });
+      //   newSubmission = { ...submission, questions: newQuestions };
+      // } else {
+      //   // does not have questions yet, so create a new one
+      //   newSubmission = {
+      //     ...submission, questions: [{
+      //       questionId: action.payload.questionId,
+      //       mark: action.payload.mark,
+      //     }]
+      //   };
+      // }
+      // newSubmission = { ...newSubmission, totalMark: action.payload.totalMark }
+      // // }
+
+      // newList = state.marks.map(s => {
+      //   if (s.submissionId === action.payload.submissionId) {
+      //     return newSubmission;
+      //   }
+      //   return s;
+      // })
+
+      // console.log(newList);
+
+      return {
+        ...state,
+        detailedMarks: newList,
+      }
+
     default:
       return state;
   }
