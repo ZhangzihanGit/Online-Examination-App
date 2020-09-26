@@ -7,15 +7,10 @@ import util.UnitOfWork;
 import java.util.List;
 
 public class Subject {
-    @Expose(serialize = true,deserialize = true)
     private Integer id;
-    @Expose(serialize = true,deserialize = true)
     private String subjectCode;
-    @Expose(serialize = false,deserialize = false)
     private List<Exam> exams;
-    @Expose(serialize = false,deserialize = false)
     private List<Student> students;
-    @Expose(serialize = true,deserialize = true)
     private String description;
     private int adminId;
 
@@ -40,8 +35,14 @@ public class Subject {
         this.id = id;
         this.description = description;
         this.adminId = adminId;
+    }
 
-//        UnitOfWork.getInstance().registerNewObject(this);
+    public int getAdminId() {
+        return adminId;
+    }
+
+    public void setAdminId(int adminId) {
+        this.adminId = adminId;
     }
 
     public void setDescription(String description) {

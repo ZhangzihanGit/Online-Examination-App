@@ -59,9 +59,13 @@ public class Question {
 
     public void setMark(Integer mark) {
         this.mark = mark;
+        UnitOfWork.getInstance().registerDirtyObject(this);
     }
 
     public Integer getMark() {
+        if (mark== null) {
+            load();
+        }
         return mark;
     }
 
@@ -101,6 +105,9 @@ public class Question {
     }
 
     public String getDescription() {
+        if (description == null) {
+            load();
+        }
         return description;
     }
 
@@ -121,6 +128,10 @@ public class Question {
     public void setDescription(String description) {
         this.description = description;
         UnitOfWork.getInstance().registerDirtyObject(this);
+    }
+
+    public void delete() {
+        UnitOfWork.getInstance().registerDeletedObject(this);
     }
 
     private void load() {

@@ -3,21 +3,18 @@ package servlet;
 import db.ExamMapper;
 import domain.Exam;
 import domain.Question;
-import domain.QuestionType;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import service.InstructorService;
 import service.impl.InstructorServiceImpl;
-import util.UnitOfWork;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 @WebServlet(urlPatterns = "/update-exam")
@@ -38,27 +35,14 @@ public class UpdateExamServlet extends HttpServlet {
         int examId = jsonObject.getInt("examId");
         JSONArray jsonArray = jsonObject.getJSONArray("questions");
 
-        // TODO: Identity Map 很有用，需要修复。删改不需要数据库操作了，现在还需要load回来
-        Exam exam = ExamMapper.loadWithId(examId);
-        List<Question> questions = new ArrayList<>();
-        for (int i=0; i<jsonArray.length(); i++) {
-            JSONObject object = jsonArray.getJSONObject(i);
-            String description = object.getString("description");
-            String options = object.get("options").toString();
-            int mark = object.getInt("mark");
-            int questionId = object.getInt("questionId");
-            QuestionType questionType = QuestionType.valueOf(object
-                    .getString("questionType").toUpperCase());
-            Question question = new Question(questionId,description,options,questionType,examId,mark);
-            questions.add(question);
-        }
         InstructorService instructorService = new InstructorServiceImpl();
-        // Commit list of questions, including unitofwork.commit()
-        instructorService.updateQuestions(questions);
 
-        // exam becomes dirty, unitofwork.commit()
-        exam.setQuestions(questions);
-        instructorService.updateExam(exam);
+        // TODO: Identity Map 很有用，需要修复。删改不需要数据库操作了，现在还需要load回来
+        // Get the exam that is being updated.
+        Exam exam = ExamMapper.loadWithId(examId);
+        List<Question> originalQuestions = exam.getQuestions();
+
+        instructorService.updatedQuestions(originalQuestions,jsonArray, exam);
 
         // TODO: 还是把更新后的exam字段发回来吧
 

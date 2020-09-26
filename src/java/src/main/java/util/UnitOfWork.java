@@ -2,8 +2,10 @@ package util;
 
 import db.ExamMapper;
 import db.QuestionMapper;
+import db.SubjectMapper;
 import domain.Exam;
 import domain.Question;
+import domain.Subject;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -81,6 +83,10 @@ public class UnitOfWork {
                 logger.info("New question is added");
                 QuestionMapper.addQuestion((Question) object);
             }
+            if (object instanceof Subject) {
+                logger.info("New subject is added");
+                SubjectMapper.addSubject((Subject) object);
+            }
         }
         // Don't forget to clear the new objects after commit.
         newObjectList.clear();
@@ -96,5 +102,17 @@ public class UnitOfWork {
             }
         }
         dirtyObjectList.clear();
+        for (int i=0; i<deletedObjectList.size(); i++) {
+            Object object = deletedObjectList.get(i);
+            if (object instanceof Exam) {
+                logger.info("exam object is deleted with id: " + ((Exam) object).getId());
+                ExamMapper.deleteExam((Exam) object);
+            }
+            if (object instanceof Question) {
+                logger.info("question object is deleted with id: " + ((Question) object).getQuestionID());
+                QuestionMapper.deleteQuestion((Question) object);
+            }
+        }
+        deletedObjectList.clear();
     }
 }
