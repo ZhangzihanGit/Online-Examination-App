@@ -11,14 +11,14 @@ const { Title } = Typography;
 
 const DetailedSubmission = () => {
 
-  const { code, examId } = useParams();
+  const { code, examId, submissionId } = useParams();
   const dispatch = useDispatch();
   const { examList, studentAnswer } = useSelector(state => state.subject);
   const { identity } = useSelector(state => state.user);
   const [current, setCurrent] = useState(1);
   const [exam, setExam] = useState(null);
 
-
+  console.log(submissionId);
   const handlePageChange = (page) => {
     setCurrent(page)
   }

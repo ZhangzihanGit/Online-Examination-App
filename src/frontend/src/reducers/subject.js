@@ -10,7 +10,8 @@ import {
   DELETE_EXAM,
   CREATE_SUBJECT,
   UPDATE_EXAM,
-  SAVE_MARK,
+  SAVE_TOTAL_MARK,
+  GET_SUBMISSIONS,
 } from '../constants/actions';
 
 const initState = {};
@@ -99,13 +100,18 @@ export default function reducer(state = initState, action) {
         ...state,
         examList: newList,
       }
-    case SAVE_MARK:
-      // if the state does not have submissions, then create one
-      if (state.submissions) {
-        const found = state.submissions.find(s => s.submissionId === action.payload.submissionId);
+    case GET_SUBMISSIONS:
+      return {
+        ...state,
+        submissionList: action.payload,
+      }
+    case SAVE_TOTAL_MARK:
+      // if the state does not have marks, then create one
+      if (state.marks) {
+        const found = state.marks.find(s => s.submissionId === action.payload.submissionId);
         if (found) {
-          // if the submission already exist, then update the value
-          newList = state.submissions.map(s => {
+          // if the mark already exist, then update the value
+          newList = state.marks.map(s => {
             if (s.submissionId === action.payload.submissionId) {
               console.log(action.payload)
               console.log({ ...s, ...action.payload })
@@ -115,14 +121,14 @@ export default function reducer(state = initState, action) {
           });
         } else {
           // otherwise just concatenate it
-          newList = [...state.submissions, action.payload];
+          newList = [...state.marks, action.payload];
         }
       } else {
         newList = [action.payload];
       }
       return {
         ...state,
-        submissions: newList,
+        marks: newList,
       }
     default:
       return state;

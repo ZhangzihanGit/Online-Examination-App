@@ -23,13 +23,23 @@ const AnswerCard = () => {
         />
       </Card>
 
-      <Input
-        className={styles.markInput}
-        defaultValue="0"
-        addonBefore={<span><HighlightOutlined /> Mark this question</span>}
-        suffix={`/ ${10}`}
-        onBlur={handleSaveMark}
-      />
+      <div className={styles.inputContainer}>
+        <Input
+          className={styles.markInput}
+          defaultValue="0"
+          addonBefore={<span><HighlightOutlined /> Mark this question</span>}
+          suffix={`/ ${10}`}
+          onBlur={handleSaveMark}
+        />
+
+        <Input
+          className={styles.totalMarkInput}
+          value="0"
+          addonBefore={`Total`}
+          onBlur={handleSaveMark}
+          disabled
+        />
+      </div>
     </div>
   );
 };
