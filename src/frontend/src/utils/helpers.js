@@ -15,6 +15,17 @@ export const findAnswerById = (answers, questionId) => {
 // split options to array of string: "["AAA","BBB","CCC"]" => ["AAA","BBB","CCC"]
 export const splitOptions = (options) => JSON.parse(options);
 
+export const isValidateNumber = (value, min, max) => {
+  const regex = RegExp(/^[0-9]+$/);
+  // only contains numbers
+  if (regex.test(value)) {
+    if (Number(value) <= max && Number(value) >= min) {
+      return true;
+    }
+  }
+  return false;
+};
+
 export const insertItem = (array, action) => {
   let newArray = array.slice()
   newArray.splice(action.index, 0, action.item)
@@ -40,4 +51,4 @@ export const updateObjectInArray = (array, action) => {
       ...action.item
     }
   })
-}
+};

@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams, useHistory } from 'react-router-dom';
-import { Card, Form, Radio, Input, Button, Checkbox } from 'antd';
+import { Card, message, Radio, Input, Button, Checkbox } from 'antd';
 import { HighlightOutlined } from '@ant-design/icons';
 import { SAVE_TOTAL_MARK, SAVE_INDIVIDUAL_MARK } from '../../../constants/actions';
+import { isValidateNumber } from '../../../utils/helpers';
 import styles from './index.module.less';
 
 const getIndividualMark = (detailedMarks, submissionId, questionId) => {
@@ -51,15 +52,18 @@ const AnswerCard = ({ currentQuestion }) => {
   }
 
   const handleSaveMark = (e) => {
-    // TODO: validate the mark not exceeding the total mark
-    dispatch({
-      type: SAVE_INDIVIDUAL_MARK,
-      payload: {
-        submissionId: Number(submissionId),
-        questionId: Number(questionId),
-        mark: Number(e.target.value),
-      }
-    });
+    if (isValidateNumber(e.target.value, 0, mark)) {
+      dispatch({
+        type: SAVE_INDIVIDUAL_MARK,
+        payload: {
+          submissionId: Number(submissionId),
+          questionId: Number(questionId),
+          mark: Number(e.target.value),
+        }
+      });
+    } else {
+      message.error("Please enter a valid mark");
+    }
   };
 
   useEffect(() => {

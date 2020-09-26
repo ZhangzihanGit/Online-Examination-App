@@ -1,38 +1,11 @@
 import React from 'react';
-import { Input, Divider, List, Button } from 'antd';
+import { Input, Divider, List, Button, message } from 'antd';
 import { useParams } from 'react-router-dom';
 import { push } from 'connected-react-router';
 import { useSelector, useDispatch } from 'react-redux';
 import { SAVE_TOTAL_MARK } from '../../constants/actions';
+import { isValidateNumber } from '../../utils/helpers';
 import styles from './index.module.less';
-
-// const submissionList = [
-//   {
-//     submissionId: 1,
-//     userId: 111,
-//     questions: [
-//       {
-//         questionId: 1,
-//         answer: "student answer"
-//       }, {
-//         questionId: 2,
-//         answer: "student answer"
-//       },
-//     ]
-//   }, {
-//     submissionId: 2,
-//     userId: 222,
-//     questions: [
-//       {
-//         questionId: 1,
-//         answer: "student answer"
-//       }, {
-//         questionId: 2,
-//         answer: "student answer"
-//       },
-//     ]
-//   }
-// ];
 
 // get recent total mark from the store
 const getDefaultTotalMark = (totalMarks, submissionId) => {
@@ -56,14 +29,20 @@ const Submission = () => {
 
   const handleSaveMark = (e, item) => {
     // TODO: validate the input mark not exceeding the total mark 
-    dispatch({
-      type: SAVE_TOTAL_MARK,
-      payload: {
-        submissionId: item.submissionId,
-        userId: item.userId,
-        totalMark: Number(e.target.value),
-      }
-    })
+    const totalMark = submissionList ? submissionList.totalMark : 100;
+
+    if (isValidateNumber(e.target.value, 0, totalMark)) {
+      dispatch({
+        type: SAVE_TOTAL_MARK,
+        payload: {
+          submissionId: item.submissionId,
+          userId: item.userId,
+          totalMark: Number(e.target.value),
+        }
+      })
+    } else {
+      message.error("Please enter a valid mark");
+    }
   };
 
   const handleSubmissionClick = (item) => {
