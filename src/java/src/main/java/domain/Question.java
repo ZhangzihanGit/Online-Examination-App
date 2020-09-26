@@ -45,20 +45,27 @@ public class Question {
      * @param options
      * @param questionType
      */
-    public Question(int questionID, String description, String options, QuestionType questionType) {
+    public Question(int questionID, String description, String options, QuestionType questionType, int examId,
+                    int mark) {
         this.questionID = questionID;
         this.questionType = questionType;
         this.description = description;
         this.options = options;
+        this.examId = examId;
+        this.mark = mark;
 
-        UnitOfWork.getInstance().registerNewObject(this);
+//        UnitOfWork.getInstance().registerNewObject(this);
     }
 
     public void setMark(Integer mark) {
         this.mark = mark;
+        UnitOfWork.getInstance().registerDirtyObject(this);
     }
 
     public Integer getMark() {
+        if (mark== null) {
+            load();
+        }
         return mark;
     }
 
@@ -98,12 +105,14 @@ public class Question {
     }
 
     public String getDescription() {
+        if (description == null) {
+            load();
+        }
         return description;
     }
 
     public void setQuestionID(int questionID) {
         this.questionID = questionID;
-//        UnitOfWork.getInstance().registerDirtyObject(this);
     }
 
     public void setOptions(String options) {
@@ -121,18 +130,27 @@ public class Question {
         UnitOfWork.getInstance().registerDirtyObject(this);
     }
 
+    public void delete() {
+        UnitOfWork.getInstance().registerDeletedObject(this);
+    }
+
     private void load() {
+        logger.info("Loading questions...");
         Question question = QuestionMapper.loadWithId(this.questionID);
         if (options == null ){
+            logger.info("Loading options");
             this.options = question.options;
         }
         if (questionType == null) {
+            logger.info("Loading type");
             this.questionType = question.questionType;
         }
         if (description == null) {
+            logger.info("loading description");
             this.description = question.description;
         }
         if (examId == null) {
+            logger.info("loading examid");
             this.examId = examId;
         }
 

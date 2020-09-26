@@ -29,6 +29,7 @@ public class GetExamServlet extends HttpServlet {
         data.put("showName", exam.getShowName());
         data.put("description", exam.getDescription());
         data.put("published", exam.isPublished());
+        data.put("closed", exam.isClosed());
         data.put("message", "success");
         data.put("subjectId", exam.getSubjectId());
         data.put("examId", examId);

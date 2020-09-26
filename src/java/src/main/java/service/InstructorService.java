@@ -1,10 +1,9 @@
 package service;
 
 import domain.Exam;
-import domain.Subject;
+import domain.Question;
+import org.json.JSONArray;
 
-import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 import java.util.List;
 
 // 接口可以是在controller层面解析parameter，把id发过来。
@@ -45,7 +44,11 @@ public interface InstructorService extends UserService{
      * @param subjectId Subject Id
      * @param examId Exam Id
      */
-    public void updateExam(HttpServletRequest request) throws IOException;
+    public void updateExam(Exam exam);
+
+    public void updatedQuestions(List<Question> originalQuestions, JSONArray newQuestionsObj, Exam exam);
+
+    public void updateQuestions(List<Question> questions);
 
     /**
      * Update the marks of the student.
@@ -58,13 +61,13 @@ public interface InstructorService extends UserService{
      * @param subjectId
      * @param examId
      */
-    public void closeExam(int subjectId, int examId);
+    public void closeExam(int userId, int examId);
 
     /**
      * Publish the exam and make it available to the student.
      * @param subjectId
      * @param examId
      */
-    public void publishExam(int subjectId, int examId);
+    public void publishExam(int userId, int examId);
 
 }

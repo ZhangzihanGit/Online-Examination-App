@@ -10,15 +10,17 @@ public class Exam {
     private String description;
     private Integer id;
     private boolean isPublished=false;
+    private boolean isClosed=false;
     private List<Question> questions;
     private String showName;
 
     public Exam() {
 
     }
-    public Exam(int subjectId, String description) {
+    public Exam(int subjectId, String showName, String description) {
         System.out.println("Exam partial constructor");
 //        this.questions = questions;
+        this.showName = showName;
         this.subjectId = subjectId;
         this.description = description;
 
@@ -29,16 +31,21 @@ public class Exam {
         return isPublished;
     }
 
-    public Exam(Integer id, Integer subjectId, String description, List<Question> questions, boolean isPublished, String showName) {
+    public boolean isClosed() {
+        return isClosed;
+    }
+
+    public Exam(Integer id, Integer subjectId, String description, List<Question> questions, boolean isPublished,
+                Boolean isClosed, String showName) {
         System.out.println("Exam full constructor");
         this.description = description;
         this.questions = questions;
         this.id = id;
         this.isPublished = isPublished;
+        this.isClosed = isClosed;
         this.subjectId = subjectId;
         this.showName = showName;
 
-        UnitOfWork.getInstance().registerNewObject(this);
     }
 
     public String getShowName() {
@@ -70,6 +77,16 @@ public class Exam {
         UnitOfWork.getInstance().registerDirtyObject(this);
     }
 
+    public void setPublished(Boolean published) {
+        this.isPublished = published;
+        UnitOfWork.getInstance().registerDirtyObject(this);
+    }
+
+    public void setClosed(Boolean closed) {
+        this.isClosed = closed;
+        UnitOfWork.getInstance().registerDirtyObject(this);
+    }
+
     public int getSubjectId() {
         if (this.subjectId == null ){
             load();
@@ -95,7 +112,7 @@ public class Exam {
         this.questions = questions;
         // Update questions should not update the exam itself, because exam doesn't
         // have the reference of questions in DB.
-//        UnitOfWork.getInstance().registerDirtyObject(this);
+        UnitOfWork.getInstance().registerDirtyObject(this);
     }
 
     public void deleteExam() {
@@ -103,7 +120,7 @@ public class Exam {
     }
 
     private void load() {
-        System.out.println("Exma is reloaded");
+        System.out.println("Exam is reloaded");
         Exam exam = ExamMapper.loadWithId(this.id);
         if (this.description == null) {
             this.description = exam.getDescription();

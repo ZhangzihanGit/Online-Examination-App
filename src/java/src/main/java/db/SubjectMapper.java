@@ -16,6 +16,30 @@ public class SubjectMapper {
         return null;
     }
 
+
+    public static void addSubject(Subject subject) {
+        String sql = "INSERT INTO exam.subject (show_name, description, instructorid) " +
+                " VALUES (?,?,?) RETURNING id";
+        String showName = subject.getSubjectCode();
+        String description = subject.getDescription();
+        int userid = subject.getAdminId();
+        PreparedStatement statement = DBConnection.prepare(sql);
+        int subjectId = 0;
+        try {
+            statement.setString(1,showName);
+            statement.setString(2,description);
+            statement.setInt(3,userid);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                subjectId = resultSet.getInt("id");
+            }
+            if (subjectId!=0) {
+                subject.setId(subjectId);
+            }
+        } catch (SQLException e) {
+            logger.error(e.getMessage());
+        }
+    }
     /**
      * Student loads subjects by id
      * @param userid
@@ -98,11 +122,11 @@ public class SubjectMapper {
     private static Subject load(ResultSet resultSet) {
         Subject subject = new Subject();
         try {
-            IdentityMap<Subject> map = IdentityMap.getInstance(subject.getClass());
+//            IdentityMap<Subject> map = IdentityMap.getInstance(subject.getClass());
             Integer id = resultSet.getInt("id");
             System.out.println(id);
             // If not previously loaded, load from DB.
-            if (map.get(id) == null) {
+//            if (map.get(id) == null) {
                 String showName = resultSet.getString("show_name");
                 String description = resultSet.getString("description");
                 Integer instructorId = resultSet.getInt("instructorId");
@@ -114,8 +138,9 @@ public class SubjectMapper {
 //                subject.setExams(ExamMapper.loadWithId());
                 subject.setSubjectCode(showName);
                 subject.setDescription(description);
+
 //                map.put()
-            }
+//            }
         }catch (SQLException e) {
             logger.error(e.getMessage());
         }

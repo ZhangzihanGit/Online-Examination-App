@@ -5,7 +5,6 @@ import { Pagination, Typography, Divider, Button } from 'antd';
 import { CloudUploadOutlined } from '@ant-design/icons';
 import { submitExam } from '../../actions/subject';
 import { findExamById } from '../../utils/helpers';
-
 import QuestionCard from './QuestionCard';
 import styles from './index.module.less';
 
@@ -34,36 +33,31 @@ const Exam = () => {
     }
   }, [examList]);
 
-  console.log(exam)
-
-  const handlePageChange = (page, pageSize) => {
-    console.log(page);
-
+  const handlePageChange = (page) => {
     setCurrent(page)
   }
 
   const handleExamSubmit = () => {
-    console.log('exam submitted');
     if (studentAnswer) {
       console.log(studentAnswer);
       dispatch(submitExam({
         userId: identity.userId,
         examId,
         questions: studentAnswer,
-      }));
+      }, `/dashboard/subjects/${code}`));
     } else {
       const defaultAnswer = generateDefaultSubmission(exam.questions);
       dispatch(submitExam({
         userId: identity.userId,
         examId,
         questions: defaultAnswer,
-      }))
+      }, `/dashboard/subjects/${code}`))
     }
   };
 
   return (
     <div className={styles.examContainer}>
-      <Title level={4}>Exam Title</Title>
+      <Title level={4}>{exam ? exam.showName : `Exam Title`}</Title>
       <Divider type="horizontal" />
 
       <Pagination
@@ -74,7 +68,7 @@ const Exam = () => {
         total={exam ? exam.questions.length : 0}
       />
 
-      {exam && <QuestionCard exam={exam} current={current} currentQuestion={exam.questions[current - 1]} />}
+      {exam && <QuestionCard currentQuestion={exam.questions[current - 1]} />}
 
       {exam && (exam.questions.length === current) ? (
         <Button
