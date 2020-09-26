@@ -57,3 +57,7 @@ export const closeExam = (params) => {
 export const getSubmissions = (params) => {
   return ajax.get(`/all-submissions`, { params });
 };
+
+export const submitMarks = (params) => {
+  return ajax.post(`/mark-submit`, { data: params });
+};

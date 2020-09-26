@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useParams, useHistory } from 'react-router-dom';
-import { Card, message, Radio, Input, Button, Checkbox } from 'antd';
+import { useParams } from 'react-router-dom';
+import { Card, message, Input } from 'antd';
 import { HighlightOutlined } from '@ant-design/icons';
 import { SAVE_TOTAL_MARK, SAVE_INDIVIDUAL_MARK } from '../../../constants/actions';
 import { isValidateNumber } from '../../../utils/helpers';
@@ -40,10 +40,10 @@ const sumMarks = (detailedMarks, submissionId) => {
   return 0;
 }
 
-const AnswerCard = ({ currentQuestion }) => {
+const AnswerCard = ({ currentQuestion, userId }) => {
   const dispatch = useDispatch();
-  const { code, examId, submissionId } = useParams();
-  const { studentAnswer, totalMarks, detailedMarks } = useSelector(state => state.subject);
+  const { submissionId } = useParams();
+  const { totalMarks, detailedMarks } = useSelector(state => state.subject);
   const { answer, mark, description, questionId } = currentQuestion;
   let preMark = 0;
 
@@ -73,7 +73,7 @@ const AnswerCard = ({ currentQuestion }) => {
       type: SAVE_TOTAL_MARK,
       payload: {
         submissionId: Number(submissionId),
-        userId: Number(questionId),
+        userId: Number(userId),
         totalMark: newTotalMark,
       }
     })

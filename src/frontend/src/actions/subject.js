@@ -10,7 +10,8 @@ import {
   CREATE_SUBJECT,
   CREATE_EXAM,
   UPDATE_EXAM,
-  GET_SUBMISSIONS
+  GET_SUBMISSIONS,
+  SUBMIT_MARKS
 } from '../constants/actions';
 import { message } from 'antd';
 
@@ -230,6 +231,26 @@ export function getSubmissions(payload = {}, pathname) {
     dispatch(push(pathname));
     // } else {
     //   message.error('Fail to delete exam');
+    // }
+  }
+};
+
+export function submitMarks(payload = {}, pathname) {
+  return async (dispatch) => {
+    console.log(payload)
+    console.log(pathname)
+    // const result = await api.submitMarks(payload);
+
+    // if (result.status === 200) {
+    // TODO: no need to update the store when submit ?
+    // dispatch({
+    //   type: SUBMIT_MARKS,
+    //   payload: payload,
+    // });
+    message.success('Submit marks successfully');
+    dispatch(push(pathname));
+    // } else {
+    //   message.error('Fail to submit marks');
     // }
   }
 };

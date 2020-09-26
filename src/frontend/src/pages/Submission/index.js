@@ -1,8 +1,10 @@
 import React from 'react';
 import { Input, Divider, List, Button, message } from 'antd';
+import { CloudUploadOutlined } from '@ant-design/icons';
 import { useParams } from 'react-router-dom';
 import { push } from 'connected-react-router';
 import { useSelector, useDispatch } from 'react-redux';
+import { submitMarks } from '../../actions/subject';
 import { SAVE_TOTAL_MARK } from '../../constants/actions';
 import { isValidateNumber } from '../../utils/helpers';
 import styles from './index.module.less';
@@ -19,18 +21,37 @@ const getDefaultTotalMark = (totalMarks, submissionId) => {
 
 const Submission = () => {
   const dispatch = useDispatch();
-  const { examId } = useParams();
+  const { code, examId } = useParams();
   const { pathname } = useSelector(state => state.router.location);
-  const { submissionList, totalMarks } = useSelector(state => state.subject);
+  const { submissionList, totalMarks, detailedMarks } = useSelector(state => state.subject);
 
-  const handleSubmitMark = () => {
-    console.log("save mark");
+
+  const handleSubmitMarks = () => {
+    console.log("Submit mark");
+
+    if (totalMarks.length !== detailedMarks.length) {
+      message.error('Please mark each question, not just a total mark!');
+      return;
+    }
+
+    const data = totalMarks.map(submission => {
+      const found = detailedMarks.find(d => submission.submissionId === d.submissionId);
+      if (found) {
+        return { ...submission, ...found };
+      } else
+        return { ...submission };
+    });
+
+    dispatch(submitMarks({
+      examId: Number(examId),
+      marks: data,
+    }, `/dashboard/subjects/${code}`))
   }
 
   const handleSaveMark = (e, item) => {
-    // TODO: validate the input mark not exceeding the total mark 
+    // validate the input mark not exceeding the total mark 
     const totalMark = submissionList ? submissionList.totalMark : 100;
-
+    console.log(item)
     if (isValidateNumber(e.target.value, 0, totalMark)) {
       dispatch({
         type: SAVE_TOTAL_MARK,
@@ -83,9 +104,10 @@ const Submission = () => {
         <Button
           className={styles.submitButton}
           type="primary"
-          onClick={handleSubmitMark}
+          icon={<CloudUploadOutlined />}
+          onClick={handleSubmitMarks}
         >
-          Save All Marks
+          Submit All Marks
         </Button>
       </div>
     </div>
