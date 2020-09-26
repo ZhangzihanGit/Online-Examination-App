@@ -178,41 +178,6 @@ export default function reducer(state = initState, action) {
           }]
         }];
       }
-
-
-      // const submission = state.marks.find(o => o.submissionId === action.payload.submissionId);
-      // console.log(submission);
-      // // if (submission) {
-      // let newSubmission = {};
-      // if (submission.questions) {
-      //   const newQuestions = submission.questions.map(q => {
-      //     if (q.questionId === action.payload.questionId) {
-      //       return { ...q, mark: action.payload.mark };
-      //     }
-      //     return q;
-      //   });
-      //   newSubmission = { ...submission, questions: newQuestions };
-      // } else {
-      //   // does not have questions yet, so create a new one
-      //   newSubmission = {
-      //     ...submission, questions: [{
-      //       questionId: action.payload.questionId,
-      //       mark: action.payload.mark,
-      //     }]
-      //   };
-      // }
-      // newSubmission = { ...newSubmission, totalMark: action.payload.totalMark }
-      // // }
-
-      // newList = state.marks.map(s => {
-      //   if (s.submissionId === action.payload.submissionId) {
-      //     return newSubmission;
-      //   }
-      //   return s;
-      // })
-
-      // console.log(newList);
-
       return {
         ...state,
         detailedMarks: newList,
