@@ -99,11 +99,11 @@ public class SubmissionMapper {
         try {
             int id = resultSet.getInt("id");
             int examId = resultSet.getInt("examid");
-            int studentid = resultSet.getInt("studentid");
+            int studentId = resultSet.getInt("studentid");
             int mark = resultSet.getInt("mark");
             answers = AnswerMapper.loadAnswers(id);
 
-            submission = new Submission(id,answers,mark,studentid, examId);
+            submission = new Submission(id,answers,mark,studentId, examId);
         } catch (SQLException e) {
             logger.error(e.getMessage());
         }
