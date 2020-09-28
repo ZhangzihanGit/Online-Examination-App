@@ -182,54 +182,54 @@ export function deleteExam(payload = {}) {
 
 export function getSubmissions(payload = {}, pathname) {
   return async (dispatch) => {
-    // const result = await api.getSubmissions(payload);
-    // console.log(result)
+    const result = await api.getSubmissions(payload);
+    console.log(result)
 
-    const fakeReponse = {
-      "examId": 1,
-      "totalMark": 120,
-      "submissions": [
-        {
-          "submissionId": 1,
-          "userId": 111,
-          "questions": [{
-            "questionId": 1,
-            "description": "question 1 description",
-            "mark": 3,
-            "answer": "student's answer 1"
-          }, {
-            "questionId": 2,
-            "description": "question 2 description",
-            "mark": 5,
-            "answer": "student's answer 2"
-          }]
-        }, {
-          "submissionId": 2,
-          "userId": 222,
-          "questions": [{
-            "questionId": 1,
-            "description": "question 1 description",
-            "mark": 3,
-            "answer": "student's answer 1"
-          }, {
-            "questionId": 2,
-            "description": "question 2 description",
-            "mark": 5,
-            "answer": "student's answer 2"
-          }]
-        }
-      ]
-    }
-
-    // if (result.status === 200) {
-    dispatch({
-      type: GET_SUBMISSIONS,
-      payload: fakeReponse,
-    });
-    dispatch(push(pathname));
-    // } else {
-    //   message.error('Fail to fetch submissions');
+    // const fakeReponse = {
+    //   "examId": 1,
+    //   "totalMark": 120,
+    //   "submissions": [
+    //     {
+    //       "submissionId": 1,
+    //       "userId": 111,
+    //       "questions": [{
+    //         "questionId": 1,
+    //         "description": "question 1 description",
+    //         "mark": 3,
+    //         "answer": "student's answer 1"
+    //       }, {
+    //         "questionId": 2,
+    //         "description": "question 2 description",
+    //         "mark": 5,
+    //         "answer": "student's answer 2"
+    //       }]
+    //     }, {
+    //       "submissionId": 2,
+    //       "userId": 222,
+    //       "questions": [{
+    //         "questionId": 1,
+    //         "description": "question 1 description",
+    //         "mark": 3,
+    //         "answer": "student's answer 1"
+    //       }, {
+    //         "questionId": 2,
+    //         "description": "question 2 description",
+    //         "mark": 5,
+    //         "answer": "student's answer 2"
+    //       }]
+    //     }
+    //   ]
     // }
+
+    if (result.status === 200) {
+      dispatch({
+        type: GET_SUBMISSIONS,
+        payload: result.data,
+      });
+      dispatch(push(pathname));
+    } else {
+      message.error('Fail to fetch submissions');
+    }
   }
 };
 

@@ -11,4 +11,8 @@ import { RELATIVE_PATH } from '../constants';
  */
 export const login = (params) => {
   return ajax.post(`/login`, { data: params });
+};
+
+export const getAllInstructors = (params) => {
+  return ajax.post(`/all-instructors`, { data: params });
 }

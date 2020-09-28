@@ -1,7 +1,7 @@
 import { message } from 'antd';
 import { push } from 'connected-react-router';
 import * as api from '../api/user';
-import { LOGIN, LOGOUT } from '../constants/actions';
+import { LOGIN, LOGOUT, GET_INSTRUCTOR_LIST, GET_STUDENT_LIST } from '../constants/actions';
 
 export function login(payload = {}) {
   return async (dispatch) => {
@@ -34,5 +34,23 @@ export function logout(payload = {}) {
       payload: {},
     });
     dispatch(push('/'));
+  };
+};
+
+export function getAllInstructors(payload = {}) {
+  return async (dispatch) => {
+    console.log(payload)
+    const response = await api.getAllInstructors(payload);
+    console.log(response)
+
+    if (response.status === 200) {
+      dispatch({
+        type: GET_INSTRUCTOR_LIST,
+        payload: response.data.instructorList,
+      });
+      message.success(response.data.message);
+    } else {
+      message.error(response.data.message);
+    }
   };
 };
