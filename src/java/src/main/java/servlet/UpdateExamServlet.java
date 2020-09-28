@@ -42,6 +42,8 @@ public class UpdateExamServlet extends HttpServlet {
         Exam exam = ExamMapper.loadWithId(examId);
         List<Question> originalQuestions = exam.getQuestions();
 
+        // Detect if the questions are new-added/ modified/ deleted.
+        // Assume that front end will give all questions of the exam.
         instructorService.updatedQuestions(originalQuestions,jsonArray, exam);
 
         // TODO: 还是把更新后的exam字段发回来吧

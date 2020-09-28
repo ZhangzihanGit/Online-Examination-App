@@ -12,7 +12,7 @@ const { Title } = Typography;
 
 const generateDefaultSubmission = (questions) => {
   return questions.map(question => ({
-    questionId: question.questionID,
+    questionId: question.questionId,
     answer: ""
   }));
 };
@@ -22,6 +22,7 @@ const Exam = () => {
   const dispatch = useDispatch();
   const { examList, studentAnswer } = useSelector(state => state.subject);
   const { identity } = useSelector(state => state.user);
+  const isStudent = identity && identity.userType === "student";
   const [current, setCurrent] = useState(1);
   const [exam, setExam] = useState(null);
 
@@ -74,6 +75,7 @@ const Exam = () => {
           type="primary"
           icon={<CloudUploadOutlined />}
           onClick={handleExamSubmit}
+          disabled={!isStudent}
         >
           Submit Exam
         </Button>

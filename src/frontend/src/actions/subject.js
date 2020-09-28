@@ -228,7 +228,7 @@ export function getSubmissions(payload = {}, pathname) {
       });
       dispatch(push(pathname));
     } else {
-      message.error('Fail to delete exam');
+      message.error('Fail to fetch submissions');
     }
   }
 };

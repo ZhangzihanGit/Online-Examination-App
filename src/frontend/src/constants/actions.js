@@ -1,5 +1,7 @@
 export const LOGIN = 'user/LOGIN';
 export const LOGOUT = 'user/LOGOUT';
+export const GET_INSTRUCTOR_LIST = 'subject/GET_INSTRUCTOR_LIST';
+export const GET_STUDENT_LIST = 'subject/GET_STUDENT_LIST';
 
 export const GET_SUBJECT_LIST = 'subject/GET_SUBJECT_LIST';
 export const DELETE_SUBJECT = 'subject/DELETE_SUBJECT';

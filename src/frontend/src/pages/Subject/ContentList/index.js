@@ -16,12 +16,31 @@ import {
   getSubmissions
 } from '../../../actions/subject';
 
+const renderAdminView = (item) => [
+  <Button
+    size="small"
+    type="ghost"
+    disabled
+    icon={<PlayCircleOutlined />}
+  >
+    {item.published ? "Publised" : "Unpublished"}
+  </Button>,
+  <Button
+    size="small"
+    type="ghost"
+    disabled
+    icon={<StopOutlined />}
+  >
+    {item.closed ? "Closed" : "Unclosed"}
+  </Button>,
+];
+
 const ContentList = ({ list, isExam }) => {
   const dispatch = useDispatch();
   const { identity } = useSelector(state => state.user);
   const { pathname } = useSelector(state => state.router.location);
-  // const { examList } = useSelector(state => state.subject);
   const [publisedList, setPublisedList] = useState([]);
+  const isAdmin = identity && identity.userType === "admin";
   const isInstructor = identity && identity.userType === "instructor";
   const isStudent = identity && identity.userType === "student";
 
@@ -123,7 +142,7 @@ const ContentList = ({ list, isExam }) => {
             >
               Delete
             </Button>,
-          ] : null}
+          ] : (isExam && isAdmin ? renderAdminView(item) : null)}
         >
           <List.Item.Meta
             style={{ cursor: 'pointer' }}

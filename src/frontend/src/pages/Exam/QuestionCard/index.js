@@ -14,14 +14,14 @@ const radioStyle = {
 /**
  * Replace the old answer of the question with the new one.
  * @param {*} studentAnswer old answer state
- * @param {*} questionID target question
+ * @param {*} questionId target question
  * @param {*} e new answer value
  * @return new state
  */
-const getNewState = (studentAnswer, questionID, e) => {
+const getNewState = (studentAnswer, questionId, e) => {
   let newState = [];
   if (studentAnswer) {
-    const previousAnswerIndex = studentAnswer.findIndex(({ questionId }) => questionId === questionID);
+    const previousAnswerIndex = studentAnswer.findIndex(s => s.questionId === questionId);
     if (previousAnswerIndex !== -1) {
       const newAnswer = { ...studentAnswer[previousAnswerIndex], answer: e.target.value };
       newState = [
@@ -33,14 +33,14 @@ const getNewState = (studentAnswer, questionID, e) => {
       newState = [
         ...studentAnswer,
         {
-          questionId: questionID,
+          questionId,
           answer: e.target.value,
         }
       ];
     }
   } else {
     newState = [{
-      questionId: questionID,
+      questionId,
       answer: e.target.value,
     }];
   }
@@ -51,12 +51,14 @@ const getNewState = (studentAnswer, questionID, e) => {
 const QuestionCard = ({ currentQuestion }) => {
   const dispatch = useDispatch();
   const { studentAnswer } = useSelector(state => state.subject);
-  const { questionType, options, description, questionID } = currentQuestion;
+  const { questionType, options, description, questionId } = currentQuestion;
+  const { identity } = useSelector(state => state.user);
+  const isStudent = identity && identity.userType === "student";
   const formattedOptions = splitOptions(options);
   let prevAnswer = null;
 
   if (studentAnswer) {
-    const found = findAnswerById(studentAnswer, questionID);
+    const found = findAnswerById(studentAnswer, questionId);
     if (found) {
       prevAnswer = found.answer;
     }
@@ -65,7 +67,7 @@ const QuestionCard = ({ currentQuestion }) => {
 
   // store the answer to redux store
   const handleAnswer = (e) => {
-    const newState = getNewState(studentAnswer, questionID, e);
+    const newState = getNewState(studentAnswer, questionId, e);
     dispatch({
       type: SAVE_ANSWER,
       payload: newState,
@@ -77,6 +79,7 @@ const QuestionCard = ({ currentQuestion }) => {
       <Card title={description} className={styles.questionCard}>
         {questionType.toLowerCase() === "shortanswer" && (
           <Input.TextArea
+            disabled={!isStudent}
             onChange={handleAnswer}
             autoSize={{ minRows: 5, maxRows: 10 }}
             allowClear
@@ -84,7 +87,12 @@ const QuestionCard = ({ currentQuestion }) => {
           />
         )}
         {questionType.toLowerCase() === "multiplechoice" && (
-          <Radio.Group style={radioStyle} onChange={handleAnswer} value={prevAnswer ? prevAnswer : ""}>
+          <Radio.Group
+            style={radioStyle}
+            onChange={handleAnswer}
+            value={prevAnswer ? prevAnswer : ""}
+            disabled={!isStudent}
+          >
             {formattedOptions.map(option => (
               <Radio
                 key={option}

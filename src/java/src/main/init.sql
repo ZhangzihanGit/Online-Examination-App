@@ -57,7 +57,7 @@ CREATE TABLE IF NOT EXISTS exam.submission(
 	examId INT NOT NULL,
 	FOREIGN KEY (studentId) REFERENCES exam.users(id),
 	FOREIGN KEY (examId) REFERENCES exam.exam(id),
-	mark INT NOT NULL,
+	mark INT,
 	PRIMARY KEY (id, studentId, examId)
 );
 CREATE TABLE IF NOT EXISTS exam.answer(
@@ -66,6 +66,7 @@ CREATE TABLE IF NOT EXISTS exam.answer(
 	questionId INT NOT NULL,
 	FOREIGN KEY (submissionId) REFERENCES exam.submission (id),
 	FOREIGN KEY (questionId) REFERENCES exam.question (id),
-	mark INT NOT NULL,
+	mark INT,
+	content TEXT,
 	PRIMARY KEY (id,submissionId, questionId)
 );

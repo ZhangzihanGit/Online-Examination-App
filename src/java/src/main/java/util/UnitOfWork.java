@@ -1,11 +1,7 @@
 package util;
 
-import db.ExamMapper;
-import db.QuestionMapper;
-import db.SubjectMapper;
-import domain.Exam;
-import domain.Question;
-import domain.Subject;
+import db.*;
+import domain.*;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -80,12 +76,20 @@ public class UnitOfWork {
                 ExamMapper.addExam((Exam)object);
             }
             if (object instanceof Question) {
-                logger.info("New question is added");
+                logger.info("New question is added to DB ");
                 QuestionMapper.addQuestion((Question) object);
             }
             if (object instanceof Subject) {
-                logger.info("New subject is added");
+                logger.info("New subject is added to DB");
                 SubjectMapper.addSubject((Subject) object);
+            }
+            if (object instanceof Answer) {
+                logger.info("New answer is added to DB");
+                AnswerMapper.addAnswer((Answer)object);
+            }
+            if (object instanceof Submission) {
+                logger.info("New submission is added to DB ");
+                SubmissionMapper.addSubmission((Submission)object);
             }
         }
         // Don't forget to clear the new objects after commit.
@@ -97,8 +101,18 @@ public class UnitOfWork {
                 ExamMapper.updateExam((Exam)object);
             }
             if (object instanceof Question) {
-                logger.info("question object is being updated with id: "+((Question) object).getQuestionID());
+                logger.info("question object is being updated with id: "+((Question) object).getQuestionId());
                 QuestionMapper.updateQuestion((Question) object);
+            }
+            // TODO: Don't forget tot add Submission and Answer here, as they
+            // need marks to be updated.
+            if (object instanceof Answer) {
+                logger.info("answer object is being updated with id: " + ((Answer) object).getId());
+                AnswerMapper.updateAnswer((Answer) object);
+            }
+            if (object instanceof Submission) {
+                logger.info("submission object is being update with id: " + ((Submission) object).getId());
+                SubmissionMapper.updateSubmission((Submission) object);
             }
         }
         dirtyObjectList.clear();
@@ -109,7 +123,7 @@ public class UnitOfWork {
                 ExamMapper.deleteExam((Exam) object);
             }
             if (object instanceof Question) {
-                logger.info("question object is deleted with id: " + ((Question) object).getQuestionID());
+                logger.info("question object is deleted with id: " + ((Question) object).getQuestionId());
                 QuestionMapper.deleteQuestion((Question) object);
             }
         }

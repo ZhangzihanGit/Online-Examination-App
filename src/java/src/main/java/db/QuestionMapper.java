@@ -17,7 +17,7 @@ public class QuestionMapper {
     public static void deleteQuestion(Question question) {
         String sql = "DELETE FROM exam.question " +
                 " WHERE id=?";
-        int id = question.getQuestionID();
+        int id = question.getQuestionId();
         PreparedStatement statement = null;
         try {
             statement = DBConnection.prepare(sql);
@@ -38,7 +38,7 @@ public class QuestionMapper {
             preparedStatement.setString(2,question.getQuestionType().toString().toLowerCase());
             preparedStatement.setString(3,question.getDescription());
             preparedStatement.setInt(4,question.getMark());
-            preparedStatement.setInt(6,question.getQuestionID());
+            preparedStatement.setInt(6,question.getQuestionId());
             if (question.getOptions() !=null) {
                 preparedStatement.setString(5,question.getOptions());
             }
@@ -46,7 +46,7 @@ public class QuestionMapper {
                 preparedStatement.setString(5,null);
             }
             ResultSet resultSet = preparedStatement.executeQuery();
-            logger.info("the question is updated, id is " + question.getQuestionID());
+            logger.info("the question is updated, id is " + question.getQuestionId());
         } catch (SQLException e) {
             logger.error(e.getMessage());
         }
@@ -81,13 +81,12 @@ public class QuestionMapper {
                 questionId = resultSet.getInt("id");
                 if(questionId!=0) {
                     logger.info("questions id is: " + questionId);
-                    question.setQuestionID(questionId);
+                    question.setQuestionId(questionId);
                 }
             }
         }catch (SQLException e) {
             logger.error(e.toString());
         }
-
     }
 
     public static List<Question> loadQuestionsFromExamId(int examid) {

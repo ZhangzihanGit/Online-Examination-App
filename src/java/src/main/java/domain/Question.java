@@ -10,7 +10,7 @@ import java.util.Queue;
 
 public class Question {
     private final static Logger logger = LogManager.getLogger(Question.class);
-    private int questionID;
+    private int questionId;
     private QuestionType questionType;
     private String description;
     private String options;
@@ -40,14 +40,14 @@ public class Question {
     /**
      * Full constructor, that requires question id. The contructor will not be used if the question
      * is the first time created.
-     * @param questionID
+     * @param questionId
      * @param description
      * @param options
      * @param questionType
      */
-    public Question(int questionID, String description, String options, QuestionType questionType, int examId,
+    public Question(int questionId, String description, String options, QuestionType questionType, int examId,
                     int mark) {
-        this.questionID = questionID;
+        this.questionId = questionId;
         this.questionType = questionType;
         this.description = description;
         this.options = options;
@@ -100,8 +100,8 @@ public class Question {
         return examId;
     }
 
-    public int getQuestionID() {
-        return questionID;
+    public int getQuestionId() {
+        return questionId;
     }
 
     public String getDescription() {
@@ -111,8 +111,8 @@ public class Question {
         return description;
     }
 
-    public void setQuestionID(int questionID) {
-        this.questionID = questionID;
+    public void setQuestionId(int questionId) {
+        this.questionId = questionId;
     }
 
     public void setOptions(String options) {
@@ -136,7 +136,7 @@ public class Question {
 
     private void load() {
         logger.info("Loading questions...");
-        Question question = QuestionMapper.loadWithId(this.questionID);
+        Question question = QuestionMapper.loadWithId(this.questionId);
         if (options == null ){
             logger.info("Loading options");
             this.options = question.options;

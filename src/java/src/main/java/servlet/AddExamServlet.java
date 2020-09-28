@@ -54,8 +54,10 @@ public class AddExamServlet extends HttpServlet {
                     get("questionType").toString().toUpperCase());
             questions.add(new Question(description,options,questionType,examId,mark));
         }
+        // Commit the new added questions
         service.addQuestions();
         // After questions are loaded into the exam, initialise it in the exam object.
+        // The setter will not initiate
         exam.setQuestions(questions);
 
         jsonObject = new JSONObject();
