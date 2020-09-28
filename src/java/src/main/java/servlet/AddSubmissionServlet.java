@@ -9,7 +9,9 @@ import org.json.JSONObject;
 import service.InstructorService;
 import service.UserService;
 import service.impl.InstructorServiceImpl;
+import util.UnitOfWork;
 
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@WebServlet(urlPatterns = "/submission")
 public class AddSubmissionServlet extends HttpServlet {
     private final static Logger logger = LogManager.getLogger(AddSubmissionServlet.class);
 
@@ -35,6 +38,7 @@ public class AddSubmissionServlet extends HttpServlet {
         service.addSubmission();
         // Create the new submission.
         Submission submission = new Submission(userId, examId);
+        UnitOfWork.getInstance().commit();
 
         int submissionId = submission.getId();
 
