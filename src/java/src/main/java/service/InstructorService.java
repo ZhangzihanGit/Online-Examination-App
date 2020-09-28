@@ -1,7 +1,9 @@
 package service;
 
+import domain.Answer;
 import domain.Exam;
 import domain.Question;
+import domain.Submission;
 import org.json.JSONArray;
 
 import java.util.List;
@@ -23,6 +25,20 @@ public interface InstructorService extends UserService{
     public void addExam(Exam exam);
 
     public void addQuestions();
+
+    public boolean checkExamSubmitted(Exam exam);
+
+    public boolean checkStudentInExam(Exam exam);
+
+    public void addSubmission();
+
+    public void addAnswer();
+
+    public Submission getSubmission(int submissionId);
+
+    public List<Answer> getAllSubmission(int examId, int subjectId);
+
+    public Answer getAnswer(int submissionId, int questionId);
 
     /**
      * View all exams under the subject.

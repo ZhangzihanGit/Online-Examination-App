@@ -16,9 +16,15 @@ public class Exam {
     public Exam() {
 
     }
+
+    /**
+     * The constructor is used when it's first time created.
+     * List of questions is appended later to Exam.
+     * @param subjectId
+     * @param description
+     */
     public Exam(int subjectId, String description) {
         System.out.println("Exam partial constructor");
-//        this.questions = questions;
         this.subjectId = subjectId;
         this.description = description;
 
@@ -29,7 +35,7 @@ public class Exam {
         return isPublished;
     }
 
-    public Exam(Integer id, Integer subjectId, String description, List<Question> questions, boolean isPublished, String showName) {
+    public Exam(Integer id, int subjectId, String description, List<Question> questions, boolean isPublished, String showName) {
         System.out.println("Exam full constructor");
         this.description = description;
         this.questions = questions;

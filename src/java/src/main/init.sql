@@ -66,6 +66,7 @@ CREATE TABLE IF NOT EXISTS exam.answer(
 	questionId INT NOT NULL,
 	FOREIGN KEY (submissionId) REFERENCES exam.submission (id),
 	FOREIGN KEY (questionId) REFERENCES exam.question (id),
-	mark INT NOT NULL,
+	mark INT,
+	content TEXT,
 	PRIMARY KEY (id,submissionId, questionId)
 );

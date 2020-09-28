@@ -35,6 +35,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User getUser(int userId) {
+        User user = UserMapper.loadWithId(userId);
+        return user;
+    }
+
+    @Override
     public List<Student> viewAllStudents(int subjectId) {
         return null;
     }

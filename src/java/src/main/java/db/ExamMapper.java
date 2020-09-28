@@ -23,6 +23,8 @@ public class ExamMapper {
         String sql = "DELETE FROM exam.exam " +
                 " WHERE id = ?";
         int id = exam.getId();
+        // When the exam is deleted, the dependency that depends on
+        // exam should be deleted too. 
         List<Question> questions = exam.getQuestions();
         for (Question q: questions) {
             QuestionMapper.deleteQuestion(q);

@@ -2,6 +2,7 @@ package service;
 
 import domain.Exam;
 import domain.Question;
+import domain.Submission;
 
 import java.util.List;
 
@@ -44,4 +45,6 @@ public interface StudentService extends UserService{
      * @return One exam
      */
     public Exam viewExamById(int subjectId, int examId);
+
+    public void addSubmission(Submission submission);
 }

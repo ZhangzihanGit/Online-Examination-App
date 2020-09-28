@@ -8,6 +8,7 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import service.StudentService;
 import service.UserService;
+import util.UnitOfWork;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +16,10 @@ import java.util.List;
 public class StudentServiceImpl implements StudentService {
     private static final Logger logger = LogManager.getLogger(StudentServiceImpl.class);
 
+    @Override
+    public void addSubmission(Submission submission) {
+        UnitOfWork.getInstance().commit();
+    }
     @Override
     public Exam getExam(int examId) {
         return null;
@@ -95,6 +100,11 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public User getUser(String userName) {
+        return null;
+    }
+
+    @Override
+    public User getUser(int userId) {
         return null;
     }
 

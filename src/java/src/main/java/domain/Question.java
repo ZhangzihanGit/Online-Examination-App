@@ -10,7 +10,7 @@ import java.util.Queue;
 
 public class Question {
     private final static Logger logger = LogManager.getLogger(Question.class);
-    private int questionID;
+    private int questionId;
     private QuestionType questionType;
     private String description;
     private String options;
@@ -47,7 +47,7 @@ public class Question {
      */
     public Question(int questionID, String description, String options, QuestionType questionType, int examId,
                     int mark) {
-        this.questionID = questionID;
+        this.questionId = questionID;
         this.questionType = questionType;
         this.description = description;
         this.options = options;
@@ -101,7 +101,7 @@ public class Question {
     }
 
     public int getQuestionID() {
-        return questionID;
+        return questionId;
     }
 
     public String getDescription() {
@@ -112,7 +112,7 @@ public class Question {
     }
 
     public void setQuestionID(int questionID) {
-        this.questionID = questionID;
+        this.questionId = questionID;
     }
 
     public void setOptions(String options) {
@@ -136,7 +136,7 @@ public class Question {
 
     private void load() {
         logger.info("Loading questions...");
-        Question question = QuestionMapper.loadWithId(this.questionID);
+        Question question = QuestionMapper.loadWithId(this.questionId);
         if (options == null ){
             logger.info("Loading options");
             this.options = question.options;

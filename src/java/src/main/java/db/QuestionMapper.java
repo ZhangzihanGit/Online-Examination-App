@@ -87,7 +87,6 @@ public class QuestionMapper {
         }catch (SQLException e) {
             logger.error(e.toString());
         }
-
     }
 
     public static List<Question> loadQuestionsFromExamId(int examid) {

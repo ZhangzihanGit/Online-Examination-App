@@ -6,20 +6,75 @@ import util.UnitOfWork;
 import java.util.Date;
 
 public class Answer {
-    private int questionID;
+    private Integer questionId;
+    private Integer submissionId;
     private String content;
-    private Date updatedTime;
+    private Integer id;
+    private Integer mark;
 
-    public Answer(int questionID, String content, Date updatedTime) {
-        this.questionID = questionID;
+    public Answer(){
+
+    }
+
+    public Answer(int questionId, String content, int submissionId) {
+        this.questionId = questionId;
         this.content = content;
-        this.updatedTime = updatedTime;
+        this.submissionId = submissionId;
 
         UnitOfWork.getInstance().registerNewObject(this);
     }
 
-    public int getQuestionID() {
-        return questionID;
+    public Answer(int id, int questionID, String content,
+                  int submissionId) {
+        this.id = id;
+        this.questionId = questionID;
+        this.content = content;
+        this.submissionId = submissionId;
+//        this.mark = mark;
+
+//        UnitOfWork.getInstance().registerNewObject(this);
+    }
+
+    public Integer getMark() {
+        return mark;
+    }
+
+
+    public void setMark(Integer mark) {
+        this.mark = mark;
+        UnitOfWork.getInstance().registerDirtyObject(this);
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public Integer getSubmissionId() {
+        if (this.submissionId == null ) {
+            load();
+        }
+        return submissionId;
+    }
+
+    public void setQuestionId(Integer questionId) {
+        this.questionId = questionId;
+        UnitOfWork.getInstance().registerDirtyObject(this);
+    }
+
+    public void setSubmissionId(Integer submissionId) {
+        this.submissionId = submissionId;
+        UnitOfWork.getInstance().registerDirtyObject(this);
+    }
+
+    public int getQuestionId() {
+        if (this.questionId == null) {
+            load();
+        }
+        return questionId;
     }
 
     public String getContent() {
@@ -29,8 +84,8 @@ public class Answer {
         return content;
     }
 
-    public void setQuestionID(int questionID) {
-        this.questionID = questionID;
+    public void setQuestionID(int questionId) {
+        this.questionId = questionId;
         UnitOfWork.getInstance().registerDirtyObject(this);
     }
 
@@ -40,12 +95,16 @@ public class Answer {
     }
 
     private void load() {
-        Answer answer = AnswerMapper.loadWithId(this.questionID);
-        if (this.updatedTime == null) {
-            this.updatedTime = answer.updatedTime;
-        }
+        Answer answer = AnswerMapper.loadWithId(id);
+
         if (this.content == null) {
             this.content = answer.content;
+        }
+        if (this.questionId == null) {
+            this.questionId = answer.questionId;
+        }
+        if (this.submissionId == null) {
+            this.submissionId = answer.submissionId;
         }
     }
 }

@@ -1,6 +1,5 @@
 package domain;
 
-import com.google.gson.annotations.Expose;
 import db.SubjectMapper;
 import util.UnitOfWork;
 
