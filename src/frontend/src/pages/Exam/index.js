@@ -12,7 +12,7 @@ const { Title } = Typography;
 
 const generateDefaultSubmission = (questions) => {
   return questions.map(question => ({
-    questionId: question.questionID,
+    questionId: question.questionId,
     answer: ""
   }));
 };

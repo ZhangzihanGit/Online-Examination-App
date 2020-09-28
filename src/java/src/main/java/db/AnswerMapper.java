@@ -29,7 +29,7 @@ public class AnswerMapper {
     }
 
     public static List<Answer> loadAnswers(int submissionId) {
-        String sql = "SELECT ( FROM exam.answer WHERE submissionid = ?";
+        String sql = "SELECT * FROM exam.answer WHERE submissionid = ?";
         PreparedStatement statement = null;
         List<Answer> answers = new ArrayList<>();
 

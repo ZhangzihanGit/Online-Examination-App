@@ -101,7 +101,7 @@ public class UnitOfWork {
                 ExamMapper.updateExam((Exam)object);
             }
             if (object instanceof Question) {
-                logger.info("question object is being updated with id: "+((Question) object).getQuestionID());
+                logger.info("question object is being updated with id: "+((Question) object).getQuestionId());
                 QuestionMapper.updateQuestion((Question) object);
             }
             // TODO: Don't forget tot add Submission and Answer here, as they
@@ -123,7 +123,7 @@ public class UnitOfWork {
                 ExamMapper.deleteExam((Exam) object);
             }
             if (object instanceof Question) {
-                logger.info("question object is deleted with id: " + ((Question) object).getQuestionID());
+                logger.info("question object is deleted with id: " + ((Question) object).getQuestionId());
                 QuestionMapper.deleteQuestion((Question) object);
             }
         }
