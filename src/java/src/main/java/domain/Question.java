@@ -40,14 +40,14 @@ public class Question {
     /**
      * Full constructor, that requires question id. The contructor will not be used if the question
      * is the first time created.
-     * @param questionID
+     * @param questionId
      * @param description
      * @param options
      * @param questionType
      */
-    public Question(int questionID, String description, String options, QuestionType questionType, int examId,
+    public Question(int questionId, String description, String options, QuestionType questionType, int examId,
                     int mark) {
-        this.questionId = questionID;
+        this.questionId = questionId;
         this.questionType = questionType;
         this.description = description;
         this.options = options;
@@ -100,7 +100,7 @@ public class Question {
         return examId;
     }
 
-    public int getQuestionID() {
+    public int getQuestionId() {
         return questionId;
     }
 
@@ -111,8 +111,8 @@ public class Question {
         return description;
     }
 
-    public void setQuestionID(int questionID) {
-        this.questionId = questionID;
+    public void setQuestionId(int questionId) {
+        this.questionId = questionId;
     }
 
     public void setOptions(String options) {

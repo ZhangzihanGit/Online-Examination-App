@@ -24,10 +24,10 @@ public class Answer {
         UnitOfWork.getInstance().registerNewObject(this);
     }
 
-    public Answer(int id, int questionID, String content,
+    public Answer(int id, int questionId, String content,
                   int submissionId) {
         this.id = id;
-        this.questionId = questionID;
+        this.questionId = questionId;
         this.content = content;
         this.submissionId = submissionId;
 //        this.mark = mark;

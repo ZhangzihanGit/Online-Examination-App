@@ -264,7 +264,7 @@ public class ExamMapper {
 
             exam = new Exam(id,subjectId,description,questions,isPublished,isClosed,showName);
             for (int i=0; i< questions.size();i ++ ) {
-                logger.info(questions.get(i).getQuestionID());
+                logger.info(questions.get(i).getQuestionId());
             }
 
         } catch (SQLException e) {

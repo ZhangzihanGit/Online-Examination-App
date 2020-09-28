@@ -44,7 +44,7 @@ const ExamForm = () => {
 
         temp.questionDescription = question.description;
         temp.questionMark = question.mark;
-        temp.questionID = question.questionID;
+        temp.questionId = question.questionId;
         deTransformedQuestions.push(temp);
       });
 
@@ -66,7 +66,7 @@ const ExamForm = () => {
     const transformedQuestions = [];
     values.questions.forEach(({
       questionType, questionDescription, questionMark,
-      options, option1, option2, questionID
+      options, option1, option2, questionId
     }) => {
       let newOptions = [];
       if (options) {
@@ -80,7 +80,7 @@ const ExamForm = () => {
         description: questionDescription,
         mark: Number(questionMark),
         options: newOptions,
-        questionID
+        questionId
       });
     });
 
@@ -149,8 +149,8 @@ const ExamForm = () => {
                           <Form.Item
                             {...field}
                             label="Question Id"
-                            name={[field.name, 'questionID']}
-                            fieldKey={[field.fieldKey, 'questionID']}
+                            name={[field.name, 'questionId']}
+                            fieldKey={[field.fieldKey, 'questionId']}
 
                           >
                             <Input disabled />

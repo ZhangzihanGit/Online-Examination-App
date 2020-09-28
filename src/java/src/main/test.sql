@@ -52,3 +52,6 @@ ALTER TYPE questiontype ADD VALUE 'shortanswer' BEFORE 'short_answer';
 
 -- ALTER TABLE exam.exam
 --     RENAME COLUMN isstart TO isclosed;
+
+ALTER TABLE exam.submission
+    ALTER COLUMN mark drop not NULL;

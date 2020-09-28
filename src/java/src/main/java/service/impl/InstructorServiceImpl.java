@@ -123,8 +123,6 @@ public class InstructorServiceImpl implements InstructorService {
     /**
      * Update the exam, given the subject Id and exam Id.
      *
-     * @param subjectId Subject Id
-     * @param examId    Exam Id
      */
     @Override
     public void updateExam(Exam exam) {
@@ -172,7 +170,7 @@ public class InstructorServiceImpl implements InstructorService {
             }
             for (Question q: originalQuestions) {
                 // the question id existed in the original questions lists but not in the current question list.
-                if (!newQuestionIds.contains(q.getQuestionID())) {
+                if (!newQuestionIds.contains(q.getQuestionId())) {
                     q.delete();
                 }
             }
@@ -197,8 +195,8 @@ public class InstructorServiceImpl implements InstructorService {
                 for (Question q: originalQuestions) {
                     // Check if this is the same question, if true, go and check the attributes inside the question
                     // Exam id is not examined, since the request body was under the exam id.
-                    if (q.getQuestionID()==questionId) {
-                        logger.info("question with id: "+ q.getQuestionID() + " is being checked");
+                    if (q.getQuestionId()==questionId) {
+                        logger.info("question with id: "+ q.getQuestionId() + " is being checked");
                         // The content of the question is updated
                         if (q.getQuestionType() != questionType) {
                             q.setQuestionType(questionType);
@@ -232,7 +230,7 @@ public class InstructorServiceImpl implements InstructorService {
     /**
      * Close the exam.
      *
-     * @param subjectId
+     * @param userId
      * @param examId
      */
     @Override
@@ -249,7 +247,7 @@ public class InstructorServiceImpl implements InstructorService {
     /**
      * Publish the exam and make it available to the student.
      *
-     * @param subjectId
+     * @param userId
      * @param examId
      */
     @Override

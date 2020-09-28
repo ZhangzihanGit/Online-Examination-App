@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@WebServlet(urlPatterns = "/add-submission")
+@WebServlet(urlPatterns = "/submission")
 public class AddSubmissionServlet extends HttpServlet {
     private final static Logger logger = LogManager.getLogger(AddSubmissionServlet.class);
 

@@ -63,6 +63,7 @@ public class SubmissionMapper {
             statement = DBConnection.prepare(sql);
             statement.setInt(1,studentId);
             statement.setInt(2,examId);
+//            statement.setInt(3,mark);
 
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
