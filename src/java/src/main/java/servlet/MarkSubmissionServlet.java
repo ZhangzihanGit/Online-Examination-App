@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.stream.Collectors;
 
-@WebServlet(urlPatterns = "mark-submit")
+@WebServlet(urlPatterns = "/mark-submit")
 public class MarkSubmissionServlet extends HttpServlet {
     private static final Logger logger = LogManager.getLogger(MarkSubmissionServlet.class);
 

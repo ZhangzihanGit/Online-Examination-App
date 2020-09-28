@@ -51,11 +51,11 @@ public class SubmissionMapper {
     }
 
     public static void addSubmission(Submission submission ) {
-        String sql = "INSERT INTO exam.submission (studentid, examid, mark) " +
-                " VALUES(?,?,?) RETURNING id";
+        String sql = "INSERT INTO exam.submission (studentid, examid) " +
+                " VALUES(?,?) RETURNING id";
         int studentId = submission.getStudentId();
         int examId = submission.getExamId();
-        int mark = submission.getMark();
+//        int mark = submission.getMark();
         int id = 0;
 
         PreparedStatement statement = null;
@@ -63,7 +63,6 @@ public class SubmissionMapper {
             statement = DBConnection.prepare(sql);
             statement.setInt(1,studentId);
             statement.setInt(2,examId);
-            statement.setInt(3,mark);
 
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
