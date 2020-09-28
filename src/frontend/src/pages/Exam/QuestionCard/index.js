@@ -52,6 +52,8 @@ const QuestionCard = ({ currentQuestion }) => {
   const dispatch = useDispatch();
   const { studentAnswer } = useSelector(state => state.subject);
   const { questionType, options, description, questionId } = currentQuestion;
+  const { identity } = useSelector(state => state.user);
+  const isStudent = identity && identity.userType === "student";
   const formattedOptions = splitOptions(options);
   let prevAnswer = null;
 
@@ -77,6 +79,7 @@ const QuestionCard = ({ currentQuestion }) => {
       <Card title={description} className={styles.questionCard}>
         {questionType.toLowerCase() === "shortanswer" && (
           <Input.TextArea
+            disabled={!isStudent}
             onChange={handleAnswer}
             autoSize={{ minRows: 5, maxRows: 10 }}
             allowClear
@@ -84,7 +87,12 @@ const QuestionCard = ({ currentQuestion }) => {
           />
         )}
         {questionType.toLowerCase() === "multiplechoice" && (
-          <Radio.Group style={radioStyle} onChange={handleAnswer} value={prevAnswer ? prevAnswer : ""}>
+          <Radio.Group
+            style={radioStyle}
+            onChange={handleAnswer}
+            value={prevAnswer ? prevAnswer : ""}
+            disabled={!isStudent}
+          >
             {formattedOptions.map(option => (
               <Radio
                 key={option}
