@@ -48,7 +48,23 @@ export function getAllInstructors(payload = {}) {
         type: GET_INSTRUCTOR_LIST,
         payload: response.data.instructorList,
       });
-      message.success(response.data.message);
+    } else {
+      message.error(response.data.message);
+    }
+  };
+};
+
+export function getAllStudents(payload = {}) {
+  return async (dispatch) => {
+    console.log(payload)
+    const response = await api.getAllStudents(payload);
+    console.log(response);
+
+    if (response.status === 200) {
+      dispatch({
+        type: GET_STUDENT_LIST,
+        payload: response.data.studentList,
+      });
     } else {
       message.error(response.data.message);
     }

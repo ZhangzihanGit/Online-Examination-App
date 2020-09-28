@@ -2,29 +2,24 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Form, Input, Button, Select } from 'antd';
 import { createSubject } from '../../../actions/subject';
-import { getAllInstructors } from '../../../actions/user';
+import { getAllInstructors, getAllStudents } from '../../../actions/user';
 import styles from './index.module.less';
 
 const { Option } = Select;
 
-const getAllInstructorNames = (instructorList) => {
-  return instructorList.map(i => i.showName);
-}
-
 const SubjectForm = () => {
   const dispatch = useDispatch();
-  const { identity, instructorList } = useSelector(state => state.user);
+  const { identity, instructorList, studentList } = useSelector(state => state.user);
   // const { identity } = useSelector(state => state.user);
 
   const onFinish = values => {
-    console.log(values);
-    // dispatch(createSubject({
-    //   ...values,
-    //   userId: identity.userId,
-    // }, `/dashboard/subjects`));
+    dispatch(createSubject({
+      ...values,
+      userId: identity.userId,
+    }, `/dashboard/subjects`));
   };
 
-  const handleClick = () => {
+  const handleInstructorClick = () => {
     // only fetch data if Redux store does not have it
     if (!instructorList) {
       dispatch(getAllInstructors({
@@ -34,9 +29,15 @@ const SubjectForm = () => {
     }
   };
 
-  // const onInstructorChange = (values) => {
-  //   console.log(values);
-  // };
+  const handleStudentClick = () => {
+    // only fetch data if Redux store does not have it
+    if (!studentList) {
+      dispatch(getAllStudents({
+        userId: identity.userId,
+        userType: identity.userType,
+      }));
+    }
+  };
 
   return (
     <div className={styles.formContainer}>
@@ -78,12 +79,33 @@ const SubjectForm = () => {
         >
           <Select
             placeholder="Assign instructors"
-            // onChange={onInstructorChange}
-            onClick={handleClick}
+            onClick={handleInstructorClick}
             mode="multiple"
             allowClear
           >
             {instructorList && instructorList.map(i => (
+              <Option key={i.userId} value={i.userId}>{i.showName}</Option>
+            ))}
+          </Select>
+        </Form.Item>
+
+        <Form.Item
+          name="students"
+          label="students"
+          rules={[
+            {
+              required: true,
+              message: "Please assign at least one student"
+            },
+          ]}
+        >
+          <Select
+            placeholder="Assign students"
+            onClick={handleStudentClick}
+            mode="multiple"
+            allowClear
+          >
+            {studentList && studentList.map(i => (
               <Option key={i.userId} value={i.userId}>{i.showName}</Option>
             ))}
           </Select>

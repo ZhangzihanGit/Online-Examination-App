@@ -1,6 +1,7 @@
 package service.impl;
 
 import db.InstructorMapper;
+import db.StudentMapper;
 import domain.Instructor;
 import domain.Student;
 import domain.Subject;
@@ -23,6 +24,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public List<Student> viewAllStudents() {
-        return null;
+        List<Student> students = StudentMapper.loadAllStudents();
+        return students;
     }
 }

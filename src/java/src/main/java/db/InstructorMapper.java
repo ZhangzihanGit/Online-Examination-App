@@ -36,7 +36,6 @@ public class InstructorMapper {
                 Instructor instructor = new Instructor(userId, userName, subjects,
                         UserType.valueOf(userType.toUpperCase()), showName);
                 instructors.add(instructor);
-                logger.info("========= " + userName + " " + userId);
             }
         } catch (SQLException e) {
             logger.error(e.getMessage());
