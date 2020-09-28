@@ -27,7 +27,7 @@ const SubjectList = () => {
     name: "Add Subject"
   };
 
-  const renderList = subjectList ? (isAdmin ? [addSubjectButton, ...subjectList] : subjectList)
+  const renderList = subjectList ? (isAdmin ? [...subjectList, addSubjectButton] : subjectList)
     : [];
 
   const handleAddSubject = () => {
@@ -50,7 +50,8 @@ const SubjectList = () => {
       className={styles.subjectsContainer}
       size="small"
       rowKey="id"
-      grid={{ gutter: 24, xxl: 4, xl: 3, lg: 2, md: 2, sm: 2, xs: 1 }}
+      grid={{ gutter: 24, xxl: 6, lg: 4, md: 2, sm: 1, xs: 1 }}
+      // grid={{ gutter: 24, column: 4 }}
       dataSource={renderList}
       renderItem={(item) => {
         if (item.name === "Add Subject") {
