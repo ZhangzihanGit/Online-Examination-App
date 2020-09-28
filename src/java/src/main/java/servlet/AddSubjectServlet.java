@@ -25,7 +25,10 @@ public class AddSubjectServlet extends HttpServlet {
         // TODO: 这里应该是给一个userid
         int adminId = jsonObject.getInt("userId");
         String showName = jsonObject.getString("showName");
-        String description = jsonObject.getString("HIS");
+        String description = jsonObject.getString("description");
+
+
+        // TODO: 创建完subject之后需要返回字段description, show_name, id用于前端显示
 
         //TODO: add subject 是admin的行为？
         Subject subject = new Subject(description,showName,adminId);

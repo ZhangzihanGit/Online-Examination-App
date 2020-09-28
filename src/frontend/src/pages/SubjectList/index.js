@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { List, Card, Button } from 'antd';
 import {
@@ -15,6 +16,7 @@ const getRandomANumber = (min, max) => {
 
 const SubjectList = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
   const { identity } = useSelector(state => state.user);
   const { pathname } = useSelector(state => state.router.location);
   const { subjectList } = useSelector(state => state.subject);
@@ -29,7 +31,7 @@ const SubjectList = () => {
     : [];
 
   const handleAddSubject = () => {
-    console.log("subject created!");
+    history.push(`/dashboard/subjects/create-subject`);
   };
 
   const handleSelectSubject = (item) => {

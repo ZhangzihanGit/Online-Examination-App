@@ -46,6 +46,8 @@ public class UpdateExamServlet extends HttpServlet {
         // Assume that front end will give all questions of the exam.
         instructorService.updatedQuestions(originalQuestions,jsonArray, exam);
 
+        // TODO: 还是把更新后的exam字段发回来吧
+
         JSONObject object = new JSONObject();
         object.put("message","success");
         response.setContentType("application/json");

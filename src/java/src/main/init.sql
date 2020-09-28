@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS exam.exam(
 	subjectId INT NOT NULL,
 	FOREIGN KEY (subjectId) REFERENCES exam.subject(id),
 	isPublished BOOLEAN NOT NULL DEFAULT FALSE,
-	isStart BOOLEAN NOT NULL DEFAULT FALSE,
+	isstart BOOLEAN NOT NULL DEFAULT FALSE,
 	description TEXT,
 	PRIMARY KEY (id, subjectId)
 );

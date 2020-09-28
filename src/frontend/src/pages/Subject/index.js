@@ -4,7 +4,6 @@ import { useSelector } from 'react-redux';
 import { Divider, Button } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import ContentList from './ContentList';
-// import ManageExam from '../manageExam/manageExam';
 import styles from './index.module.less';
 
 const adminView = (instructorList, studentList) => (
@@ -26,7 +25,7 @@ const Subject = () => {
 
   const handleCreateExam = () => {
     history.push(`/dashboard/subjects/${code}/create-exam`);
-  }
+  };
 
   return (
     <div className={styles.examListContaner}>

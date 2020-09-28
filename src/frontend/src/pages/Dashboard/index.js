@@ -5,14 +5,15 @@ import { Layout, Menu, Avatar, Breadcrumb } from 'antd';
 import { UserOutlined, HomeOutlined, LogoutOutlined } from '@ant-design/icons';
 import SubjectList from '../SubjectList';
 import Subject from '../Subject';
-// import AddExam from '../manageExam/addExam';
-// import Subject from '../TakeExam/subject';
 import { capitalizeFirstLetter } from '../../utils/helpers';
-// import { logout } from '../../actions/user';
+import { logout } from '../../actions/user';
 import { getSubjectList } from '../../actions/subject';
 import styles from './index.module.less';
-import UpdateExam from '../manageExam/updateExam';
 import ExamForm from '../Exam/ExamForm';
+import Exam from '../Exam';
+import SubjectForm from '../Subject/SubjectForm';
+import Submission from '../Submission';
+import DetailedSubmission from '../Submission/DetailedSubmission';
 
 
 const { Header, Sider, Content } = Layout;
@@ -60,7 +61,7 @@ const Dashboard = ({ location }) => {
   };
 
   const handleLogout = () => {
-    // dispatch(logout());
+    dispatch(logout());
   }
 
   return (
@@ -102,9 +103,15 @@ const Dashboard = ({ location }) => {
           </Breadcrumb>
           <div className={styles.content}>
             <Switch>
-              <Route path="/dashboard/subjects/:code/create-exam" component={ExamForm} />
-              <Route path="/dashboard/subjects/:code/edit-exam" component={UpdateExam} />
-              <Route path="/dashboard/subjects/:code" component={Subject} />
+              <Route exact path="/dashboard/subjects/:code/mark-exam-:examId/submission-:submissionId" component={DetailedSubmission} />
+              <Route exact path="/dashboard/subjects/create-subject" component={SubjectForm} />
+              <Route exact path="/dashboard/subjects/:code/create-exam" component={ExamForm} />
+              <Route exact path="/dashboard/subjects/:code/edit-exam-:examId" component={ExamForm} />
+              <Route exact path="/dashboard/subjects/:code/mark-exam-:examId" component={Submission} />
+              <Route exact path="/dashboard/subjects/:code/exam-:examId" component={Exam} />
+              <Route exact path="/dashboard/subjects/:code" component={Subject} />
+
+
               {menuList.map(({ key, content }) => {
                 return (
                   <Route key={key} path={key} component={content} />

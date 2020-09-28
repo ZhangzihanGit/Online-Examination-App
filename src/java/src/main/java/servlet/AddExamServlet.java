@@ -32,11 +32,14 @@ public class AddExamServlet extends HttpServlet {
                 collect(Collectors.joining(System.lineSeparator()));
         JSONObject jsonObject = new JSONObject(requestData);
         int subjectId = Integer.parseInt(jsonObject.get("subjectId").toString());
+        String showName = jsonObject.get("showName").toString();
+        String examDescription = jsonObject.get("description").toString();
         JSONArray jsonArray= jsonObject.getJSONArray("questions");
 
+        logger.info(showName);
 
         List<Question> questions = new ArrayList<>();
-        Exam exam = new Exam(subjectId,"Not too sure if needed");
+        Exam exam = new Exam(subjectId,showName,examDescription);
         InstructorService service = new InstructorServiceImpl();
         // Commit the exam to DB, get examid from DB.
         service.addExam(exam);
@@ -59,7 +62,12 @@ public class AddExamServlet extends HttpServlet {
 
         jsonObject = new JSONObject();
         jsonObject.put("message","success");
-        jsonObject.put("examId", exam.getId().toString());
+        jsonObject.put("examId", exam.getId());
+        jsonObject.put("showName", exam.getShowName());
+        jsonObject.put("closed", exam.isClosed());
+        jsonObject.put("description", exam.getDescription());
+        jsonObject.put("published", exam.isPublished());
+        jsonObject.put("subjectId", exam.getSubjectId());
         response.setContentType("application/json");
         request.setCharacterEncoding("UTF-8");
         response.setStatus(200);
