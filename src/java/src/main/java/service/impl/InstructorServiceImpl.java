@@ -20,8 +20,21 @@ public class InstructorServiceImpl implements InstructorService {
 
     public boolean checkUpdatePermission(int examId, int subjectId) {
         List<Student> students = StudentMapper.loadStudentsBySubject(subjectId);
+        Exam exam = ExamMapper.loadWithId(examId);
+        // If the exam is submitted, has some submissions, cannot close the exam.
+        if (SubmissionMapper.examIsSubmitted(exam)) {
+            return false;
+        }
 
-        return false;
+        // If there are any student who
+        for (Student student: students) {
+            int id = student.getUserId();
+            // If the student if currently in one exam ,check the exam he's taking.
+            if (student.getInExam()) {
+                //TODO: How to check one exam is with one student?
+            }
+        }
+        return true;
     }
 
     public void addAnswer(){
