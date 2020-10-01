@@ -9,7 +9,9 @@ CREATE TABLE IF NOT EXISTS exam.users(
 	password VARCHAR(50) NOT NULL,
 	show_name VARCHAR(40) NOT NULL,
 	users_type USERTYPE,
-	PRIMARY KEY (id,username)
+	PRIMARY KEY (id,username),
+-- 	New added attribute: isInExam
+    is_in_exam BOOLEAN
 );
 
 CREATE TABLE IF NOT EXISTS exam.subject(

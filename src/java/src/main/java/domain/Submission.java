@@ -46,7 +46,6 @@ public class Submission {
         this.studentId = studentId;
         this.examId = examId;
 
-//        UnitOfWork.getInstance().registerNewObject(this);
     }
 
     public int getExamId() {

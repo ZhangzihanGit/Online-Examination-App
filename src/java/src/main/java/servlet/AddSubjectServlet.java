@@ -1,6 +1,7 @@
 package servlet;
 
 import domain.Subject;
+import domain.UserType;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.json.JSONObject;
@@ -27,6 +28,7 @@ public class AddSubjectServlet extends HttpServlet {
         int adminId = jsonObject.getInt("userId");
         String showName = jsonObject.getString("showName");
         String description = jsonObject.getString("description");
+//        UserType userType = UserType.valueOf(jsonObject.getString("userType"));
 
 
         // TODO: 创建完subject之后需要返回字段description, show_name, id用于前端显示

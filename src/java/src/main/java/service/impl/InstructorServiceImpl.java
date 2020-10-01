@@ -18,6 +18,12 @@ import java.util.List;
 public class InstructorServiceImpl implements InstructorService {
     private static final Logger logger = LogManager.getLogger(InstructorServiceImpl.class);
 
+    public boolean checkUpdatePermission(int examId, int subjectId) {
+        List<Student> students = StudentMapper.loadStudentsBySubject(subjectId);
+
+        return false;
+    }
+
     public void addAnswer(){
         UnitOfWork.getInstance().commit();
     }
@@ -37,8 +43,8 @@ public class InstructorServiceImpl implements InstructorService {
         return answer;
     }
 
-    public List<Answer> getAllSubmission(int examId, int subjectId){
-        return null;
+    public List<Submission> getAllSubmission(int examId){
+        return SubmissionMapper.loadSubmissionsExam(examId);
     }
 
     @Override
@@ -240,7 +246,6 @@ public class InstructorServiceImpl implements InstructorService {
             ExamMapper.closeExam(exam);
         } catch (Exception e) {
             logger.error(e.getMessage());
-            // TODO: error handling
         }
     }
 

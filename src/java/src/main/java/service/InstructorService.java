@@ -24,6 +24,7 @@ public interface InstructorService extends UserService{
      */
     public void addExam(Exam exam);
 
+
     public void addQuestions();
 
     public boolean checkExamSubmitted(Exam exam);
@@ -36,7 +37,7 @@ public interface InstructorService extends UserService{
 
     public Submission getSubmission(int submissionId);
 
-    public List<Answer> getAllSubmission(int examId, int subjectId);
+    public List<Submission> getAllSubmission(int examId);
 
     public Answer getAnswer(int submissionId, int questionId);
 

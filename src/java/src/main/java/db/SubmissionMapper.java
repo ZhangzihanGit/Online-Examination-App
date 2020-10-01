@@ -30,6 +30,24 @@ public class SubmissionMapper {
         }
     }
 
+    public static List<Submission> loadSubmissionsExam(int examId) {
+        String sql = "SELECT * FROM exam.submission WHERE " +
+                " examid=?";
+        PreparedStatement statement = null;
+        List<Submission> submissions = null;
+        try {
+            statement = DBConnection.prepare(sql);
+            statement.setInt(1,examId);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                submissions.add(load(resultSet));
+            }
+        } catch (SQLException e) {
+            logger.error(e.getMessage());
+        }
+        return submissions;
+    }
+
     public static boolean examIsSubmitted(Exam exam) {
         String sql = "SELECT * FROM exam.submission WHERE " +
                 " examid = ?";
@@ -75,6 +93,33 @@ public class SubmissionMapper {
         } catch (SQLException e) {
             logger.error(e.getMessage());
         }
+    }
+
+    /**
+     * Return a submission for one student in one exam. This will be unique, as
+     * one student can only have one submission for one exam.
+     * @param studentId
+     * @param examId
+     * @return
+     */
+    public static Submission loadWithStudentExam(int studentId, int examId) {
+        String sql = "SELECT * FROM exam.submission WHERE studentid = ? AND " +
+                "examid = ?";
+        PreparedStatement statement = null;
+        Submission submission = null;
+        try {
+            statement = DBConnection.prepare(sql);
+            statement.setInt(1,studentId);
+            statement.setInt(2,examId);
+            ResultSet resultSet = statement.executeQuery();
+
+            while(resultSet.next()) {
+                submission = SubmissionMapper.load(resultSet);
+            }
+        } catch (SQLException e) {
+            logger.error(e.getMessage());
+        }
+        return submission;
     }
 
     public static Submission loadWithId(int id) {

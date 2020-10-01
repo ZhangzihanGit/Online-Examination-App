@@ -11,8 +11,8 @@ import java.util.Map;
 public class Student extends User{
     private static Logger logger = LogManager.getLogger(User.class);
     private List<Subject> subjects;
-    private boolean isInExam;
-    private List<Map<Exam,Integer>> marks;
+    private Boolean isInExam;
+//    private List<Map<Exam,Integer>> marks;
     private String showName;
 
     public Student() {
@@ -28,20 +28,8 @@ public class Student extends User{
         return isInExam;
     }
 
-    public List<Map<Exam, Integer>> getMarks() {
-        if (marks == null) {
-            load();
-        }
-        return marks;
-    }
-
     public void setInExam(boolean inExam) {
         this.isInExam = inExam;
-        UnitOfWork.getInstance().registerDirtyObject(this);
-    }
-
-    public void setMarks(List<Map<Exam, Integer>> marks) {
-        this.marks = marks;
         UnitOfWork.getInstance().registerDirtyObject(this);
     }
 
@@ -54,10 +42,14 @@ public class Student extends User{
     public void load() {
         super.load();
         logger.info("Reach Sub load, not only the parent load");
-        Student student = StudentMapper.loadWithId(this.userId);
-        if (this.marks == null) {
-//            this.marks = student.marks;
-            logger.info("marks is null");
+        Student student = null;
+        try {
+            student = StudentMapper.loadWithId(this.userId);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+        }
+        if (this.isInExam == null) {
+            this.isInExam = student.isInExam;
         }
     }
 }

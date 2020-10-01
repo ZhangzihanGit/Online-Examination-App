@@ -54,7 +54,6 @@ public class Question {
         this.examId = examId;
         this.mark = mark;
 
-//        UnitOfWork.getInstance().registerNewObject(this);
     }
 
     public void setMark(Integer mark) {

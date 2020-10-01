@@ -114,6 +114,10 @@ public class UnitOfWork {
                 logger.info("submission object is being update with id: " + ((Submission) object).getId());
                 SubmissionMapper.updateSubmission((Submission) object);
             }
+            if (object instanceof Student ){
+                logger.info("student information is be updated with id" + ((Student) object).getUserId());
+                StudentMapper.updateStatus((Student) object);
+            }
         }
         dirtyObjectList.clear();
         for (int i=0; i<deletedObjectList.size(); i++) {

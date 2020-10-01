@@ -17,8 +17,57 @@ public class StudentMapper {
     private static final Logger logger = LogManager.getLogger(StudentMapper.class);
 
     public static Student loadWithId(Integer id) {
-        // need to non-null check 
+        String sql = "SELECT * FROM exam.users WHERE id = ?";
+        PreparedStatement statement = null;
+        Student student = null;
+        try {
+            statement.setInt(1,id);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                student = StudentMapper.load(resultSet);
+            }
+            return student;
+        }catch (SQLException e) {
+            logger.error(e.getMessage());
+        }
         return null;
+    }
+
+    private static Student load(ResultSet resultSet) {
+        Student student = null;
+        try {
+            int userId = resultSet.getInt("id");
+            String userName = resultSet.getString("username");
+            String showName = resultSet.getString("show_name");
+            String userType = resultSet.getString("users_type");
+            boolean isInExam = resultSet.getBoolean("is_in_exam");
+            List<Subject> subjects =   SubjectMapper.loadStudentSubjects(userId);
+
+            student = new Student(userId, subjects, isInExam, userName,
+                    UserType.valueOf(userType.toUpperCase()), showName);
+        } catch (SQLException e) {
+            logger.error(e.getMessage());
+        }
+        return student;
+    }
+
+    public static boolean updateStatus(Student student) {
+        String sql = "UPDATE exam.users SET" +
+                " is_in_exam = ? WHERE id = ?";
+        int id = student.getUserId();
+        boolean isInExam = student.getInExam();
+
+        PreparedStatement statement = null;
+        try {
+            statement = DBConnection.prepare(sql);
+            statement.setBoolean(1,isInExam);
+            statement.setInt(2,id);
+            ResultSet resultSet = statement.executeQuery();
+            return true;
+        } catch (SQLException e) {
+            logger.error(e.getMessage());
+            return false;
+        }
     }
 
     public static List<Student> loadAllStudents() {
@@ -30,12 +79,8 @@ public class StudentMapper {
             while(resultSet.next()) {
                 int userId = resultSet.getInt("id");
                 String userName = resultSet.getString("username");
-                String showName = resultSet.getString("show_name");
-                String userType = resultSet.getString("users_type");
-                List<Subject> subjects =   SubjectMapper.loadStudentSubjects(userId);
 
-                Student student = new Student(userId, subjects, false, userName,
-                        UserType.valueOf(userType.toUpperCase()), showName);
+                Student student = StudentMapper.load(resultSet);
                 students.add(student);
                 logger.info(userName + " " + userId);
             }
@@ -57,19 +102,16 @@ public class StudentMapper {
             while(resultSet.next()) {
                 int userId = resultSet.getInt("id");
                 String userName = resultSet.getString("username");
-                String showName = resultSet.getString("show_name");
-                String userType = resultSet.getString("users_type");
-                List<Subject> subjects =   SubjectMapper.loadStudentSubjects(userId);
 
-                Student student = new Student(userId, subjects, false, userName,
-                        UserType.valueOf(userType.toUpperCase()), showName);
+//                Student student = new Student(userId, subjects, false, userName,
+//                        UserType.valueOf(userType.toUpperCase()), showName);
+                Student student = StudentMapper.load(resultSet);
                 students.add(student);
                 logger.info(userName + " " + userId);
             }
         } catch (SQLException e) {
             logger.error(e.getMessage());
         }
-
         return students;
     }
 }

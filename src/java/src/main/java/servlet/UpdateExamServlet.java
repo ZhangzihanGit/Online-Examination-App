@@ -47,9 +47,11 @@ public class UpdateExamServlet extends HttpServlet {
         instructorService.updatedQuestions(originalQuestions,jsonArray, exam);
 
         // TODO: 还是把更新后的exam字段发回来吧
+        JSONObject examObject = new JSONObject(exam);
 
         JSONObject object = new JSONObject();
         object.put("message","success");
+        object.put("exam", examObject);
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         response.setStatus(200);

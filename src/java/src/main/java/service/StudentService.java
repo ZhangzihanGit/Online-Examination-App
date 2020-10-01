@@ -2,6 +2,7 @@ package service;
 
 import domain.Exam;
 import domain.Question;
+import domain.Student;
 import domain.Submission;
 
 import java.util.List;
@@ -47,4 +48,6 @@ public interface StudentService extends UserService{
     public Exam viewExamById(int subjectId, int examId);
 
     public void addSubmission(Submission submission);
+
+    public boolean startExam(Student student);
 }

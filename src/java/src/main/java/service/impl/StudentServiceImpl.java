@@ -110,7 +110,6 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public List<Student> viewAllStudents(int subjectId) {
-        logger.info("reach here");
         List<Student> students = StudentMapper.loadStudentsBySubject(subjectId);
         return students;
     }
@@ -118,5 +117,10 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public List<Instructor> viewAllInstructors(int subjectId) {
         return null;
+    }
+
+    @Override
+    public boolean startExam(Student student) {
+        return StudentMapper.updateStatus(student);
     }
 }
