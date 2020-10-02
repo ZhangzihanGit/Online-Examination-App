@@ -123,4 +123,10 @@ public class StudentServiceImpl implements StudentService {
     public boolean startExam(Student student) {
         return StudentMapper.updateStatus(student);
     }
+
+    @Override
+    public void addSubmission() {
+        UnitOfWork.getInstance().commit();
+    }
+
 }
