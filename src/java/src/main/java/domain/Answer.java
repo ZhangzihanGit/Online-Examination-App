@@ -25,12 +25,12 @@ public class Answer {
     }
 
     public Answer(int id, int questionId, String content,
-                  int submissionId) {
+                  int submissionId, int mark) {
         this.id = id;
         this.questionId = questionId;
         this.content = content;
         this.submissionId = submissionId;
-//        this.mark = mark;
+        this.mark = mark;
 
 //        UnitOfWork.getInstance().registerNewObject(this);
     }

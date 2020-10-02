@@ -34,7 +34,7 @@ public class SubmissionMapper {
         String sql = "SELECT * FROM exam.submission WHERE " +
                 " examid=?";
         PreparedStatement statement = null;
-        List<Submission> submissions = null;
+        List<Submission> submissions = new ArrayList<>();
         try {
             statement = DBConnection.prepare(sql);
             statement.setInt(1,examId);
@@ -148,7 +148,7 @@ public class SubmissionMapper {
             int studentId = resultSet.getInt("studentid");
             int mark = resultSet.getInt("mark");
             answers = AnswerMapper.loadAnswers(id);
-
+            logger.info("Answer with id " + id + " and mark " + mark);
             submission = new Submission(id,answers,mark,studentId, examId);
         } catch (SQLException e) {
             logger.error(e.getMessage());

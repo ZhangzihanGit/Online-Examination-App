@@ -2,6 +2,8 @@ package servlet;
 
 import db.*;
 import domain.*;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import service.InstructorService;
@@ -16,6 +18,7 @@ import java.util.List;
 
 @WebServlet(urlPatterns = "/all-submissions")
 public class GetAllSubmissionServlet extends HttpServlet {
+    private final static Logger logger = LogManager.getLogger(GetAllSubmissionServlet.class);
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         int examId = Integer.parseInt(request.getParameter("examId"));
         int subjectId = Integer.parseInt(request.getParameter("subjectId"));
@@ -38,6 +41,8 @@ public class GetAllSubmissionServlet extends HttpServlet {
                 if (student.getUserId() == submission.getStudentId()) {
                     tempSubmission.put("userId", student.getUserId());
                     tempSubmission.put("submissionId", submission.getId());
+                    logger.info("User id submssion id +" + student.getUserId()+ " " + submission.getId());
+                    System.out.println("submission id is: " + submission.getStudentId());
                     // Find the submission under the name of the student, get back to the questions.
                     List<Answer> answers = AnswerMapper.loadAnswers(submission.getId());
                     JSONObject tempQuestion = null;
