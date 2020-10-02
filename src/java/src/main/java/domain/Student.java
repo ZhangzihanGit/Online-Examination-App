@@ -16,7 +16,7 @@ public class Student extends User{
     private String showName;
 
     public Student() {
-
+        this.isInExam = false;
     }
     public Student(int id, List<Subject> subjects, boolean isInExam, String name,
                    UserType userType, String showName) {

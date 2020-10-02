@@ -18,12 +18,13 @@ import java.io.IOException;
 @WebServlet(urlPatterns = "/start-exam")
 public class StartExamServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        int studentId = Integer.parseInt(request.getParameter("id"));
+        int studentId = Integer.parseInt(request.getParameter("userId"));
         int examId = Integer.parseInt(request.getParameter("examId"));
 
         StudentService service = new StudentServiceImpl();
         Exam exam = service.getExam(examId);
         User student = service.getUser(studentId);
+        System.out.println("Student ID: " + student.getName());
 
         boolean isExamStart = service.startExam((Student)student);
         JSONObject jsonObject = new JSONObject();

@@ -105,7 +105,8 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public User getUser(int userId) {
-        return null;
+        Student student = StudentMapper.loadWithId(userId);
+        return student;
     }
 
     @Override
@@ -121,6 +122,12 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public boolean startExam(Student student) {
+        student.setInExam(true);
+        return StudentMapper.updateStatus(student);
+    }
+
+    public boolean endExam(Student student) {
+        student.setInExam(false);
         return StudentMapper.updateStatus(student);
     }
 

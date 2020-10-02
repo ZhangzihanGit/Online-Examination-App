@@ -30,6 +30,10 @@ export const getExam = (params) => {
   return ajax.get(`/get-exam`, { params });
 };
 
+export const startExam = (params) => {
+  return ajax.get(`/start-exam`, { params });
+};
+
 export const createExam = (params) => {
   return ajax.post(`/add-exam`, { data: params });
 };

@@ -79,6 +79,25 @@ export function getExam(payload = {}, pathname) {
   }
 };
 
+export function startExam(payload = {}, pathname) {
+  return async (dispatch) => {
+    console.log(payload)
+    const result = await api.startExam(payload);
+    console.log(result);
+
+    if (result.status === 200) {
+      // dispatch({
+      //   type: GET_EXAM,
+      //   payload: result.data,
+      // });
+      // dispatch(push(pathname));
+      // message.success('Fetching exam successfully');
+    } else {
+      message.error('Fail to start exam');
+    }
+  }
+};
+
 export function submitExam(payload = {}, pathname) {
   return async (dispatch) => {
     const result = await api.submitExam(payload);

@@ -18,9 +18,10 @@ public class StudentMapper {
 
     public static Student loadWithId(Integer id) {
         String sql = "SELECT * FROM exam.users WHERE id = ?";
-        PreparedStatement statement = null;
+        logger.info("id: " + id);
         Student student = null;
         try {
+            PreparedStatement statement = DBConnection.prepare(sql);
             statement.setInt(1,id);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -57,13 +58,16 @@ public class StudentMapper {
                 " is_in_exam = ? WHERE id = ?";
         int id = student.getUserId();
         boolean isInExam = student.getInExam();
+        logger.info("Student is in exam? " + isInExam);
 
         PreparedStatement statement = null;
         try {
             statement = DBConnection.prepare(sql);
-            statement.setBoolean(1,isInExam);
+            statement.setBoolean(1, isInExam);
             statement.setInt(2,id);
-            ResultSet resultSet = statement.executeQuery();
+            // update SQL should use executeUpdate instead of executeQuery
+            statement.executeUpdate();
+
             return true;
         } catch (SQLException e) {
             logger.error(e.getMessage());

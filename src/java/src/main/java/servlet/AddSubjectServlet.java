@@ -30,14 +30,12 @@ public class AddSubjectServlet extends HttpServlet {
         String description = jsonObject.getString("description");
 //        UserType userType = UserType.valueOf(jsonObject.getString("userType"));
 
-
-        // TODO: 创建完subject之后需要返回字段description, show_name, id用于前端显示
-
-        //TODO: add subject 是admin的行为？
+        //TODO: add subject 时添加学生和老师
         Subject subject = new Subject(description,showName,adminId);
         AdminService service = new AdminServiceImpl();
         service.addSubject(subject);
 
+        // TODO: 创建完subject之后需要返回字段description, show_name, id用于前端显示
         jsonObject = new JSONObject();
         jsonObject.put("message","success");
         response.setContentType("application/json");

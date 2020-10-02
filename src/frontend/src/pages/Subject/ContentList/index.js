@@ -10,6 +10,7 @@ import {
 } from '@ant-design/icons';
 import {
   getExam,
+  startExam,
   publishExam,
   closeExam,
   deleteExam,
@@ -74,6 +75,10 @@ const ContentList = ({ list, isExam }) => {
   }
 
   const handleClickExam = (item) => {
+    dispatch(startExam({
+      examId: item.examId,
+      userId: identity.userId,
+    }));
     dispatch(getExam({
       examId: item.examId,
     }, `${pathname}/exam-${item.examId}`));

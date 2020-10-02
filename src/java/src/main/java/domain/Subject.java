@@ -11,6 +11,8 @@ public class Subject {
     private List<Exam> exams;
     private List<Student> students;
     private String description;
+    // TODO: replace adminId to InstructorId
+    // private List<Instructor> instructors;
     private int adminId;
 
     public Subject() {
@@ -19,6 +21,7 @@ public class Subject {
     public Subject(String description ,String subjectCode, int adminId) {
         this.description = description;
         this.subjectCode = subjectCode;
+        // TODO: replace
         this.adminId = adminId;
 
         UnitOfWork.getInstance().registerNewObject(this);
