@@ -46,6 +46,7 @@ public class MarkSubmissionServlet extends HttpServlet {
                 int questionId = questionData.getInt("questionId");
                 int mark = questionData.getInt("mark");
                 Answer answer = service.getAnswer(submissionId, questionId);
+                logger.info("Answer id is: "+ answer.getId());
                 answer.setMark(mark);
             }
             UnitOfWork.getInstance().commit();

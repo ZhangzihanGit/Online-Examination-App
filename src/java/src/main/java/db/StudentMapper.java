@@ -41,7 +41,7 @@ public class StudentMapper {
             String showName = resultSet.getString("show_name");
             String userType = resultSet.getString("users_type");
             boolean isInExam = resultSet.getBoolean("is_in_exam");
-            List<Subject> subjects =   SubjectMapper.loadStudentSubjects(userId);
+            List<Subject> subjects =  SubjectMapper.loadStudentSubjects(userId);
 
             student = new Student(userId, subjects, isInExam, userName,
                     UserType.valueOf(userType.toUpperCase()), showName);

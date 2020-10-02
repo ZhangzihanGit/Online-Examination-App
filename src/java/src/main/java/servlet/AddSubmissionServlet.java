@@ -7,8 +7,10 @@ import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import service.InstructorService;
+import service.StudentService;
 import service.UserService;
 import service.impl.InstructorServiceImpl;
+import service.impl.StudentServiceImpl;
 import util.UnitOfWork;
 
 import javax.servlet.annotation.WebServlet;
@@ -34,7 +36,7 @@ public class AddSubmissionServlet extends HttpServlet {
         int userId = jsonObject.getInt("userId");
 
         JSONArray jsonArray = jsonObject.getJSONArray("questions");
-        InstructorService service = new InstructorServiceImpl();
+        StudentService service = new StudentServiceImpl();
         service.addSubmission();
         // Create the new submission.
         Submission submission = new Submission(userId, examId);

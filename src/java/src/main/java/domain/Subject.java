@@ -20,8 +20,6 @@ public class Subject {
         this.description = description;
         this.subjectCode = subjectCode;
         this.adminId = adminId;
-//        this.exams = exams;
-//        this.students = students;
 
         UnitOfWork.getInstance().registerNewObject(this);
     }
@@ -46,7 +44,7 @@ public class Subject {
 
     public void setDescription(String description) {
         this.description = description;
-        UnitOfWork.getInstance().registerDirtyObject(this);
+//        UnitOfWork.getInstance().registerDirtyObject(this);
     }
 
     public String getDescription() {
@@ -98,7 +96,7 @@ public class Subject {
     }
 
     private void load() {
-        Subject subject = SubjectMapper.loadWithId(this.subjectCode);
+        Subject subject = SubjectMapper.loadWithId(this.id);
         if (this.exams == null) {
             this.exams = subject.exams;
         }
