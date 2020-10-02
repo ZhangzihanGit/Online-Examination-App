@@ -53,4 +53,7 @@ public interface StudentService extends UserService{
 
     public void addSubmission();
 
+    public void addAnswer();
+
+
 }

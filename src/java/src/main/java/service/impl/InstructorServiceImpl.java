@@ -37,9 +37,7 @@ public class InstructorServiceImpl implements InstructorService {
         return true;
     }
 
-    public void addAnswer(){
-        UnitOfWork.getInstance().commit();
-    }
+
 
     public Submission getSubmission(int submissionId) {
         return SubmissionMapper.loadWithId(submissionId);

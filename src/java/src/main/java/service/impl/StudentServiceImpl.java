@@ -129,4 +129,9 @@ public class StudentServiceImpl implements StudentService {
         UnitOfWork.getInstance().commit();
     }
 
+    @Override
+    public void addAnswer(){
+        UnitOfWork.getInstance().commit();
+    }
+
 }

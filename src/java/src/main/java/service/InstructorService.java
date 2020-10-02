@@ -32,7 +32,6 @@ public interface InstructorService extends UserService{
     public boolean checkStudentInExam(Exam exam);
 
 
-    public void addAnswer();
 
     public Submission getSubmission(int submissionId);
 
