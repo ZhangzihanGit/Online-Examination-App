@@ -150,7 +150,7 @@ public class SubjectMapper {
 //             to construct Subject Object.  => See Subject Constructor.
 //            Instructor instructor = InstructorMapper.loadWithId(instructorId);
                 subject.setId(id);
-//                subject.setExams(ExamMapper.loadWithId());
+                subject.setExams(ExamMapper.loadExamListWithSubject(id));
                 subject.setSubjectCode(showName);
                 subject.setDescription(description);
 

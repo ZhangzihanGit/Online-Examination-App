@@ -44,6 +44,7 @@ const Submission = () => {
     // }
 
     // check if we have submissions for this exam
+    // assignedMark
 
     const data = totalMarks.map(submission => {
       const found = detailedMarks.find(d => submission.submissionId === d.submissionId);

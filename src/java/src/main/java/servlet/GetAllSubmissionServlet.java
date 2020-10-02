@@ -69,8 +69,12 @@ public class GetAllSubmissionServlet extends HttpServlet {
                             tempQuestion = new JSONObject();
                             if (question.getQuestionId() == answer.getQuestionId()) {
                                 String questionDescription = question.getDescription();
-                                // here shouldn't get mark from answer, because we don't have marks now
-                                // int mark =answer.getMark();
+
+                                int assignedMark = 0;
+                                try {
+                                    assignedMark =answer.getMark();
+                                } catch (NullPointerException e){}
+
                                 int mark = question.getMark();
                                 totalMark +=mark;
                                 String content = answer.getContent();
@@ -78,7 +82,10 @@ public class GetAllSubmissionServlet extends HttpServlet {
                                 tempQuestion.put("questionId", questionId);
                                 tempQuestion.put("description", questionDescription);
                                 tempQuestion.put("answer", content);
+                                // mark means the question's full mark
                                 tempQuestion.put("mark", mark);
+                                // assignedMark means the mark that the instructor assigned to the student
+                                tempQuestion.put("assignedMark", assignedMark);
 
                                 tempArrayQuestions.put(tempQuestion);
                             }
