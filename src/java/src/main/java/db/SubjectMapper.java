@@ -1,5 +1,7 @@
 package db;
 
+import domain.Exam;
+import domain.Student;
 import domain.Subject;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -12,8 +14,22 @@ import java.util.List;
 
 public class SubjectMapper {
     private static final Logger logger = LogManager.getLogger(SubjectMapper.class);
-    public static Subject loadWithId(String id) {
-        return null;
+    public static Subject loadWithId(int id) {
+        String sql = "SELECT * FROM exam.subject WHERE id = ?";
+        PreparedStatement statement = null;
+        Subject subject = null;
+        try {
+            statement = DBConnection.prepare(sql);
+            statement.setInt(1,id);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                subject = SubjectMapper.load(resultSet);
+            }
+        }catch (SQLException e) {
+            logger.error(e.getMessage());
+        }
+        return subject;
     }
 
 
@@ -118,7 +134,6 @@ public class SubjectMapper {
         return subject;
     }
 
-
     private static Subject load(ResultSet resultSet) {
         Subject subject = new Subject();
         try {
@@ -139,8 +154,6 @@ public class SubjectMapper {
                 subject.setSubjectCode(showName);
                 subject.setDescription(description);
 
-//                map.put()
-//            }
         }catch (SQLException e) {
             logger.error(e.getMessage());
         }
