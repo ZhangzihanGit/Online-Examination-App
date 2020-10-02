@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Input, Divider, List, Button, message } from 'antd';
 import { CloudUploadOutlined } from '@ant-design/icons';
 import { useParams } from 'react-router-dom';
@@ -24,13 +24,26 @@ const Submission = () => {
   const { code, examId } = useParams();
   const { pathname } = useSelector(state => state.router.location);
   const { submissionList, totalMarks, detailedMarks } = useSelector(state => state.subject);
+  const [haveSubmissions, setHaveSubmissions] = useState(false);
+  console.log(haveSubmissions)
 
+  useEffect(() => {
+    if (submissionList) {
+      if (submissionList.submissions.length === 0) {
+        setHaveSubmissions(false);
+      } else {
+        setHaveSubmissions(true);
+      }
+    }
+  }, [submissionList]);
 
   const handleSubmitMarks = () => {
-    if (totalMarks.length !== detailedMarks.length) {
-      message.error('Please mark each question, not just a total mark!');
-      return;
-    }
+    // if (totalMarks.length !== detailedMarks.length) {
+    //   message.error('Please mark each question, not just a total mark!');
+    //   return;
+    // }
+
+    // check if we have submissions for this exam
 
     const data = totalMarks.map(submission => {
       const found = detailedMarks.find(d => submission.submissionId === d.submissionId);
@@ -101,6 +114,7 @@ const Submission = () => {
         <Button
           className={styles.submitButton}
           type="primary"
+          disabled={!haveSubmissions}
           icon={<CloudUploadOutlined />}
           onClick={handleSubmitMarks}
         >
