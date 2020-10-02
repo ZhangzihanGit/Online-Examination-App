@@ -1,18 +1,25 @@
 package servlet;
 
+import domain.Instructor;
+import domain.Student;
 import domain.Subject;
 import domain.UserType;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import service.AdminService;
+import service.UserService;
 import service.impl.AdminServiceImpl;
+import service.impl.UserServiceImpl;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @WebServlet(urlPatterns = "/add-subject")
@@ -23,17 +30,34 @@ public class AddSubjectServlet extends HttpServlet {
         String requestData = request.getReader().lines().
                 collect(Collectors.joining(System.lineSeparator()));
         JSONObject jsonObject = new JSONObject(requestData);
-        // TODO: 这里应该是给一个userid
         // TODO: enable multiple students and instructors enroll in this newly added subject
         int adminId = jsonObject.getInt("userId");
         String showName = jsonObject.getString("showName");
         String description = jsonObject.getString("description");
-//        UserType userType = UserType.valueOf(jsonObject.getString("userType"));
+
+        UserService userService = new UserServiceImpl();
+        AdminService service = new AdminServiceImpl();
+        logger.info("Start");
+        List<Instructor> instructors = new ArrayList<>();
+        List<Student> students = new ArrayList<>();
+
+        for (int i=0; i< jsonObject.getJSONArray("instructors").length(); i++) {
+            int instructorId = jsonObject.getJSONArray("instructors").getInt(i);
+            Instructor instructor = (Instructor)userService.getUser(instructorId);
+            logger.info("Instructor id: " + instructor.getUserId());
+            instructors.add(instructor);
+        }
+        for (int i=0; i< jsonObject.getJSONArray("students").length(); i++) {
+            int studentId= jsonObject.getJSONArray("students").getInt(i);
+            Student student = (Student) userService.getUser(studentId);
+            logger.info("Student id is: " + student.getUserId());
+            students.add(student);
+        }
 
         //TODO: add subject 时添加学生和老师
-        Subject subject = new Subject(description,showName,adminId);
-        AdminService service = new AdminServiceImpl();
-        service.addSubject(subject);
+        //Subject will be added to new Object list and commit by calling addSubject()
+        Subject subject = new Subject(description,showName,adminId,students,instructors);
+        service.addSubject();
 
         // TODO: 创建完subject之后需要返回字段description, show_name, id用于前端显示
         jsonObject = new JSONObject();

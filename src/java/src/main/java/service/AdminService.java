@@ -7,7 +7,7 @@ import domain.Subject;
 import java.util.List;
 
 public interface AdminService {
-    public void addSubject(Subject subject);
+    public void addSubject();
     List<Instructor> viewAllInstructors();
     List<Student> viewAllStudents();
 }

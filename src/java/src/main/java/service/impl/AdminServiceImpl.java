@@ -12,7 +12,7 @@ import java.util.List;
 
 public class AdminServiceImpl implements AdminService {
     @Override
-    public void addSubject(Subject subject) {
+    public void addSubject() {
         UnitOfWork.getInstance().commit();
     }
 

@@ -19,7 +19,10 @@ public class UserMapper {
             preparedStatement = DBConnection.prepare(sql);
             preparedStatement.setInt(1,id);
             ResultSet resultSet = preparedStatement.executeQuery();
-            user = UserMapper.load(resultSet);
+
+            while (resultSet.next()) {
+                user = UserMapper.load(resultSet);
+            }
         } catch (SQLException e) {
             logger.error(e.getMessage());
         }
@@ -73,6 +76,7 @@ public class UserMapper {
             String username = resultSet.getString("username");
             String showName = resultSet.getString("show_name");
             // UnitOfWork没有受到影响只是因为commit的时候没有选出来User类型的实例。
+            // This may lead to possible trouble, as evey setter leads to an add to unitofwork.
             user.setUserId(id);
             user.setName(username);
             user.setShowName(showName);
