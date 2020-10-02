@@ -149,7 +149,7 @@ public class SubmissionMapper {
             int studentId = resultSet.getInt("studentid");
             int mark = resultSet.getInt("mark");
             answers = AnswerMapper.loadAnswers(id);
-
+            logger.info("Answer with id " + id + " and mark " + mark);
             submission = new Submission(id,answers,mark,studentId, examId);
         } catch (SQLException e) {
             logger.error(e.getMessage());

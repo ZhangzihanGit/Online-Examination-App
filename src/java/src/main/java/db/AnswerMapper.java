@@ -98,8 +98,9 @@ public class AnswerMapper {
             int submissionId = resultSet.getInt("submissionid");
             String content = resultSet.getString("content");
             int id = resultSet.getInt("id");
+            int mark = resultSet.getInt("mark");
 
-            answer = new Answer(id,questionId,content,submissionId);
+            answer = new Answer(id,questionId,content,submissionId,mark);
 
         } catch (SQLException e) {
             logger.error(e.getMessage());
