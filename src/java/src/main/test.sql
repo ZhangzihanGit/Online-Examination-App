@@ -55,3 +55,6 @@ ALTER TYPE questiontype ADD VALUE 'shortanswer' BEFORE 'short_answer';
 
 ALTER TABLE exam.submission
     ALTER COLUMN mark drop not NULL;
+
+ALTER TABLE exam.users
+    ADD COLUMN is_in_exam BOOLEAN;

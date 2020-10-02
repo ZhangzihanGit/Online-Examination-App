@@ -49,7 +49,7 @@ const SubjectList = () => {
     <List
       className={styles.subjectsContainer}
       size="small"
-      rowKey="id"
+      // rowKey="id"
       grid={{ gutter: 24, xxl: 6, lg: 4, md: 2, sm: 1, xs: 1 }}
       // grid={{ gutter: 24, column: 4 }}
       dataSource={renderList}

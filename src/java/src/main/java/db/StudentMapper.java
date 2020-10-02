@@ -45,6 +45,7 @@ public class StudentMapper {
 
             student = new Student(userId, subjects, isInExam, userName,
                     UserType.valueOf(userType.toUpperCase()), showName);
+            logger.info("======== " + userName + " " + userId);
         } catch (SQLException e) {
             logger.error(e.getMessage());
         }
@@ -82,7 +83,7 @@ public class StudentMapper {
 
                 Student student = StudentMapper.load(resultSet);
                 students.add(student);
-                logger.info(userName + " " + userId);
+                logger.info("======== " + userName + " " + userId);
             }
         } catch (SQLException e) {
             logger.error(e.getMessage());

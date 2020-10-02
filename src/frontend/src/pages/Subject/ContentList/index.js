@@ -112,7 +112,7 @@ const ContentList = ({ list, isExam }) => {
             <Button
               size="small"
               type="ghost"
-              disabled={item.closed}
+              disabled={item.published ? item.closed : true}
               onClick={() => handleCloseExam(item)}
               icon={<StopOutlined />}
             >
