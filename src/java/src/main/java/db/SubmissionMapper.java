@@ -98,28 +98,26 @@ public class SubmissionMapper {
     /**
      * Return a submission for one student in one exam. This will be unique, as
      * one student can only have one submission for one exam.
-     * @param studentId
      * @param examId
      * @return
      */
-    public static Submission loadWithStudentExam(int studentId, int examId) {
-        String sql = "SELECT * FROM exam.submission WHERE studentid = ? AND " +
-                "examid = ?";
+    public static List<Integer> loadWithStudentExam(int examId) {
+        String sql = "SELECT * FROM exam.submission WHERE examid = ?";
         PreparedStatement statement = null;
-        Submission submission = null;
+        List<Integer> studentIds = new ArrayList<>();
         try {
             statement = DBConnection.prepare(sql);
-            statement.setInt(1,studentId);
-            statement.setInt(2,examId);
+            statement.setInt(1,examId);
             ResultSet resultSet = statement.executeQuery();
 
             while(resultSet.next()) {
-                submission = SubmissionMapper.load(resultSet);
+                int id = resultSet.getInt("studentid");
+                studentIds.add(id);
             }
         } catch (SQLException e) {
             logger.error(e.getMessage());
         }
-        return submission;
+        return studentIds;
     }
 
     public static Submission loadWithId(int id) {

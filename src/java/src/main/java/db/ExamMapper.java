@@ -88,8 +88,6 @@ public class ExamMapper {
                 "show_name=?, description=? " +
                 "WHERE id=?";
         PreparedStatement preparedStatement = null;
-        System.out.println("!!!!!!!!!called in mapper");
-        System.out.println("!!!!!!!!!called: " + exam.getDescription() + " " + exam.getShowName());
         try{
             preparedStatement =  DBConnection.prepare(sql);
             preparedStatement.setString(1, exam.getShowName());

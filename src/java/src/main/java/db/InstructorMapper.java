@@ -49,13 +49,11 @@ public class InstructorMapper {
         String sql = "SELECT * FROM exam.users as u INNER JOIN exam.subject as s ON" +
                 " u.id = s.instructorid WHERE s.id = ?";
         List<Instructor> instructors = new ArrayList<>();
-        logger.info("reach here1 " + subjectId);
         try {
             PreparedStatement statement = DBConnection.prepare(sql);
             statement.setInt(1, subjectId);
             ResultSet resultSet = statement.executeQuery();
             while(resultSet.next()) {
-                logger.info("reach here2 " + subjectId);
                 int userId = resultSet.getInt("id");
                 String userName = resultSet.getString("username");
                 String showName = resultSet.getString("show_name");

@@ -12,6 +12,7 @@ import domain.*;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import service.InstructorService;
+import service.StudentService;
 import util.Registry;
 import util.UnitOfWork;
 
@@ -273,12 +274,65 @@ public class InstructorServiceImpl implements InstructorService {
      * @param examId
      */
     @Override
-    public void closeExam(int userId, int examId) {
+    public void closeExam(int userId, int examId, int subjectId) {
         try {
             Exam exam = ExamMapper.loadWithId(examId);
+            // update exam table to be false
             ExamMapper.closeExam(exam);
+
+            // force all students that enrolls in this subject submit the exam
+            forceSubmit(subjectId, examId);
         } catch (Exception e) {
             logger.error(e.getMessage());
+        }
+    }
+
+    private void forceSubmit(int subjectId, int examId) {
+        // 1. get all students that enrolled in this subject
+        // 2. ignore students who submitted by themselves
+        // 3. for every unsubmitted student, create a new submission obj
+        // 4. insert submission into table to get submissionId
+        // 5. for each question, create a new answer obj, mark content as ""
+        // 6. insert answer into table
+
+        List<Student> students = this.viewAllStudents(subjectId);
+        List<Integer> selfSubmittedStudentIds = SubmissionMapper.loadWithStudentExam(examId);
+
+        List<Student> unsubmittedStudents = new ArrayList<>();
+        for (Student s : students) {
+            if (!selfSubmittedStudentIds.contains(s.getUserId())) {
+                unsubmittedStudents.add(s);
+            }
+        }
+
+        // all students have self-submitted, then no need to force them to submit
+        if (unsubmittedStudents.size() <= 0) return;
+
+        // get all questions of the exam
+        List<Question> questions = QuestionMapper.loadQuestionsFromExamId(examId);
+
+        StudentService service = new StudentServiceImpl();
+        // for all students that have not submitted, force submit
+        for (Student s : unsubmittedStudents) {
+            // Create the new submission.
+            Submission submission = new Submission(s.getUserId(), examId);
+            UnitOfWork.getInstance().commit();
+            List<Answer> answers = new ArrayList<>();
+            int submissionId = submission.getId();
+
+            for (Question q : questions) {
+                int questionId = q.getQuestionId();
+                Answer answer = new Answer(questionId, "", submissionId);
+                answers.add(answer);
+            }
+            // Call UnitOfWork to commit the added answers.
+            service.addAnswer();
+            // After the answers are written into DB, inject the dependency into
+            // the submission.
+            // *NOTE*: do not setAnswers, otherwise submission will be marked as dirty,
+            // then in the next loop, UoW will commit this dirty submission, but we
+            // do not have marks yet, so it will cause error
+//            submission.setAnswers(answers);
         }
     }
 
@@ -327,7 +381,8 @@ public class InstructorServiceImpl implements InstructorService {
 
     @Override
     public List<Student> viewAllStudents(int subjectId) {
-        return null;
+        List<Student> students = StudentMapper.loadStudentsBySubject(subjectId);
+        return students;
     }
 
     @Override

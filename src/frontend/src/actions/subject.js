@@ -250,6 +250,7 @@ export function submitMarks(payload = {}, pathname) {
   return async (dispatch) => {
     try {
       const result = await api.submitMarks(payload);
+      console.log(result);
       message.success('Submit marks successfully');
       dispatch(push(pathname));
     } catch (error) {

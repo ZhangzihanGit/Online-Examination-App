@@ -19,6 +19,7 @@ public class AnswerMapper {
         PreparedStatement preparedStatement = null;
         try {
             preparedStatement = DBConnection.prepare(sql);
+            int test = answer.getMark();
             preparedStatement.setInt(1,answer.getMark());
             preparedStatement.setInt(2,answer.getId());
             preparedStatement.executeUpdate();

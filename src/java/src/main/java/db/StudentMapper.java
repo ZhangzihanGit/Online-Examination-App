@@ -96,7 +96,6 @@ public class StudentMapper {
 
             student = new Student(userId, subjects, isInExam, userName,
                     UserType.valueOf(userType.toUpperCase()), showName);
-            logger.info("======== " + userName + " " + userId);
         } catch (SQLException e) {
             logger.error(e.getMessage());
         }
@@ -134,10 +133,8 @@ public class StudentMapper {
             while(resultSet.next()) {
                 int userId = resultSet.getInt("id");
                 String userName = resultSet.getString("username");
-
                 Student student = StudentMapper.load(resultSet);
                 students.add(student);
-                logger.info("======== " + userName + " " + userId);
             }
         } catch (SQLException e) {
             logger.error(e.getMessage());
@@ -158,11 +155,9 @@ public class StudentMapper {
                 int userId = resultSet.getInt("id");
                 String userName = resultSet.getString("username");
 
-//                Student student = new Student(userId, subjects, false, userName,
-//                        UserType.valueOf(userType.toUpperCase()), showName);
                 Student student = StudentMapper.load(resultSet);
                 students.add(student);
-                logger.info(userName + " " + userId);
+                logger.info("here: " + userName + " " + userId);
             }
         } catch (SQLException e) {
             logger.error(e.getMessage());
