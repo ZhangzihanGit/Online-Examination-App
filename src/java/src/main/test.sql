@@ -58,3 +58,6 @@ ALTER TABLE exam.submission
 
 ALTER TABLE exam.users
     ADD COLUMN is_in_exam BOOLEAN;
+
+ALTER TABLE exam.users
+    ADD COLUMN taking_exams VARCHAR (255);
