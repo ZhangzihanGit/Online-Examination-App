@@ -50,11 +50,12 @@ export function getSubject(payload = {}, pathname) {
 export function createSubject(payload = {}, pathname) {
   return async (dispatch) => {
     const result = await api.createSubject(payload);
+    console.log(result);
 
     if (result.status === 200) {
       dispatch({
         type: CREATE_SUBJECT,
-        payload: result.data,
+        payload: result.data.subject,
       });
       message.success('Create subject successfully');
       dispatch(push(pathname));

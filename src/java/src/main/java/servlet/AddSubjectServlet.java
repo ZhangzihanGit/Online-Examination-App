@@ -59,9 +59,13 @@ public class AddSubjectServlet extends HttpServlet {
         Subject subject = new Subject(description,showName,adminId,students,instructors);
         service.addSubject();
 
-        // TODO: 创建完subject之后需要返回字段description, show_name, id用于前端显示
         jsonObject = new JSONObject();
+        JSONObject data = new JSONObject();
+        data.put("id", subject.getId());
+        data.put("description", subject.getDescription());
+        data.put("subjectCode", subject.getSubjectCode());
         jsonObject.put("message","success");
+        jsonObject.put("subject", data);
         response.setContentType("application/json");
         request.setCharacterEncoding("UTF-8");
         response.setStatus(200);

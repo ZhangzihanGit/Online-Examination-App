@@ -1,6 +1,7 @@
 package db;
 
 import domain.Exam;
+import domain.Instructor;
 import domain.Student;
 import domain.Subject;
 import org.apache.log4j.LogManager;
@@ -10,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class SubjectMapper {
@@ -38,11 +40,23 @@ public class SubjectMapper {
 
 
     public static void addSubject(Subject subject) {
+        // TODO: also need to update student_subject_relation table
         String sql = "INSERT INTO exam.subject (show_name, description, instructorid) " +
                 " VALUES (?,?,?) RETURNING id";
         String showName = subject.getSubjectCode();
         String description = subject.getDescription();
+        // TODO: not use userid
         int userid = subject.getAdminId();
+
+        List<Instructor> instructors = subject.getInstructors();
+        List<Integer> instructorIds = new ArrayList<>();
+
+        for (Instructor i : instructors) {
+            instructorIds.add(i.getUserId());
+        }
+        // TODO: PUT [11, 12, 13] as string into subject
+        System.out.println(instructorIds.toString());
+
         PreparedStatement statement = DBConnection.prepare(sql);
         int subjectId = 0;
         try {
