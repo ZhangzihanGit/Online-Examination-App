@@ -162,14 +162,14 @@ public class SubjectMapper {
             String description = resultSet.getString("description");
             Integer instructorId = resultSet.getInt("instructorId");
 
-//            TODO: Load UserMapper and ExamMapper here// 或者是直接UserMapper，具体实现再商量,
-//             to construct Subject Object.  => See Subject Constructor.
+//            TODO: 这里student与subject互相引用，直接加载会出现死循环。
 //            Instructor instructor = InstructorMapper.loadWithId(instructorId);
             subject.setId(id);
             subject.setExams(ExamMapper.loadExamListWithSubject(id));
             subject.setSubjectCode(showName);
             subject.setDescription(description);
 
+//            List<Student> students = StudentMapper.loadStudentsBySubject(id);
         }catch (SQLException e) {
             logger.error(e.getMessage());
         }

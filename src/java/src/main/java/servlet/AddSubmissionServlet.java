@@ -37,7 +37,7 @@ public class AddSubmissionServlet extends HttpServlet {
 
         JSONArray jsonArray = jsonObject.getJSONArray("questions");
         StudentService service = new StudentServiceImpl();
-        service.addSubmission();
+        service.addSubmission(examId, userId);
         // Create the new submission.
         Submission submission = new Submission(userId, examId);
         UnitOfWork.getInstance().commit();

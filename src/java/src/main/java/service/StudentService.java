@@ -49,9 +49,9 @@ public interface StudentService extends UserService{
 
     public void addSubmission(Submission submission);
 
-    public boolean startExam(Student student);
+    public boolean startExam(Student student, Exam exam);
 
-    public void addSubmission();
+    public void addSubmission(int examId, int userId);
 
     public void addAnswer();
 

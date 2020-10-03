@@ -3,6 +3,8 @@ package servlet;
 import db.ExamMapper;
 import domain.Exam;
 import domain.Question;
+import exceptions.ExamGotSubmissionException;
+import exceptions.StudentTakingExamException;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.json.JSONArray;
@@ -37,24 +39,37 @@ public class UpdateExamServlet extends HttpServlet {
 
         InstructorService instructorService = new InstructorServiceImpl();
 
-        // TODO: Identity Map 很有用，需要修复。删改不需要数据库操作了，现在还需要load回来
         // Get the exam that is being updated.
         Exam exam = ExamMapper.loadWithId(examId);
         List<Question> originalQuestions = exam.getQuestions();
 
-        // Detect if the questions are new-added/ modified/ deleted.
-        // Assume that front end will give all questions of the exam.
-        instructorService.updatedQuestions(originalQuestions,jsonArray, exam);
+        try {
+            // If the permission is granted(no submission or student is taking the exam)
+            if (instructorService.checkAnySubmission(examId,subjectId) &&
+                    instructorService.checkStudentTakingExam(examId,subjectId)) {
+                // Detect if the questions are new-added/ modified/ deleted.
+                // Assume that front end will give all questions of the exam.
+                instructorService.updatedQuestions(originalQuestions,jsonArray, exam);
+                JSONObject examObject = new JSONObject(exam);
+
+                JSONObject object = new JSONObject();
+                object.put("message","success");
+                object.put("exam", examObject);
+                response.setContentType("application/json");
+                response.setCharacterEncoding("UTF-8");
+                response.setStatus(200);
+                response.getWriter().write(object.toString());
+            }
+        } catch (ExamGotSubmissionException | StudentTakingExamException e) {
+            e.printStackTrace();
+            JSONObject object = new JSONObject();
+            object.put("message",e.getMessage());
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            response.setStatus(200);
+            response.getWriter().write(object.toString());
+        }
 
         // TODO: 还是把更新后的exam字段发回来吧
-        JSONObject examObject = new JSONObject(exam);
-
-        JSONObject object = new JSONObject();
-        object.put("message","success");
-        object.put("exam", examObject);
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
-        response.setStatus(200);
-        response.getWriter().write(object.toString());
     }
 }

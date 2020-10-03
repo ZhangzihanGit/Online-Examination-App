@@ -26,7 +26,7 @@ public class StartExamServlet extends HttpServlet {
         User student = service.getUser(studentId);
         System.out.println("Student ID: " + student.getName());
 
-        boolean isExamStart = service.startExam((Student)student);
+        boolean isExamStart = service.startExam((Student)student, exam);
         JSONObject jsonObject = new JSONObject();
         if (isExamStart )jsonObject.put("message", "success");
         else jsonObject.put("message", "failed");
