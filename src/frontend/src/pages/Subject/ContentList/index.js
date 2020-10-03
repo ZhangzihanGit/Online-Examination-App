@@ -69,6 +69,7 @@ const ContentList = ({ list, isExam }) => {
       dispatch(closeExam({
         userId: identity.userId,
         examId: item.examId,
+        subjectId: item.subjectId,
       }));
     }
   }

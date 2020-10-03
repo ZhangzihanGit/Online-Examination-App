@@ -23,6 +23,9 @@ public class CloseExamServlet extends HttpServlet {
         JSONObject jsonObject = new JSONObject(requestData);
         int userId = jsonObject.getInt("userId");
         int examId = jsonObject.getInt("examId");
+        int subjectId = jsonObject.getInt("subjectId");
+
+        logger.info("User: " + userId + " Exam: " + examId + " Subject: " + subjectId );
 
         InstructorServiceImpl service = new InstructorServiceImpl();
 

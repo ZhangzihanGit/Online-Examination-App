@@ -35,6 +35,8 @@ public class UpdateExamServlet extends HttpServlet {
         JSONObject jsonObject = new JSONObject(requestData);
         int subjectId = jsonObject.getInt("subjectId");
         int examId = jsonObject.getInt("examId");
+        String description = jsonObject.getString("description");
+        String showName = jsonObject.getString("showName");
         JSONArray jsonArray = jsonObject.getJSONArray("questions");
 
         InstructorService instructorService = new InstructorServiceImpl();
@@ -50,11 +52,21 @@ public class UpdateExamServlet extends HttpServlet {
                 // Detect if the questions are new-added/ modified/ deleted.
                 // Assume that front end will give all questions of the exam.
                 instructorService.updatedQuestions(originalQuestions,jsonArray, exam);
-                JSONObject examObject = new JSONObject(exam);
+                instructorService.updateExam(exam, description, showName);
+
+                JSONObject examObj = new JSONObject();
+                examObj.put("examId", examId);
+                examObj.put("description", exam.getDescription());
+                examObj.put("showName", exam.getShowName());
+                examObj.put("published", exam.isPublished());
+                examObj.put("closed", exam.isClosed());
+                examObj.put("subjectId", exam.getSubjectId());
+                JSONArray questionArr = new JSONArray(exam.getQuestions());
+                examObj.put("questions", questionArr);
 
                 JSONObject object = new JSONObject();
                 object.put("message","success");
-                object.put("exam", examObject);
+                object.put("exam", examObj);
                 response.setContentType("application/json");
                 response.setCharacterEncoding("UTF-8");
                 response.setStatus(200);

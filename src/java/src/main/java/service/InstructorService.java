@@ -61,10 +61,8 @@ public interface InstructorService extends UserService{
 
     /**
      * Update the exam, given the subject Id and exam Id.
-     * @param subjectId Subject Id
-     * @param examId Exam Id
      */
-    public void updateExam(Exam exam);
+    public void updateExam(Exam exam, String newDescription, String newShowName);
 
     public void updatedQuestions(List<Question> originalQuestions, JSONArray newQuestionsObj, Exam exam);
 
@@ -78,7 +76,6 @@ public interface InstructorService extends UserService{
 
     /**
      * Cl the exam.
-     * @param subjectId
      * @param examId
      */
     public void closeExam(int userId, int examId);

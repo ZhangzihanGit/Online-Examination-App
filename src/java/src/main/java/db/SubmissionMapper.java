@@ -23,7 +23,7 @@ public class SubmissionMapper {
             statement = DBConnection.prepare(sql);
             statement.setInt(1,submission.getMark());
             statement.setInt(2,submission.getId());
-            ResultSet resultSet = statement.executeQuery();
+            statement.executeUpdate();
             logger.info("the submission is updated with mark: " +submission.getMark());
         } catch (SQLException e){
             logger.error(e.getMessage());

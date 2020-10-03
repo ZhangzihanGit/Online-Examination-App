@@ -8,7 +8,7 @@ import java.util.List;
 public class Exam {
     private Integer subjectId;
     private String description;
-    private Integer id;
+    private Integer examId;
     private boolean isPublished=false;
     private boolean isClosed=false;
     private List<Question> questions;
@@ -35,12 +35,12 @@ public class Exam {
         return isClosed;
     }
 
-    public Exam(Integer id, Integer subjectId, String description, List<Question> questions, boolean isPublished,
+    public Exam(Integer examId, Integer subjectId, String description, List<Question> questions, boolean isPublished,
                 Boolean isClosed, String showName) {
         System.out.println("Exam full constructor");
         this.description = description;
         this.questions = questions;
-        this.id = id;
+        this.examId = examId;
         this.isPublished = isPublished;
         this.isClosed = isClosed;
         this.subjectId = subjectId;
@@ -58,11 +58,11 @@ public class Exam {
     }
 
     public void setId(Integer id) {
-        this.id = id;
+        this.examId = id;
     }
 
     public Integer getId() {
-        return id;
+        return examId;
     }
 
     public String getDescription() {
@@ -121,7 +121,7 @@ public class Exam {
 
     private void load() {
         System.out.println("Exam is reloaded");
-        Exam exam = ExamMapper.loadWithId(this.id);
+        Exam exam = ExamMapper.loadWithId(this.examId);
         if (this.description == null) {
             this.description = exam.getDescription();
         }

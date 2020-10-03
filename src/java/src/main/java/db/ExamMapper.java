@@ -52,11 +52,7 @@ public class ExamMapper {
             statement.setBoolean(1,true);
             statement.setInt(2, examId);
 
-            ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()) {
-                logger.info("Exam with id: " + + resultSet.
-                        getInt("id") +" is closed");
-            }
+            statement.executeUpdate();
         } catch (SQLException e) {
             logger.error(e.getMessage());
         }
@@ -76,11 +72,8 @@ public class ExamMapper {
             statement.setBoolean(1,true);
             statement.setInt(2,examId);
 
-            ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()) {
-                logger.info("Exam with id: " + + resultSet.
-                        getInt("id") +" is published");
-            }
+            statement.executeUpdate();
+
         } catch (SQLException e) {
             logger.error(e.getMessage());
         }
@@ -92,20 +85,18 @@ public class ExamMapper {
      */
     public static void updateExam(Exam exam) {
         String sql = "UPDATE exam.exam SET " +
-                "show_name=?, subjectId=?, ispublished=?,isstart=?,description=? " +
+                "show_name=?, description=? " +
                 "WHERE id=?";
         PreparedStatement preparedStatement = null;
+        System.out.println("!!!!!!!!!called in mapper");
+        System.out.println("!!!!!!!!!called: " + exam.getDescription() + " " + exam.getShowName());
         try{
             preparedStatement =  DBConnection.prepare(sql);
-            preparedStatement.setString(1,exam.getShowName());
-            preparedStatement.setInt(2,exam.getSubjectId());
-            preparedStatement.setBoolean(3,exam.isPublished());
-            // TODO: 需要修改db schema，这个字段不需要了
-            preparedStatement.setBoolean(4,false);
-            preparedStatement.setString(5,exam.getDescription());
-            preparedStatement.setInt(6,exam.getId());
+            preparedStatement.setString(1, exam.getShowName());
+            preparedStatement.setString(2, exam.getDescription());
+            preparedStatement.setInt(3, exam.getId());
 
-//            ResultSet resultSet = preparedStatement.executeQuery();
+            preparedStatement.executeUpdate();
             logger.info("The exam is successfully updated, with id " + exam.getId());
         } catch (SQLException e) {
             logger.info(e.getMessage());

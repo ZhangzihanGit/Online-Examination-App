@@ -67,7 +67,7 @@ export function getExam(payload = {}, pathname) {
       const result = await api.getExam(payload);
       dispatch({
         type: GET_EXAM,
-        payload: result.data,
+        payload: result.data.exam,
       });
 
       if (pathname) {
@@ -113,7 +113,7 @@ export function updateExam(payload = {}, pathname) {
       const result = await api.updateExam(payload);
       dispatch({
         type: UPDATE_EXAM,
-        payload: result.data,
+        payload: result.data.exam,
       });
       message.success('Update exam successfully');
       // goes back to exam page

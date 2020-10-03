@@ -45,7 +45,7 @@ public class QuestionMapper {
             else {
                 preparedStatement.setString(5,null);
             }
-            ResultSet resultSet = preparedStatement.executeQuery();
+            preparedStatement.executeUpdate();
             logger.info("the question is updated, id is " + question.getQuestionId());
         } catch (SQLException e) {
             logger.error(e.getMessage());

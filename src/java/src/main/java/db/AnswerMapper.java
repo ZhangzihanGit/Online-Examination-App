@@ -21,7 +21,7 @@ public class AnswerMapper {
             preparedStatement = DBConnection.prepare(sql);
             preparedStatement.setInt(1,answer.getMark());
             preparedStatement.setInt(2,answer.getId());
-            ResultSet resultSet = preparedStatement.executeQuery();
+            preparedStatement.executeUpdate();
             logger.info("the answer is updated with mark: " + answer.getMark());
         } catch (SQLException e){
             logger.error(e.getMessage());

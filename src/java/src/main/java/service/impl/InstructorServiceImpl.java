@@ -162,9 +162,10 @@ public class InstructorServiceImpl implements InstructorService {
      * Update the exam, given the subject Id and exam Id.
      *
      */
-    @Override
-    public void updateExam(Exam exam) {
-//        ExamMapper.updateExam(exam);
+    public void updateExam(Exam exam, String newDescription, String newShowName) {
+        exam.setDescription(newDescription);
+        exam.setShowName(newShowName);
+
         UnitOfWork.getInstance().commit();
     }
 
