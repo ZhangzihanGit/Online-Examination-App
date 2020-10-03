@@ -61,9 +61,6 @@ public class SubjectMapper {
             studentIds.add(s.getUserId());
         }
         // TODO: In Part3, PUT [11, 12, 13] as string into subject table
-        System.out.println(instructorIds.toString());
-        System.out.println(studentIds.toString());
-
         // insert a new subject in Subject table
         PreparedStatement statement = DBConnection.prepare(sql);
         int subjectId = 0;

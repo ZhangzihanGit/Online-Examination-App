@@ -16,7 +16,6 @@ public class Registry {
     private static Map<Integer, List<Integer>> studentExamMap = new HashMap<>();
     private static Registry instance;
 
-
     public static Registry getInstance() {
         if (instance == null ) {
             instance = new Registry();
@@ -39,7 +38,7 @@ public class Registry {
 
     public boolean checkStudentInExam(int studentId, int examId) {
         // if we have the student's id AND has the examId registered
-        // then the student it taking the exam
+        // then the student is taking the exam
         if(studentExamMap.containsKey(studentId) &&
             studentExamMap.get(studentId).contains(examId)) {
             logger.info("student with id: "+ studentId + " is in exam. ");

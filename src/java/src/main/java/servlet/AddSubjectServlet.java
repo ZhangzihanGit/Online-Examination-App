@@ -54,7 +54,6 @@ public class AddSubjectServlet extends HttpServlet {
             students.add(student);
         }
 
-        //TODO: add subject 时添加学生和老师
         //Subject will be added to new Object list and commit by calling addSubject()
         Subject subject = new Subject(description,showName,adminId,students,instructors);
         service.addSubject();
