@@ -1,5 +1,6 @@
 package util;
 
+import db.StudentMapper;
 import domain.Exam;
 import domain.Student;
 import org.apache.log4j.LogManager;
@@ -19,8 +20,14 @@ public class Registry {
     public static Registry getInstance() {
         if (instance == null ) {
             instance = new Registry();
+            initMap();
         }
         return instance;
+    }
+
+
+    private static void initMap() {
+        studentExamMap  = StudentMapper.loadTakingExams();
     }
 
     public void removeStudentExam(int studentId, int examId) {
@@ -31,16 +38,16 @@ public class Registry {
 
     public void registerStartExamMap(Student student, Exam exam) {
         logger.info("the student with id: " + student.getUserId()+ " is in exam");
-        List<Integer> examIds = new ArrayList<>();
-        examIds.add(exam.getId());
-        studentExamMap.put(student.getUserId(), examIds);
+        studentExamMap.get(student.getUserId()).add(exam.getId());
+        StudentMapper.updateTakingExam(student.getUserId(), studentExamMap.get(student.getUserId()));
+
     }
 
     public boolean checkStudentInExam(int studentId, int examId) {
         // if we have the student's id AND has the examId registered
-        // then the student is taking the exam
+        // then the student it taking the exam
         if(studentExamMap.containsKey(studentId) &&
-            studentExamMap.get(studentId).contains(examId)) {
+                studentExamMap.get(studentId).contains(examId)) {
             logger.info("student with id: "+ studentId + " is in exam. ");
             return true;
         }

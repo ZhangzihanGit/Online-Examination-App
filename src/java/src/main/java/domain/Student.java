@@ -12,8 +12,8 @@ public class Student extends User{
     private static Logger logger = LogManager.getLogger(User.class);
     private List<Subject> subjects;
     private Boolean isInExam;
-//    private List<Map<Exam,Integer>> marks;
     private String showName;
+//    private List<Integer> takingExams;
 
     public Student() {
         this.isInExam = false;
