@@ -14,7 +14,7 @@ export function login(payload = {}) {
       message.success(data.message);
       dispatch(push('/dashboard'));
     } catch (error) {
-      message.error(error.response.data.message);
+      message.error('Fail to login');
     }
   };
 };

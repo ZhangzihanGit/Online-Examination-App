@@ -11,57 +11,57 @@ import { RELATIVE_PATH } from '../constants';
  */
 
 export const getSubjectList = (params) => {
-  return ajax.get(`/all-subjects`, { params });
+  return ajax.get(`${RELATIVE_PATH}/all-subjects`, { params });
 };
 
 export const getSubject = (params) => {
-  return ajax.get(`/subject`, { params });
+  return ajax.get(`${RELATIVE_PATH}/subject`, { params });
 };
 
 export const createSubject = (params) => {
-  return ajax.post(`/add-subject`, { data: params });
+  return ajax.post(`${RELATIVE_PATH}/add-subject`, { data: params });
 };
 
 export const deleteSubject = (params) => {
-  return ajax.post(`/delete`, { data: params });
+  return ajax.post(`${RELATIVE_PATH}/delete`, { data: params });
 };
 
 export const getExam = (params) => {
-  return ajax.get(`/get-exam`, { params });
+  return ajax.get(`${RELATIVE_PATH}/get-exam`, { params });
 };
 
 export const startExam = (params) => {
-  return ajax.get(`/start-exam`, { params });
+  return ajax.get(`${RELATIVE_PATH}/start-exam`, { params });
 };
 
 export const createExam = (params) => {
-  return ajax.post(`/add-exam`, { data: params });
+  return ajax.post(`${RELATIVE_PATH}/add-exam`, { data: params });
 };
 
 export const updateExam = (params) => {
-  return ajax.post(`/update-exam`, { data: params });
+  return ajax.post(`${RELATIVE_PATH}/update-exam`, { data: params });
 };
 
 export const deleteExam = (params) => {
-  return ajax.post(`/delete-exam`, { data: params });
+  return ajax.post(`${RELATIVE_PATH}/delete-exam`, { data: params });
 };
 
 export const submitExam = (params) => {
-  return ajax.post(`/submission`, { data: params });
+  return ajax.post(`${RELATIVE_PATH}/submission`, { data: params });
 };
 
 export const publishExam = (params) => {
-  return ajax.post(`/publish-exam`, { data: params });
+  return ajax.post(`${RELATIVE_PATH}/publish-exam`, { data: params });
 };
 
 export const closeExam = (params) => {
-  return ajax.post(`/close-exam`, { data: params });
+  return ajax.post(`${RELATIVE_PATH}/close-exam`, { data: params });
 };
 
 export const getSubmissions = (params) => {
-  return ajax.get(`/all-submissions`, { params });
+  return ajax.get(`${RELATIVE_PATH}/all-submissions`, { params });
 };
 
 export const submitMarks = (params) => {
-  return ajax.post(`/mark-submit`, { data: params });
+  return ajax.post(`${RELATIVE_PATH}/mark-submit`, { data: params });
 };

@@ -7,16 +7,16 @@ import { RELATIVE_PATH } from '../constants';
  * 
  * If need to build bundle and run it in server or in production, then add ${RELATIVE_PATH}, 
  * also add below in package.json:
- * "homepage": "http://localhost:8080/online_examination_war_exploded",
+ * "homepag$e": "http://localhost:8080/online_examination_war_exploded",
  */
 export const login = (params) => {
-  return ajax.post(`/login`, { data: params });
+  return ajax.post(`${RELATIVE_PATH}/login`, { data: params });
 };
 
 export const getAllInstructors = (params) => {
-  return ajax.post(`/all-instructors`, { data: params });
+  return ajax.post(`${RELATIVE_PATH}/all-instructors`, { data: params });
 };
 
 export const getAllStudents = (params) => {
-  return ajax.post(`/all-students`, { data: params });
-};
+  return ajax.post(`${RELATIVE_PATH}/all-students`, { data: params });
+}; 
