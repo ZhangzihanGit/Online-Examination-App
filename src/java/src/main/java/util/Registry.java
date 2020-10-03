@@ -27,6 +27,7 @@ public class Registry {
     }
 
     public void registerStartExamMap(Student student, Exam exam) {
+        logger.info("the student with id: " + student.getUserId()+ " is in exam");
         studentExamMap.put(student,exam);
     }
 
