@@ -43,7 +43,7 @@ public class InstructorServiceImpl implements InstructorService {
         // If there are any student who
         for (Student student: students) {
             // If there is exam corresponding with the student, no permission could be given.
-            if (Registry.getInstance().checkStudentInExam(student)) {
+            if (Registry.getInstance().checkStudentInExam(student.getUserId(), examId)) {
                 logger.info("There are students taking exam now.");
                 throw new StudentTakingExamException("One or more students are taking the exam now");
             }

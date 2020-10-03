@@ -23,7 +23,8 @@ public class StudentServiceImpl implements StudentService {
     }
     @Override
     public Exam getExam(int examId) {
-        return null;
+        Exam exam = ExamMapper.loadWithId(examId);
+        return exam;
     }
 
     /**
@@ -140,7 +141,7 @@ public class StudentServiceImpl implements StudentService {
         UnitOfWork.getInstance().commit();
         Exam exam = ExamMapper.loadWithId(examId);
         Student student = StudentMapper.loadWithId(userId);
-        Registry.getInstance().registerStartExamMap(student,exam);
+//        Registry.getInstance().registerStartExamMap(student,exam);
     }
 
     @Override

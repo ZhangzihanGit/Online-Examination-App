@@ -11,7 +11,8 @@ CREATE TABLE IF NOT EXISTS exam.users(
 	users_type USERTYPE,
 	PRIMARY KEY (id,username),
 -- 	New added attribute: isInExam
-    is_in_exam BOOLEAN
+    is_in_exam BOOLEAN,
+    taking_exams VARCHAR (255)
 );
 
 CREATE TABLE IF NOT EXISTS exam.subject(
