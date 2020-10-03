@@ -69,7 +69,10 @@ export function getExam(payload = {}, pathname) {
         type: GET_EXAM,
         payload: result.data,
       });
-      dispatch(push(pathname));
+
+      if (pathname) {
+        dispatch(push(pathname));
+      }
       message.success('Fetching exam successfully');
     } catch (error) {
       message.error('Fail to fetch exam');
@@ -82,8 +85,10 @@ export function startExam(payload = {}, pathname) {
     try {
       const result = await api.startExam(payload);
       console.log(result);
+      return Promise.resolve();
     } catch (error) {
       message.error(error.response.data.message);
+      return Promise.reject();
     }
   }
 };
@@ -136,6 +141,7 @@ export function publishExam(payload = {}) {
 
 export function closeExam(payload = {}) {
   return async (dispatch) => {
+    console.log(payload)
     try {
       const result = await api.closeExam(payload);
       dispatch({

@@ -88,11 +88,17 @@ const ContentList = ({ list, isExam }) => {
         dispatch(startExam({
           examId: item.examId,
           userId: identity.userId,
-        }));
+        }))
+          .then(_ => {
+            dispatch(getExam({
+              examId: item.examId,
+            }, `${pathname}/exam-${item.examId}`));
+          })
+      } else {
+        dispatch(getExam({
+          examId: item.examId,
+        }, `${pathname}/exam-${item.examId}`));
       }
-      dispatch(getExam({
-        examId: item.examId,
-      }, `${pathname}/exam-${item.examId}`));
     }
   }
 

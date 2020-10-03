@@ -43,14 +43,20 @@ public class InstructorServiceImpl implements InstructorService {
         // If there are any student who
         for (Student student: students) {
             // If there is exam corresponding with the student, no permission could be given.
-            if (Registry.getInstance().checkStudentInExam(student)) {
+            if (Registry.getInstance().checkStudentInExam(student.getUserId(), examId)) {
+                logger.info("Student: " + student.getName() + " is in EXAM!!");
                 throw new StudentTakingExamException("One or more students are taking the exam now");
             }
         }
         return true;
     }
 
-
+    public boolean checkStudentHasTakenExam(int examId, int studentId) throws StudentTakingExamException {
+        if (Registry.getInstance().checkStudentInExam(studentId, examId)) {
+            throw new StudentTakingExamException("You have already attempted this exam");
+        }
+        return true;
+    }
 
     public Submission getSubmission(int submissionId) {
         return SubmissionMapper.loadWithId(submissionId);

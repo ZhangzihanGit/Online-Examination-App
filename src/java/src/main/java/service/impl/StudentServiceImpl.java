@@ -23,7 +23,8 @@ public class StudentServiceImpl implements StudentService {
     }
     @Override
     public Exam getExam(int examId) {
-        return null;
+        Exam exam = ExamMapper.loadWithId(examId);
+        return exam;
     }
 
     /**
