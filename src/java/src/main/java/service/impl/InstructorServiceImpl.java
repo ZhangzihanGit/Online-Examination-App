@@ -4,6 +4,7 @@ import db.*;
 import domain.Exam;
 import domain.Subject;
 import domain.User;
+import exceptions.ExamFinishedException;
 import exceptions.ExamGotSubmissionException;
 import exceptions.StudentTakingExamException;
 import org.json.JSONArray;
@@ -57,6 +58,15 @@ public class InstructorServiceImpl implements InstructorService {
             throw new StudentTakingExamException("You have already attempted this exam!");
         }
         return true;
+    }
+
+    public boolean checkExamIsClosed(int examId) throws ExamFinishedException {
+        Exam exam = ExamMapper.loadWithId(examId);
+        System.out.println("??? examId: " + exam.getId() + " " + exam.isClosed());
+        if (exam.isClosed()) {
+            throw new ExamFinishedException("The exam has already closed, you cannot submit!");
+        }
+        return false;
     }
 
     public Submission getSubmission(int submissionId) {

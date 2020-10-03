@@ -2,6 +2,7 @@ package servlet;
 
 import domain.Answer;
 import domain.Submission;
+import exceptions.ExamFinishedException;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.json.JSONArray;
@@ -35,34 +36,51 @@ public class AddSubmissionServlet extends HttpServlet {
         int examId = jsonObject.getInt("examId");
         int userId = jsonObject.getInt("userId");
 
-        JSONArray jsonArray = jsonObject.getJSONArray("questions");
-        StudentService service = new StudentServiceImpl();
-        service.addSubmission(examId, userId);
-        // Create the new submission.
-        Submission submission = new Submission(userId, examId);
-        UnitOfWork.getInstance().commit();
-        int submissionId = submission.getId();
+        InstructorServiceImpl instructorService = new InstructorServiceImpl();
 
-        for ( int i =0; i<jsonArray.length(); i++) {
-            JSONObject o = jsonArray.getJSONObject(i);
-            int questionId = o.getInt("questionId");
-            String content = o.getString("answer");
+        try {
+            // if exam not closed, allow student submit
+            if (!instructorService.checkExamIsClosed(examId)) {
+                JSONArray jsonArray = jsonObject.getJSONArray("questions");
+                StudentService service = new StudentServiceImpl();
+                service.addSubmission(examId, userId);
+                // Create the new submission.
+                Submission submission = new Submission(userId, examId);
+                UnitOfWork.getInstance().commit();
+                int submissionId = submission.getId();
 
-            Answer answer = new Answer(questionId,content,submissionId);
-            answers.add(answer);
+                for ( int i =0; i<jsonArray.length(); i++) {
+                    JSONObject o = jsonArray.getJSONObject(i);
+                    int questionId = o.getInt("questionId");
+                    String content = o.getString("answer");
+
+                    Answer answer = new Answer(questionId,content,submissionId);
+                    answers.add(answer);
+                }
+                // Call UnitOfWork to commit the added answers.
+                service.addAnswer();
+                // After the answers are written into DB, inject the dependency into
+                // the submission.
+                submission.setAnswers(answers);
+
+                jsonObject = new JSONObject();
+                jsonObject.put("message","success");
+                response.setContentType("application/json");
+                request.setCharacterEncoding("UTF-8");
+                response.setStatus(200);
+                response.getWriter().write(jsonObject.toString());
+            }
+        } catch (ExamFinishedException e) {
+            e.printStackTrace();
+            jsonObject = new JSONObject();
+            jsonObject.put("message",e.getMessage());
+            response.setContentType("application/json");
+            request.setCharacterEncoding("UTF-8");
+            response.setStatus(403);
+            response.getWriter().write(jsonObject.toString());
         }
-        // Call UnitOfWork to commit the added answers.
-        service.addAnswer();
-        // After the answers are written into DB, inject the dependency into
-        // the submission.
-        submission.setAnswers(answers);
 
-        jsonObject = new JSONObject();
-        jsonObject.put("message","success");
-        response.setContentType("application/json");
-        request.setCharacterEncoding("UTF-8");
-        response.setStatus(200);
-        response.getWriter().write(jsonObject.toString());
+
     }
 
 }
