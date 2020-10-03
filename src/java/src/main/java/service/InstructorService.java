@@ -78,7 +78,7 @@ public interface InstructorService extends UserService{
      * Cl the exam.
      * @param examId
      */
-    public void closeExam(int userId, int examId);
+    public void closeExam(int userId, int examId, int subjectId);
 
     /**
      * Publish the exam and make it available to the student.

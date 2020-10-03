@@ -38,6 +38,9 @@ public class Registry {
 
     public void registerStartExamMap(Student student, Exam exam) {
         logger.info("the student with id: " + student.getUserId()+ " is in exam");
+        for (Integer i : studentExamMap.keySet()) {
+            System.out.print("==========: id" + i + "  exam: " + studentExamMap.get(i).toString());
+        }
         studentExamMap.get(student.getUserId()).add(exam.getId());
         StudentMapper.updateTakingExam(student.getUserId(), studentExamMap.get(student.getUserId()));
 

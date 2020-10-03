@@ -28,16 +28,7 @@ public class CloseExamServlet extends HttpServlet {
         logger.info("User: " + userId + " Exam: " + examId + " Subject: " + subjectId );
 
         InstructorServiceImpl service = new InstructorServiceImpl();
-
-        // 1. 拿到所有注册这门课的学生的list
-        // 2. 对每一个学生，创建一个submission对象
-        // 3. 对每一个submission对象中的每一个question，把answer设为""
-        // 4. 将submission对象插入到表中
-        // 5. 将答案插入answer表中
-
-
-
-        service.closeExam(userId,examId);
+        service.closeExam(userId, examId, subjectId);
 
         JSONObject data = new JSONObject();
         data.put("message", "success");

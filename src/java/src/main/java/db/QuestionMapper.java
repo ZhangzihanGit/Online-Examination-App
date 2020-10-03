@@ -67,10 +67,8 @@ public class QuestionMapper {
         QuestionType type = question.getQuestionType();
 
         try {
-            logger.info("Hello");
             PreparedStatement statement = DBConnection.prepare(sql);
             statement.setInt(1,examId);
-//            statement.set
             statement.setString(2,type.toString().toLowerCase());
             statement.setString(3,description);
             statement.setInt(4,mark);
@@ -94,7 +92,6 @@ public class QuestionMapper {
         PreparedStatement preparedStatement = null;
         List<Question> questions = new ArrayList<Question>();
         try {
-            Question question = new Question();
             preparedStatement = DBConnection.prepare(sql);
             preparedStatement.setInt(1,examid);
             ResultSet resultSet = preparedStatement.executeQuery();

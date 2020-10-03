@@ -28,8 +28,6 @@ public class MarkSubmissionServlet extends HttpServlet {
 
         InstructorService service = new InstructorServiceImpl();
 
-
-
         int examId = obj.getInt("examId");
         JSONArray array = obj.getJSONArray("marks");
         for (int i=0; i<array.length(); i++) {
