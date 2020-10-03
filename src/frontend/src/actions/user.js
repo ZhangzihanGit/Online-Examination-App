@@ -5,18 +5,16 @@ import { LOGIN, LOGOUT, GET_INSTRUCTOR_LIST, GET_STUDENT_LIST } from '../constan
 
 export function login(payload = {}) {
   return async (dispatch) => {
-    const { data, status } = await api.login(payload);
-
-    // authenticate the user
-    if (status === 200) {
+    try {
+      const { data, status } = await api.login(payload);
       dispatch({
         type: LOGIN,
         payload: data,
       });
       message.success(data.message);
       dispatch(push('/dashboard'));
-    } else {
-      message.error('Fail to login!');
+    } catch (error) {
+      message.error(error.response.data.message);
     }
   };
 };
@@ -39,34 +37,28 @@ export function logout(payload = {}) {
 
 export function getAllInstructors(payload = {}) {
   return async (dispatch) => {
-    console.log(payload)
-    const response = await api.getAllInstructors(payload);
-    console.log(response)
-
-    if (response.status === 200) {
+    try {
+      const response = await api.getAllInstructors(payload);
       dispatch({
         type: GET_INSTRUCTOR_LIST,
         payload: response.data.instructorList,
       });
-    } else {
-      message.error(response.data.message);
+    } catch (error) {
+      message.error('Fail to fetch all instructors');
     }
   };
 };
 
 export function getAllStudents(payload = {}) {
   return async (dispatch) => {
-    console.log(payload)
-    const response = await api.getAllStudents(payload);
-    console.log(response);
-
-    if (response.status === 200) {
+    try {
+      const response = await api.getAllStudents(payload);
       dispatch({
         type: GET_STUDENT_LIST,
         payload: response.data.studentList,
       });
-    } else {
-      message.error(response.data.message);
+    } catch (error) {
+      message.error('Fail to fetch all students');
     }
   };
 };

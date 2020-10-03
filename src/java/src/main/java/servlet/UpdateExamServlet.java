@@ -66,7 +66,7 @@ public class UpdateExamServlet extends HttpServlet {
             object.put("message",e.getMessage());
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
-            response.setStatus(200);
+            response.setStatus(403);
             response.getWriter().write(object.toString());
         }
 
