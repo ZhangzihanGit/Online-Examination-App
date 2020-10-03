@@ -11,9 +11,9 @@ import {
   CREATE_EXAM,
   UPDATE_EXAM,
   GET_SUBMISSIONS,
-  SAVE_TOTAL_MARK
+  SAVE_TOTAL_MARK,
+  SAVE_INDIVIDUAL_MARK
 } from '../constants/actions';
-import { getAssignedTotalMark } from '../utils/helpers';
 import { message } from 'antd';
 
 export function getSubjectList(payload = {}) {
@@ -204,10 +204,8 @@ export function deleteExam(payload = {}) {
 export function getSubmissions(payload = {}, pathname) {
   return async (dispatch) => {
     const result = await api.getSubmissions(payload);
-    console.log(result);
 
     if (result.status === 200) {
-
       // update assignedTotalMark to Store
       const totalMarks = [];
       result.data.submissions.forEach(s => {
@@ -219,8 +217,8 @@ export function getSubmissions(payload = {}, pathname) {
           totalMark: assignedTotalMark,
         })
       });
-      console.log(totalMarks);
 
+      // update all submissions to Store
       dispatch({
         type: GET_SUBMISSIONS,
         payload: result.data,
@@ -230,6 +228,33 @@ export function getSubmissions(payload = {}, pathname) {
         type: SAVE_TOTAL_MARK,
         payload: t,
       }))
+
+      // update assignedMark of each question to Store
+      const individualMarks = [];
+      result.data.submissions.forEach(s => {
+        const questions = [];
+        s.questions.forEach(q => questions.push({
+          questionId: q.questionId,
+          mark: q.assignedMark,
+        }))
+
+        individualMarks.push({
+          submissionId: s.submissionId,
+          questions,
+        })
+      });
+
+      individualMarks.forEach(s => {
+        s.questions.forEach(q => dispatch({
+          type: SAVE_INDIVIDUAL_MARK,
+          payload: {
+            submissionId: s.submissionId,
+            questionId: q.questionId,
+            mark: q.mark
+          },
+        }))
+      });
+
       dispatch(push(pathname));
     } else {
       message.error('Fail to fetch submissions');
@@ -242,11 +267,6 @@ export function submitMarks(payload = {}, pathname) {
     const result = await api.submitMarks(payload);
 
     if (result.status === 200) {
-      // TODO: no need to update the store when submit ?
-      // dispatch({
-      //   type: SUBMIT_MARKS,
-      //   payload: payload,
-      // });
       message.success('Submit marks successfully');
       dispatch(push(pathname));
     } else {

@@ -19,26 +19,12 @@ const getDefaultTotalMark = (totalMarks, submissionId) => {
   return 0;
 };
 
-// get assigned total mark from the DB
-const getAssignedTotalMark = (submissionList, submissionId) => {
-  let assignedTotalMark = 0;
-  if (submissionList) {
-    const submission = submissionList.submissions.find(s => s.submissionId === submissionId);
-    if (submission) {
-      submission.questions.forEach(q => assignedTotalMark += q.assignedMark);
-    }
-  }
-  return assignedTotalMark;
-}
-
 const Submission = () => {
   const dispatch = useDispatch();
   const { code, examId } = useParams();
   const { pathname } = useSelector(state => state.router.location);
   const { submissionList, totalMarks, detailedMarks } = useSelector(state => state.subject);
   const [haveSubmissions, setHaveSubmissions] = useState(false);
-  const [totalMark, setTotalMark] = useState(0);
-  console.log(haveSubmissions)
 
   useEffect(() => {
     if (submissionList) {
@@ -55,9 +41,6 @@ const Submission = () => {
     //   message.error('Please mark each question, not just a total mark!');
     //   return;
     // }
-
-    // check if we have submissions for this exam
-    // assignedMark
 
     const data = totalMarks.map(submission => {
       const found = detailedMarks.find(d => submission.submissionId === d.submissionId);
@@ -76,6 +59,7 @@ const Submission = () => {
   const handleSaveMark = (e, item) => {
     // validate the input mark not exceeding the total mark 
     const totalMark = submissionList ? submissionList.totalMark : 100;
+    console.log('here' + totalMark)
     if (isValidateNumber(e.target.value, 0, totalMark)) {
       dispatch({
         type: SAVE_TOTAL_MARK,
