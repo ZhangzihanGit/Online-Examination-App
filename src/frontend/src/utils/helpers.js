@@ -52,3 +52,15 @@ export const updateObjectInArray = (array, action) => {
     }
   })
 };
+
+// get assigned total mark from the DB
+export const getAssignedTotalMark = (submissionList, submissionId) => {
+  let assignedTotalMark = 0;
+  if (submissionList) {
+    const submission = submissionList.submissions.find(s => s.submissionId === submissionId);
+    if (submission) {
+      submission.questions.forEach(q => assignedTotalMark += q.assignedMark);
+    }
+  }
+  return assignedTotalMark;
+};

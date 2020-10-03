@@ -17,6 +17,18 @@ const getDefaultTotalMark = (totalMarks, submissionId) => {
     return found.totalMark;
   }
   return 0;
+};
+
+// get assigned total mark from the DB
+const getAssignedTotalMark = (submissionList, submissionId) => {
+  let assignedTotalMark = 0;
+  if (submissionList) {
+    const submission = submissionList.submissions.find(s => s.submissionId === submissionId);
+    if (submission) {
+      submission.questions.forEach(q => assignedTotalMark += q.assignedMark);
+    }
+  }
+  return assignedTotalMark;
 }
 
 const Submission = () => {
@@ -25,6 +37,7 @@ const Submission = () => {
   const { pathname } = useSelector(state => state.router.location);
   const { submissionList, totalMarks, detailedMarks } = useSelector(state => state.subject);
   const [haveSubmissions, setHaveSubmissions] = useState(false);
+  const [totalMark, setTotalMark] = useState(0);
   console.log(haveSubmissions)
 
   useEffect(() => {

@@ -11,7 +11,9 @@ import {
   CREATE_EXAM,
   UPDATE_EXAM,
   GET_SUBMISSIONS,
+  SAVE_TOTAL_MARK
 } from '../constants/actions';
+import { getAssignedTotalMark } from '../utils/helpers';
 import { message } from 'antd';
 
 export function getSubjectList(payload = {}) {
@@ -202,49 +204,32 @@ export function deleteExam(payload = {}) {
 export function getSubmissions(payload = {}, pathname) {
   return async (dispatch) => {
     const result = await api.getSubmissions(payload);
-    console.log(result)
-
-    // const fakeReponse = {
-    //   "examId": 1,
-    //   "totalMark": 120,
-    //   "submissions": [
-    //     {
-    //       "submissionId": 1,
-    //       "userId": 111,
-    //       "questions": [{
-    //         "questionId": 1,
-    //         "description": "question 1 description",
-    //         "mark": 3,
-    //         "answer": "student's answer 1"
-    //       }, {
-    //         "questionId": 2,
-    //         "description": "question 2 description",
-    //         "mark": 5,
-    //         "answer": "student's answer 2"
-    //       }]
-    //     }, {
-    //       "submissionId": 2,
-    //       "userId": 222,
-    //       "questions": [{
-    //         "questionId": 1,
-    //         "description": "question 1 description",
-    //         "mark": 3,
-    //         "answer": "student's answer 1"
-    //       }, {
-    //         "questionId": 2,
-    //         "description": "question 2 description",
-    //         "mark": 5,
-    //         "answer": "student's answer 2"
-    //       }]
-    //     }
-    //   ]
-    // }
+    console.log(result);
 
     if (result.status === 200) {
+
+      // update assignedTotalMark to Store
+      const totalMarks = [];
+      result.data.submissions.forEach(s => {
+        let assignedTotalMark = 0;
+        s.questions.forEach(q => assignedTotalMark += q.assignedMark);
+        totalMarks.push({
+          submissionId: s.submissionId,
+          userId: s.userId,
+          totalMark: assignedTotalMark,
+        })
+      });
+      console.log(totalMarks);
+
       dispatch({
         type: GET_SUBMISSIONS,
         payload: result.data,
       });
+
+      totalMarks.forEach(t => dispatch({
+        type: SAVE_TOTAL_MARK,
+        payload: t,
+      }))
       dispatch(push(pathname));
     } else {
       message.error('Fail to fetch submissions');
