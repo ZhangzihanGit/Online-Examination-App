@@ -4,6 +4,8 @@ import db.ExamMapper;
 import db.SubjectMapper;
 import domain.Exam;
 import domain.Subject;
+import exceptions.ExamGotSubmissionException;
+import exceptions.StudentTakingExamException;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.json.JSONObject;
@@ -29,15 +31,27 @@ public class DeleteExamServlet extends HttpServlet {
         int subjectId = jsonObject.getInt("subjectId");
         int userId = jsonObject.getInt("userId");
 
-        InstructorService service = new InstructorServiceImpl();
-        service.deleteExam(subjectId,examId);
+        InstructorServiceImpl service = new InstructorServiceImpl();
 
-        JSONObject data = new JSONObject();
-        data.put("message", "success");
-
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
-        response.setStatus(200);
-        response.getWriter().write(data.toString());
+        try {
+            if (service.checkAnySubmission(examId,subjectId) &&
+                    service.checkStudentTakingExam(examId,subjectId)) {
+                // delete exam only if no submission and no student is taking exam
+                service.deleteExam(subjectId,examId);
+                JSONObject data = new JSONObject();
+                data.put("message", "success");
+                response.setContentType("application/json");
+                response.setCharacterEncoding("UTF-8");
+                response.setStatus(200);
+                response.getWriter().write(data.toString());
+            }
+        } catch (StudentTakingExamException | ExamGotSubmissionException e) {
+            JSONObject data = new JSONObject();
+            data.put("message", e.getMessage());
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            response.setStatus(403);
+            response.getWriter().write(data.toString());
+        }
     }
 }

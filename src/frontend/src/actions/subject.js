@@ -181,7 +181,7 @@ export function deleteExam(payload = {}) {
       });
       message.success('Delete exam successfully');
     } catch (error) {
-      message.error('Fail to delete exam');
+      message.error(error.response.data.message);
     }
   }
 };

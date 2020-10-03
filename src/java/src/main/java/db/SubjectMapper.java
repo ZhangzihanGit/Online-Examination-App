@@ -43,26 +43,34 @@ public class SubjectMapper {
         // TODO: also need to update student_subject_relation table
         String sql = "INSERT INTO exam.subject (show_name, description, instructorid) " +
                 " VALUES (?,?,?) RETURNING id";
+
+        String studentSql = "INSERT INTO exam.student_subject_relation (studentid, subjectid) " +
+                "VALUES (?,?)";
         String showName = subject.getSubjectCode();
         String description = subject.getDescription();
-        // TODO: not use userid
-        int userid = subject.getAdminId();
 
         List<Instructor> instructors = subject.getInstructors();
         List<Integer> instructorIds = new ArrayList<>();
+        List<Student> students = subject.getStudents();
+        List<Integer> studentIds = new ArrayList<>();
 
         for (Instructor i : instructors) {
             instructorIds.add(i.getUserId());
         }
-        // TODO: PUT [11, 12, 13] as string into subject
+        for (Student s : students) {
+            studentIds.add(s.getUserId());
+        }
+        // TODO: In Part3, PUT [11, 12, 13] as string into subject table
         System.out.println(instructorIds.toString());
+        System.out.println(studentIds.toString());
 
+        // insert a new subject in Subject table
         PreparedStatement statement = DBConnection.prepare(sql);
         int subjectId = 0;
         try {
             statement.setString(1,showName);
             statement.setString(2,description);
-            statement.setInt(3,userid);
+            statement.setInt(3, instructorIds.get(0));
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 subjectId = resultSet.getInt("id");
@@ -72,6 +80,18 @@ public class SubjectMapper {
             }
         } catch (SQLException e) {
             logger.error(e.getMessage());
+        }
+
+        // insert student-subject mappings in Student_Subject_Relation table
+        statement = DBConnection.prepare(studentSql);
+        for (int i = 0; i < studentIds.size(); i++) {
+            try {
+                statement.setInt(1, studentIds.get(i));
+                statement.setInt(2, subjectId);
+                statement.executeQuery();
+            } catch (SQLException e) {
+                logger.error(e.getMessage());
+            }
         }
     }
     /**

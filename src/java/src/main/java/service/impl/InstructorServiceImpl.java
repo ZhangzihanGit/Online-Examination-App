@@ -31,7 +31,7 @@ public class InstructorServiceImpl implements InstructorService {
         Exam exam = ExamMapper.loadWithId(examId);
         // If the exam is submitted, has some submissions, cannot close the exam.
         if (SubmissionMapper.examIsSubmitted(exam)) {
-            throw new ExamGotSubmissionException("Exam has one or more submissions. Update failed");
+            throw new ExamGotSubmissionException("Operation failed: Exam has one or more submissions.");
         }
         else {
             return true;
@@ -45,7 +45,7 @@ public class InstructorServiceImpl implements InstructorService {
             // If there is exam corresponding with the student, no permission could be given.
             if (Registry.getInstance().checkStudentInExam(student.getUserId(), examId)) {
                 logger.info("Student: " + student.getName() + " is in EXAM!!");
-                throw new StudentTakingExamException("One or more students are taking the exam now");
+                throw new StudentTakingExamException("Operation failed: One or more students are taking the exam now.");
             }
         }
         return true;
@@ -53,7 +53,7 @@ public class InstructorServiceImpl implements InstructorService {
 
     public boolean checkStudentHasTakenExam(int examId, int studentId) throws StudentTakingExamException {
         if (Registry.getInstance().checkStudentInExam(studentId, examId)) {
-            throw new StudentTakingExamException("You have already attempted this exam");
+            throw new StudentTakingExamException("You have already attempted this exam!");
         }
         return true;
     }
