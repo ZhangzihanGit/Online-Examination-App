@@ -32,6 +32,10 @@ public class SubjectMapper {
         return subject;
     }
 
+    public static void updateStudentSubject(Subject subject, Student student) {
+
+    }
+
 
     public static void addSubject(Subject subject) {
         String sql = "INSERT INTO exam.subject (show_name, description, instructorid) " +
@@ -137,22 +141,20 @@ public class SubjectMapper {
     private static Subject load(ResultSet resultSet) {
         Subject subject = new Subject();
         try {
-//            IdentityMap<Subject> map = IdentityMap.getInstance(subject.getClass());
             Integer id = resultSet.getInt("id");
-            System.out.println(id);
-            // If not previously loaded, load from DB.
-//            if (map.get(id) == null) {
-                String showName = resultSet.getString("show_name");
-                String description = resultSet.getString("description");
-                Integer instructorId = resultSet.getInt("instructorId");
+            logger.info("Load subject with id: " + id);
+
+            String showName = resultSet.getString("show_name");
+            String description = resultSet.getString("description");
+            Integer instructorId = resultSet.getInt("instructorId");
 
 //            TODO: Load UserMapper and ExamMapper here// 或者是直接UserMapper，具体实现再商量,
 //             to construct Subject Object.  => See Subject Constructor.
 //            Instructor instructor = InstructorMapper.loadWithId(instructorId);
-                subject.setId(id);
-                subject.setExams(ExamMapper.loadExamListWithSubject(id));
-                subject.setSubjectCode(showName);
-                subject.setDescription(description);
+            subject.setId(id);
+            subject.setExams(ExamMapper.loadExamListWithSubject(id));
+            subject.setSubjectCode(showName);
+            subject.setDescription(description);
 
         }catch (SQLException e) {
             logger.error(e.getMessage());

@@ -12,17 +12,19 @@ public class Subject {
     private List<Student> students;
     private String description;
     // TODO: replace adminId to InstructorId
-    // private List<Instructor> instructors;
+    private List<Instructor> instructors;
     private int adminId;
 
     public Subject() {
     }
 
-    public Subject(String description ,String subjectCode, int adminId) {
+    public Subject(String description ,String subjectCode, int adminId, List<Student> students,
+                   List<Instructor> instructors) {
         this.description = description;
         this.subjectCode = subjectCode;
-        // TODO: replace
+        this.students = students;
         this.adminId = adminId;
+        this.instructors = instructors;
 
         UnitOfWork.getInstance().registerNewObject(this);
     }
@@ -35,6 +37,18 @@ public class Subject {
         this.id = id;
         this.description = description;
         this.adminId = adminId;
+    }
+
+    public List<Instructor> getInstructors() {
+        if (this.instructors == null) {
+            load();
+        }
+        return instructors;
+    }
+
+    public void setInstructors(List<Instructor> instructors) {
+        this.instructors = instructors;
+        UnitOfWork.getInstance().registerDirtyObject(this);
     }
 
     public int getAdminId() {
@@ -111,6 +125,9 @@ public class Subject {
         }
         if (this.description == null) {
             this.description = subject.description;
+        }
+        if (this.instructors == null) {
+            this.instructors = subject.instructors;
         }
     }
 }
