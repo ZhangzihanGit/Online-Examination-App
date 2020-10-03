@@ -2,11 +2,14 @@ package util;
 
 import domain.Exam;
 import domain.Student;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class Registry {
+    private final static Logger logger = LogManager.getLogger(Registry.class);
     private static Map<Student, Exam> studentExamMap = new HashMap<>();
     private static Registry instance;
 
@@ -28,7 +31,10 @@ public class Registry {
     }
 
     public boolean checkStudentInExam(Student student) {
-        if(studentExamMap.containsKey(student)) return true;
+        if(studentExamMap.containsKey(student)) {
+            logger.info("student with id: "+ student.getUserId()+ " is in exam. ");
+            return true;
+        }
         else return false;
     }
 

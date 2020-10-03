@@ -8,6 +8,7 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import service.StudentService;
 import service.UserService;
+import util.Registry;
 import util.UnitOfWork;
 
 import java.util.ArrayList;
@@ -121,8 +122,11 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public boolean startExam(Student student) {
+    public boolean startExam(Student student, Exam exam) {
+        // Change student attribute to true
         student.setInExam(true);
+        // Register the student taking the exam.
+        Registry.getInstance().registerStartExamMap(student, exam);
         return StudentMapper.updateStatus(student);
     }
 
@@ -132,8 +136,11 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public void addSubmission() {
+    public void addSubmission(int examId, int userId) {
         UnitOfWork.getInstance().commit();
+        Exam exam = ExamMapper.loadWithId(examId);
+        Student student = StudentMapper.loadWithId(userId);
+        Registry.getInstance().registerStartExamMap(student,exam);
     }
 
     @Override

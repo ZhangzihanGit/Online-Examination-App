@@ -4,12 +4,17 @@ import domain.Answer;
 import domain.Exam;
 import domain.Question;
 import domain.Submission;
+import exceptions.ExamGotSubmissionException;
+import exceptions.StudentTakingExamException;
 import org.json.JSONArray;
 
 import java.util.List;
 
 // 接口可以是在controller层面解析parameter，把id发过来。
 public interface InstructorService extends UserService{
+    public boolean checkAnySubmission(int examId, int subjectId) throws ExamGotSubmissionException;
+    public boolean checkStudentTakingExam(int examId, int subjectId) throws StudentTakingExamException;
+    public boolean checkUpdatePermission(int examId, int subjectId);
     /**
      * Delete the exam given the subject Id and exam Id.
      * @param subjectId Subject Id

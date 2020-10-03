@@ -4,12 +4,15 @@ import db.*;
 import domain.Exam;
 import domain.Subject;
 import domain.User;
+import exceptions.ExamGotSubmissionException;
+import exceptions.StudentTakingExamException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import domain.*;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import service.InstructorService;
+import util.Registry;
 import util.UnitOfWork;
 
 import java.util.ArrayList;
@@ -18,20 +21,30 @@ import java.util.List;
 public class InstructorServiceImpl implements InstructorService {
     private static final Logger logger = LogManager.getLogger(InstructorServiceImpl.class);
 
-    public boolean checkUpdatePermission(int examId, int subjectId) {
-        List<Student> students = StudentMapper.loadStudentsBySubject(subjectId);
+    /**
+     * Return true if no student has submitted in the exam, and no student is taking the exam.
+     * @param examId
+     * @param subjectId
+     * @return
+     */
+    public boolean checkAnySubmission(int examId, int subjectId) throws ExamGotSubmissionException {
         Exam exam = ExamMapper.loadWithId(examId);
         // If the exam is submitted, has some submissions, cannot close the exam.
         if (SubmissionMapper.examIsSubmitted(exam)) {
-            return false;
+            throw new ExamGotSubmissionException("Exam has one or more submissions. Update failed");
         }
+        else {
+            return true;
+        }
+    }
 
+    public boolean checkStudentTakingExam(int examId, int subjectId) throws StudentTakingExamException {
+        List<Student> students = StudentMapper.loadStudentsBySubject(subjectId);
         // If there are any student who
         for (Student student: students) {
-            int id = student.getUserId();
-            // If the student if currently in one exam ,check the exam he's taking.
-            if (student.getInExam()) {
-                //TODO: How to check one exam is with one student?
+            // If there is exam corresponding with the student, no permission could be given.
+            if (Registry.getInstance().checkStudentInExam(student)) {
+                throw new StudentTakingExamException("One or more students are taking the exam now");
             }
         }
         return true;
@@ -76,6 +89,11 @@ public class InstructorServiceImpl implements InstructorService {
      * @return
      */
     public boolean checkStudentInExam(Exam exam) {
+        return false;
+    }
+
+    @Override
+    public boolean checkUpdatePermission(int examId, int subjectId) {
         return false;
     }
 
