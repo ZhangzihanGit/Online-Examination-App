@@ -46,49 +46,63 @@ const ContentList = ({ list, isExam }) => {
   const isStudent = identity && identity.userType === "student";
 
   const handleEditExam = (item) => {
-    // when click edith exam, first get the exam
-    dispatch(getExam({
-      examId: item.examId,
-    }, `${pathname}/edit-exam-${item.examId}`));
+    if (isExam) {
+      // when click edith exam, first get the exam
+      dispatch(getExam({
+        examId: item.examId,
+      }, `${pathname}/edit-exam-${item.examId}`));
+    }
   }
 
   const handleDeleteExam = (item) => {
-    dispatch(deleteExam({
-      userId: identity.userId,
-      examId: item.examId,
-      subjectId: item.subjectId,
-    }));
+    if (isExam) {
+      dispatch(deleteExam({
+        userId: identity.userId,
+        examId: item.examId,
+        subjectId: item.subjectId,
+      }));
+    }
   }
 
   const handleCloseExam = (item) => {
-    dispatch(closeExam({
-      userId: identity.userId,
-      examId: item.examId,
-    }));
+    if (isExam) {
+      dispatch(closeExam({
+        userId: identity.userId,
+        examId: item.examId,
+      }));
+    }
   }
 
   const handlePublishExam = (item) => {
-    dispatch(publishExam({
-      userId: identity.userId,
-      examId: item.examId,
-    }));
+    if (isExam) {
+      dispatch(publishExam({
+        userId: identity.userId,
+        examId: item.examId,
+      }));
+    }
   }
 
   const handleClickExam = (item) => {
-    dispatch(startExam({
-      examId: item.examId,
-      userId: identity.userId,
-    }));
-    dispatch(getExam({
-      examId: item.examId,
-    }, `${pathname}/exam-${item.examId}`));
+    if (isExam) {
+      if (isStudent) {
+        dispatch(startExam({
+          examId: item.examId,
+          userId: identity.userId,
+        }));
+      }
+      dispatch(getExam({
+        examId: item.examId,
+      }, `${pathname}/exam-${item.examId}`));
+    }
   }
 
   const handleMarkExam = (item) => {
-    dispatch(getSubmissions({
-      examId: item.examId,
-      subjectId: item.subjectId
-    }, `${pathname}/mark-exam-${item.examId}`));
+    if (isExam) {
+      dispatch(getSubmissions({
+        examId: item.examId,
+        subjectId: item.subjectId
+      }, `${pathname}/mark-exam-${item.examId}`));
+    }
   }
 
   useEffect(() => {
