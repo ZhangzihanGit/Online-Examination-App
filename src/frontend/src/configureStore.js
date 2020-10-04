@@ -12,7 +12,7 @@ import { RELATIVE_PATH } from './constants';
  * If need to fetch data from the server or in production, then add RELATIVE_PATH
  */
 export const history = createBrowserHistory({
-  basename: RELATIVE_PATH,
+  basename: '',
 });
 
 export default function configureStore(preloadedState) {

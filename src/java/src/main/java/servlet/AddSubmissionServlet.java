@@ -61,7 +61,7 @@ public class AddSubmissionServlet extends HttpServlet {
                 service.addAnswer();
                 // After the answers are written into DB, inject the dependency into
                 // the submission.
-                submission.setAnswers(answers);
+//                submission.setAnswers(answers);
 
                 jsonObject = new JSONObject();
                 jsonObject.put("message","success");
