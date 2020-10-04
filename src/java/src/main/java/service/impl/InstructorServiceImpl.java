@@ -62,7 +62,6 @@ public class InstructorServiceImpl implements InstructorService {
 
     public boolean checkExamIsClosed(int examId) throws ExamFinishedException {
         Exam exam = ExamMapper.loadWithId(examId);
-        System.out.println("??? examId: " + exam.getId() + " " + exam.isClosed());
         if (exam.isClosed()) {
             throw new ExamFinishedException("The exam has already closed, you cannot submit!");
         }
