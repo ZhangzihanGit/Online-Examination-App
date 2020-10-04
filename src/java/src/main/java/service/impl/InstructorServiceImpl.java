@@ -55,7 +55,7 @@ public class InstructorServiceImpl implements InstructorService {
 
     public boolean checkStudentHasTakenExam(int examId, int studentId) throws StudentTakingExamException {
         if (Registry.getInstance().checkStudentInExam(studentId, examId)) {
-            throw new StudentTakingExamException("You have already attempted this exam!");
+            throw new StudentTakingExamException("The exam has closed or You have already attempted this exam!");
         }
         return true;
     }
@@ -305,6 +305,8 @@ public class InstructorServiceImpl implements InstructorService {
         // 5. for each question, create a new answer obj, mark content as ""
         // 6. insert answer into table
 
+        Exam exam = ExamMapper.loadWithId(examId);
+
         List<Student> students = this.viewAllStudents(subjectId);
         List<Integer> selfSubmittedStudentIds = SubmissionMapper.loadWithStudentExam(examId);
 
@@ -324,6 +326,9 @@ public class InstructorServiceImpl implements InstructorService {
         StudentService service = new StudentServiceImpl();
         // for all students that have not submitted, force submit
         for (Student s : unsubmittedStudents) {
+            // Register the student taking the exam.
+            Registry.getInstance().registerStartExamMap(s, exam);
+
             // Create the new submission.
             Submission submission = new Submission(s.getUserId(), examId);
             UnitOfWork.getInstance().commit();
