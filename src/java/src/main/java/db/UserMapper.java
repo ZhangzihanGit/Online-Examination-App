@@ -53,7 +53,6 @@ public class UserMapper {
     }
 
     private static User load(ResultSet resultSet) {
-        // TODO: 这里调用setter不符合UnitOfWork使用原则，9.21-9.22之间需要重写一些实体类的构造体，以及对应Mapper内部的实现。
         User user = null;
         try {
             Integer id = resultSet.getInt("id");
@@ -75,7 +74,6 @@ public class UserMapper {
 
             String username = resultSet.getString("username");
             String showName = resultSet.getString("show_name");
-            // UnitOfWork没有受到影响只是因为commit的时候没有选出来User类型的实例。
             // This may lead to possible trouble, as evey setter leads to an add to unitofwork.
             user.setUserId(id);
             user.setName(username);

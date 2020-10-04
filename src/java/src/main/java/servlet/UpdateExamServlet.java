@@ -82,6 +82,5 @@ public class UpdateExamServlet extends HttpServlet {
             response.getWriter().write(object.toString());
         }
 
-        // TODO: 还是把更新后的exam字段发回来吧
     }
 }

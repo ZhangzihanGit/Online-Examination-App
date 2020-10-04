@@ -99,7 +99,6 @@ public class InstructorServiceImpl implements InstructorService {
     }
 
     /**
-     * TODO: 需要学生加一个字段？ 这个需求之前好像没有考虑做过？
      * Check if there are any students taking the exam now.
      * @param exam
      * @return

@@ -88,17 +88,8 @@ public abstract class User {
 
     public void load() {
         logger.info("Reach the parent loader");
-        // TODO: 有可能会有bug 具体连上数据库再测继承的效果（懒得本地mock测了）= =
         User user = StudentMapper.loadWithId(this.userId)==null ?InstructorMapper.loadWithId(this.userId):
                 StudentMapper.loadWithId(this.userId);
-//        if (this.userType == null) {
-//            this.userType = user.userType;
-//        }
-//        if (this.name == null) {
-//            this.name = user.name;
-//        }
-//        if (this.subjects == null) {
-//            this.subjects = user.subjects;
-//        }
+
     }
 }
