@@ -10,20 +10,6 @@ import java.util.IdentityHashMap;
 import java.util.Map;
 
 public class IdentityMap<E>{
-//    private static IdentityHashMap instance;
-//    private static Map<Integer, Exam> examMap = new HashMap<>();
-//    private static Map<Integer, Question> questionMap = new HashMap<>();
-//    private static Map<Integer, Subject> subjectMap = new HashMap<>();
-//    private static Map<Integer, User> userMap = new HashMap<>();
-//
-//    public static IdentityHashMap getInstance() {
-//        if (instance == null) {
-//            instance = new IdentityHashMap<>();
-//        }
-//        return instance;
-//    }
-
-
     private Map<Integer, E> map = new HashMap<Integer, E>();
     private static Map<Class, IdentityMap> instance = new HashMap<Class, IdentityMap>();
 

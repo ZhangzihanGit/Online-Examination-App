@@ -43,7 +43,6 @@ public class GetAllSubmissionServlet extends HttpServlet {
         }
 
         JSONObject object = new JSONObject();
-//        JSONArray tempArrayQuestions = new JSONArray();
         JSONArray tempArraySubmissions = new JSONArray();
         for (Submission submission: submissions) {
             // should create a new question list for each submission
@@ -90,13 +89,11 @@ public class GetAllSubmissionServlet extends HttpServlet {
                                 tempArrayQuestions.put(tempQuestion);
                             }
                         }
-//                        tempArrayQuestions.put(tempQuestion);
                     }
                     tempSubmission.put("questions", tempArrayQuestions);
 
                     tempArraySubmissions.put(tempSubmission);
                 }
-//                tempArraySubmissions.put(tempSubmission);
             }
         }
 

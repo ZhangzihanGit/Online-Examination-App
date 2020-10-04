@@ -18,8 +18,6 @@ public class Submission {
 
     /**
      * The constructor is used when it's first time created.
-     * @param answers
-     * @param mark
      * @param studentId
      * @param examId
      */

@@ -10,7 +10,6 @@ import org.json.JSONArray;
 
 import java.util.List;
 
-// 接口可以是在controller层面解析parameter，把id发过来。
 public interface InstructorService extends UserService{
     public boolean checkAnySubmission(int examId, int subjectId) throws ExamGotSubmissionException;
     public boolean checkStudentTakingExam(int examId, int subjectId) throws StudentTakingExamException;
@@ -25,7 +24,6 @@ public interface InstructorService extends UserService{
     /**
      * Add a new exam given the subject ID. Exam id will be auto-generated
      * by the DB.
-     * @param subjectId Subject Id
      */
     public void addExam(Exam exam);
 
@@ -82,7 +80,6 @@ public interface InstructorService extends UserService{
 
     /**
      * Publish the exam and make it available to the student.
-     * @param subjectId
      * @param examId
      */
     public void publishExam(int userId, int examId);

@@ -179,7 +179,7 @@ public class SubjectMapper {
             String description = resultSet.getString("description");
             Integer instructorId = resultSet.getInt("instructorId");
 
-//            TODO: 这里student与subject互相引用，直接加载会出现死循环。
+            // TODO: student and subject holds each other's reference, can lead infinite loop
 //            Instructor instructor = InstructorMapper.loadWithId(instructorId);
             subject.setId(id);
             subject.setExams(ExamMapper.loadExamListWithSubject(id));

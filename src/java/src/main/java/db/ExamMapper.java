@@ -130,7 +130,6 @@ public class ExamMapper {
         int examId=0;
         try {
             statement = DBConnection.prepare(sql);
-            // TODO： 这个字段是否需要不确定，现在写死了是因为db schema要求该字段not null
             statement.setString(1, exam.getShowName());
             statement.setInt(2,exam.getSubjectId());
             statement.setString(3,exam.getDescription());
