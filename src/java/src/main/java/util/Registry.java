@@ -43,7 +43,6 @@ public class Registry {
         }
         studentExamMap.get(student.getUserId()).add(exam.getId());
         StudentMapper.updateTakingExam(student.getUserId(), studentExamMap.get(student.getUserId()));
-
     }
 
     public boolean checkStudentInExam(int studentId, int examId) {
