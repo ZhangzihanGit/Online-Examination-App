@@ -44,7 +44,7 @@ public class LockManager {
         return lockResult;
     }
 
-    public boolean releaseLock(Integer lockable) {
+    public void releaseLock(Integer lockable) {
         lockManager.lockMap.remove(lockable);
     }
 }
