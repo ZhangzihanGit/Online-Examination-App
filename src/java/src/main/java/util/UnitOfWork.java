@@ -9,10 +9,29 @@ import java.util.ArrayList;
 
 public class UnitOfWork {
     private static Logger logger = LogManager.getLogger(UnitOfWork.class);
+    // The Java ThreadLocal class enables you to create variables that can only be read and written by the same thread
+    // This is to ensure that UoW works in multi-threaded env.
+    private static ThreadLocal current = new ThreadLocal();
+
     private static UnitOfWork instance;
     private ArrayList<Object> newObjectList = new ArrayList<Object>();
     private ArrayList<Object> dirtyObjectList = new ArrayList<Object>();
     private ArrayList<Object> deletedObjectList = new ArrayList<Object>();
+
+    /**
+     * keep track of and return the UnitOfWork instance of each thread.
+     */
+    public static void newCurrent() {
+        setCurrent(new UnitOfWork());
+    }
+
+    public static void setCurrent(UnitOfWork uow) {
+        current.set(uow);
+    }
+
+    public static UnitOfWork getCurrent() {
+        return (UnitOfWork) current.get();
+    }
 
     /**
      *
