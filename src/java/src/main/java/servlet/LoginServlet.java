@@ -1,11 +1,13 @@
 package servlet;
 
+import auth.testHello;
 import domain.User;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.json.JSONObject;
 import service.UserService;
 import service.impl.UserServiceImpl;
+import util.Test;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -25,6 +27,9 @@ public class LoginServlet extends HttpServlet {
         String password = jsonObject.getString("password");
         System.out.println(username);
         System.out.println(password);
+
+        testHello test = new testHello();
+        test.testShiroInit();
 
         /**
          * TODO: Authenticate the user's credential in Part 3,
