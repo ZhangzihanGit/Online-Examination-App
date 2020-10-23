@@ -4,6 +4,12 @@ import auth.testHello;
 import domain.User;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.UnknownAccountException;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.json.JSONObject;
 import service.UserService;
 import service.impl.UserServiceImpl;
@@ -28,8 +34,51 @@ public class LoginServlet extends HttpServlet {
         System.out.println(username);
         System.out.println(password);
 
-        testHello test = new testHello();
-        test.testShiroInit();
+//        JSONObject data = new JSONObject();
+
+//        Subject subject = SecurityUtils.getSubject();
+//        UsernamePasswordToken token = new UsernamePasswordToken(username, password);
+//        if (!subject.isAuthenticated()) {
+//            try {
+//                // login successfully
+//                subject.login(token);
+//                logger.info("User has authenticated");
+//
+//                UserService userService = new UserServiceImpl();
+//                User user = userService.getUser(username);
+//                logger.info("User name : " + user.getName() + "User showName: " + user.getShowName() + "  user Type: " + user.getUserType());
+//                data.put("message", "Login successfully!");
+//                data.put("username", user.getName());
+//                data.put("showName", user.getShowName());
+//                data.put("userType", user.getUserType().toString().toLowerCase());
+//                data.put("userId", user.getUserId());
+//                response.setStatus(200);
+//            } catch (UnknownAccountException e) {
+//                data.put("message", "Unknown username!");
+//                logger.error("User has NOT authenticated");
+//                response.setStatus(401);
+//            }
+//
+////            catch (UnknownAccountException e) {
+////                data.put("message", "Unknown username!");
+////                logger.error("User has NOT authenticated");
+////                response.setStatus(401);
+////            } catch (IncorrectCredentialsException e) {
+////                logger.error("User has NOT authenticated");
+////                data.put("message", "Incorrect password!");
+////                response.setStatus(401);
+////            } catch (AuthenticationException e) {
+////                logger.error("User has NOT authenticated");
+////                data.put("message", "Login fail!");
+////                response.setStatus(401);
+////            }
+//        }
+
+//        testHello test = new testHello();
+//        test.login(username, password);
+
+
+
 
         /**
          * TODO: Authenticate the user's credential in Part 3,
