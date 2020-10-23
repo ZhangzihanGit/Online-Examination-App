@@ -11,7 +11,8 @@ export default function reducer(state = initState, action) {
     case LOGIN:
       return {
         ...state,
-        identity: action.payload
+        identity: action.payload,
+        authenticated: true,
       }
     case GET_INSTRUCTOR_LIST:
       return {
