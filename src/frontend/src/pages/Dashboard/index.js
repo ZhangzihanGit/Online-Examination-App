@@ -61,7 +61,9 @@ const Dashboard = ({ location }) => {
   };
 
   const handleLogout = () => {
-    dispatch(logout());
+    dispatch(logout({
+      sessionId: identity.sessionId
+    }));
   }
 
   return (

@@ -13,6 +13,10 @@ export const login = (params) => {
   return ajax.post(`/login`, { data: params });
 };
 
+export const logout = (params) => {
+  return ajax.post(`/logout`, { data: params });
+};
+
 export const getAllInstructors = (params) => {
   return ajax.post(`/all-instructors`, { data: params });
 };

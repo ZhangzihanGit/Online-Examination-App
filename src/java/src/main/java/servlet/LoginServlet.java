@@ -9,11 +9,11 @@ import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.json.JSONObject;
 import service.UserService;
 import service.impl.UserServiceImpl;
-import util.Test;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -34,77 +34,43 @@ public class LoginServlet extends HttpServlet {
         System.out.println(username);
         System.out.println(password);
 
-//        JSONObject data = new JSONObject();
-
-//        Subject subject = SecurityUtils.getSubject();
-//        UsernamePasswordToken token = new UsernamePasswordToken(username, password);
-//        if (!subject.isAuthenticated()) {
-//            try {
-//                // login successfully
-//                subject.login(token);
-//                logger.info("User has authenticated");
-//
-//                UserService userService = new UserServiceImpl();
-//                User user = userService.getUser(username);
-//                logger.info("User name : " + user.getName() + "User showName: " + user.getShowName() + "  user Type: " + user.getUserType());
-//                data.put("message", "Login successfully!");
-//                data.put("username", user.getName());
-//                data.put("showName", user.getShowName());
-//                data.put("userType", user.getUserType().toString().toLowerCase());
-//                data.put("userId", user.getUserId());
-//                response.setStatus(200);
-//            } catch (UnknownAccountException e) {
-//                data.put("message", "Unknown username!");
-//                logger.error("User has NOT authenticated");
-//                response.setStatus(401);
-//            }
-//
-////            catch (UnknownAccountException e) {
-////                data.put("message", "Unknown username!");
-////                logger.error("User has NOT authenticated");
-////                response.setStatus(401);
-////            } catch (IncorrectCredentialsException e) {
-////                logger.error("User has NOT authenticated");
-////                data.put("message", "Incorrect password!");
-////                response.setStatus(401);
-////            } catch (AuthenticationException e) {
-////                logger.error("User has NOT authenticated");
-////                data.put("message", "Login fail!");
-////                response.setStatus(401);
-////            }
-//        }
-
-//        testHello test = new testHello();
-//        test.login(username, password);
-
-
-
-
-        /**
-         * TODO: Authenticate the user's credential in Part 3,
-         * TODO: for now just find the user_type based on username,
-         * TODO: maybe need to do the check somewhere else
-         */
-        Boolean authenticated = true;
-        UserService userService = new UserServiceImpl();
-        User user = userService.getUser(username);
-        logger.info("User name : " + user.getName() + "User showName: " + user.getShowName() + "  user Type: " + user.getUserType());
         JSONObject data = new JSONObject();
-        if (authenticated) {
-            data.put("message", "Login successfully!");
-            data.put("username", user.getName());
-            data.put("showName", user.getShowName());
-            data.put("userType", user.getUserType().toString().toLowerCase());
-            data.put("userId", user.getUserId());
-            response.setStatus(200);
-        } else {
-            // TODO: failure reason
-            // if password incorrect
-//            data.put("message", "Wrong password!");
-            // if no such user
-//            data.put("message", "User " + user.getName() + " is not registered!");
-            data.put("message", "Login fail!");
-            response.setStatus(401);
+
+        Subject subject = SecurityUtils.getSubject();
+        UsernamePasswordToken token = new UsernamePasswordToken(username, password);
+        if (!subject.isAuthenticated()) {
+            try {
+                // login successfully
+                subject.login(token);
+                logger.info("User has authenticated");
+
+                Session session = subject.getSession();
+                logger.info("Sessionid: " + session.getId());
+
+
+                UserService userService = new UserServiceImpl();
+                User user = userService.getUser(username);
+                logger.info("User name : " + user.getName() + "User showName: " + user.getShowName() + "  user Type: " + user.getUserType());
+                data.put("message", "Login successfully!");
+                data.put("username", user.getName());
+                data.put("showName", user.getShowName());
+                data.put("userType", user.getUserType().toString().toLowerCase());
+                data.put("userId", user.getUserId());
+                data.put("sessionId", session.getId());
+                response.setStatus(200);
+            } catch (UnknownAccountException e) {
+                data.put("message", "Unknown username!");
+                logger.error("User has NOT authenticated");
+                response.setStatus(401);
+            } catch (IncorrectCredentialsException e) {
+                logger.error("User has NOT authenticated");
+                data.put("message", "Incorrect password!");
+                response.setStatus(401);
+            } catch (AuthenticationException e) {
+                logger.error("User has NOT authenticated");
+                data.put("message", "Login fail!");
+                response.setStatus(401);
+            }
         }
 
         response.setContentType("application/json");
