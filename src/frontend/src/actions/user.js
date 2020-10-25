@@ -24,7 +24,7 @@ export function logout(payload = {}) {
   return async (dispatch) => {
     console.log(payload)
     try {
-      const { data, status } = await api.logout(payload);
+      await api.logout(payload);
       // clear the Redux store
       dispatch({
         type: LOGOUT,
