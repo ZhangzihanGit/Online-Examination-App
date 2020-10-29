@@ -45,17 +45,6 @@ public class GetAllSubjectsServlet extends HttpServlet {
             subjects = userService.viewAllSubjects(Integer.parseInt(userId));
         }
 
-//        if (userType.equalsIgnoreCase(UserType.STUDENT.toString())) {
-//            StudentService studentService = new StudentServiceImpl();
-//            subjects = studentService.viewAllSubjects(Integer.parseInt(userId));
-//        } else if (userType.equalsIgnoreCase(UserType.INSTRUCTOR.toString())) {
-//            InstructorService instructorService = new InstructorServiceImpl();
-//            subjects = instructorService.viewAllSubjects(Integer.parseInt(userId));
-//        } else if (userType.equalsIgnoreCase(UserType.ADMIN.toString())){
-//            UserService userService = new UserServiceImpl();
-//            subjects = userService.viewAllSubjects(Integer.parseInt(userId));
-//        }
-
         JSONObject data = new JSONObject ();
         JSONArray subjectArr = new JSONArray();
 

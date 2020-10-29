@@ -65,35 +65,8 @@ public class MarkSubmissionServlet extends HttpServlet {
             response.setStatus(403);
         }
 
-//        InstructorService service = new InstructorServiceImpl();
-//
-//        int examId = obj.getInt("examId");
-//        JSONArray array = obj.getJSONArray("marks");
-//        for (int i=0; i<array.length(); i++) {
-//            JSONObject markObject = array.getJSONObject(i);
-//            int submissionId = markObject.getInt("submissionId");
-//            int userId = markObject.getInt("userId");
-//            int totalMark =markObject.getInt("totalMark");
-//            // Mark distribution for each question.
-//            JSONArray questionsData = markObject.getJSONArray("questions");
-//            Submission submission = service.getSubmission(submissionId);
-//            submission.setMark(totalMark);
-//            for (int j=0; j<questionsData.length(); j++) {
-//                JSONObject questionData = questionsData.getJSONObject(j);
-//                int questionId = questionData.getInt("questionId");
-//                int mark = questionData.getInt("mark");
-//                Answer answer = service.getAnswer(submissionId, questionId);
-//                logger.info("Answer id is: "+ answer.getId());
-//                answer.setMark(mark);
-//            }
-//            UnitOfWork.getInstance().commit();
-//        }
-
-//        obj = new JSONObject();
-//        obj.put("message","success");
         response.setContentType("application/json");
         request.setCharacterEncoding("UTF-8");
-//        response.setStatus(200);
         response.getWriter().write(responseObj.toString());
     }
 }
