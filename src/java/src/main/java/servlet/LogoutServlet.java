@@ -1,5 +1,6 @@
 package servlet;
 
+import auth.AuthenticationCenter;
 import domain.User;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -33,8 +34,11 @@ public class LogoutServlet extends HttpServlet {
         logger.info("Sessionid: " + sessionId);
 
         // close the session
-        Subject subject = SecurityUtils.getSubject();
-        subject.logout();
+        AuthenticationCenter authentication = AuthenticationCenter.getInstance();
+        authentication.logout(sessionId);
+
+//        Subject subject = SecurityUtils.getSubject();
+//        subject.logout();
 
         JSONObject data = new JSONObject();
         data.put("message", "Logout successfully!");

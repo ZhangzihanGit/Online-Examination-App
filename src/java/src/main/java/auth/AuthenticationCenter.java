@@ -20,23 +20,31 @@ public class AuthenticationCenter {
     DefaultSecurityManager securityManager;
     DefaultSessionManager sessionManager;
     Collection<Session> currentSessions;
+    private static AuthenticationCenter instance;
     private final static Logger logger = LogManager.getLogger(AuthenticationCenter.class);
 
-    public AuthenticationCenter() {
+    private AuthenticationCenter() {
         this.securityManager = (DefaultSecurityManager) SecurityUtils.getSecurityManager();
         this.sessionManager = (DefaultSessionManager) this.securityManager.getSessionManager();
         this.currentSessions = this.sessionManager.getSessionDAO().getActiveSessions();
     }
 
+    public static AuthenticationCenter getInstance() {
+        if (instance == null) {
+            instance = new AuthenticationCenter();
+        }
+        return instance;
+    }
+
     public Serializable login(String username, String password)
             throws AlreadyLoggedInException, IncorrectCredentialsException,
             UnknownAccountException, AuthenticationException {
-        Subject subject = SecurityUtils.getSubject();
         UsernamePasswordToken token = new UsernamePasswordToken(username, password);
 
         // let user log in and create a session
         if (!hasLoggedIn(token)) {
             try {
+                Subject subject = SecurityUtils.getSubject();
                 subject.login(token);
                 logger.info("User has authenticated");
 
@@ -75,14 +83,34 @@ public class AuthenticationCenter {
      */
     public boolean hasLoggedIn(UsernamePasswordToken token) {
         Object username = token.getPrincipal();
+        currentSessions = this.sessionManager.getSessionDAO().getActiveSessions();
         for (Session s : currentSessions) {
+            logger.info("login Existing session id: " + s.getId());
             Object existUsername = s.getAttribute("principal");
-            if (username != null && existUsername.equals(username)) {
+            if (existUsername.equals(username)) {
                 logger.info("You have already logged in!");
                 return true;
             }
         }
-
         return false;
+    }
+
+    /**
+     * Stop the session in the DAO
+     * @param sessionId
+     */
+    public void logout(String sessionId) {
+
+        currentSessions = this.sessionManager.getSessionDAO().getActiveSessions();
+        for (Session s : currentSessions) {
+            logger.info("logout Existing session id: " + s.getId());
+            if (sessionId.equals(s.getId())) {
+                SecurityUtils.getSubject().logout();
+                logger.info(sessionId + " has logged out!");
+                s.stop();
+            }
+        }
+
+
     }
 }

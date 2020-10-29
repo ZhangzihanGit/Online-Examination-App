@@ -42,35 +42,7 @@ public class LoginServlet extends HttpServlet {
 
         JSONObject data = new JSONObject();
 
-//        Subject subject = SecurityUtils.getSubject();
-//        UsernamePasswordToken token = new UsernamePasswordToken(username, password);
-//
-//        DefaultSecurityManager securityManager = (DefaultSecurityManager) SecurityUtils.getSecurityManager();
-//        DefaultSessionManager sessionManager = (DefaultSessionManager) securityManager.getSessionManager();
-//        Collection<Session> currentSessions = sessionManager.getSessionDAO().getActiveSessions();
-
-//        EnterpriseCacheSessionDAO dao = new EnterpriseCacheSessionDAO();
-//        Collection<Session> currentSessions = dao.getActiveSessions();
-
-        // 这个o其实就是username
-//        Object o = token.getPrincipal();
-//        if (o != null) {
-//            logger.info("old principal: " + o.toString());
-//        }
-//
-//        // 检查该username是否已经存在于某个session中，若存在，说明已经登录过了
-//        for (Session s : currentSessions) {
-//            Object newO = s.getAttribute("principal");
-//            if (o != null && newO.equals(o)) {
-//                logger.info("You have already logged in!");
-//                data.put("message", "You have already logged in somewhere else, please logout first!");
-//                response.setStatus(401);
-//            } else {
-//                logger.info("First time log in!");
-//            }
-//        }
-
-        AuthenticationCenter authentication = new AuthenticationCenter();
+        AuthenticationCenter authentication = AuthenticationCenter.getInstance();
 
         try {
             Serializable sessionId = authentication.login(username, password);

@@ -166,7 +166,8 @@ export function createExam(payload = {}, pathname) {
       message.success('Create exam successfully');
       dispatch(push(pathname));
     } catch (error) {
-      message.error('Fail to create exam');
+      const { message: msg } = error.response.data;
+      message.error(msg);
     }
   }
 };
