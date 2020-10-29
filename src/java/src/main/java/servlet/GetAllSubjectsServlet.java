@@ -27,21 +27,34 @@ public class GetAllSubjectsServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         String userId = request.getParameter("userId");
+        String sessionId = request.getParameter("sessionId");
         String userType = request.getParameter("userType");
         System.out.println(userId);
         System.out.println(userType);
 
         List<Subject> subjects = null;
-        if (userType.equalsIgnoreCase(UserType.STUDENT.toString())) {
+        AuthorisationCenter authorisationCenter = AuthorisationCenter.getInstance();
+        if (authorisationCenter.hasPermission(sessionId, "student")) {
             StudentService studentService = new StudentServiceImpl();
             subjects = studentService.viewAllSubjects(Integer.parseInt(userId));
-        } else if (userType.equalsIgnoreCase(UserType.INSTRUCTOR.toString())) {
+        } else if (authorisationCenter.hasPermission(sessionId, "instructor")) {
             InstructorService instructorService = new InstructorServiceImpl();
             subjects = instructorService.viewAllSubjects(Integer.parseInt(userId));
-        } else if (userType.equalsIgnoreCase(UserType.ADMIN.toString())){
+        } else if (authorisationCenter.hasPermission(sessionId, "admin")) {
             UserService userService = new UserServiceImpl();
             subjects = userService.viewAllSubjects(Integer.parseInt(userId));
         }
+
+//        if (userType.equalsIgnoreCase(UserType.STUDENT.toString())) {
+//            StudentService studentService = new StudentServiceImpl();
+//            subjects = studentService.viewAllSubjects(Integer.parseInt(userId));
+//        } else if (userType.equalsIgnoreCase(UserType.INSTRUCTOR.toString())) {
+//            InstructorService instructorService = new InstructorServiceImpl();
+//            subjects = instructorService.viewAllSubjects(Integer.parseInt(userId));
+//        } else if (userType.equalsIgnoreCase(UserType.ADMIN.toString())){
+//            UserService userService = new UserServiceImpl();
+//            subjects = userService.viewAllSubjects(Integer.parseInt(userId));
+//        }
 
         JSONObject data = new JSONObject ();
         JSONArray subjectArr = new JSONArray();

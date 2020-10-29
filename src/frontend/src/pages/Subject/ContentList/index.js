@@ -60,6 +60,7 @@ const ContentList = ({ list, isExam }) => {
         userId: identity.userId,
         examId: item.examId,
         subjectId: item.subjectId,
+        sessionId: identity.sessionId,
       }));
     }
   }
@@ -70,6 +71,7 @@ const ContentList = ({ list, isExam }) => {
         userId: identity.userId,
         examId: item.examId,
         subjectId: item.subjectId,
+        sessionId: identity.sessionId,
       }));
     }
   }
@@ -79,6 +81,7 @@ const ContentList = ({ list, isExam }) => {
       dispatch(publishExam({
         userId: identity.userId,
         examId: item.examId,
+        sessionId: identity.sessionId,
       }));
     }
   }
@@ -89,6 +92,7 @@ const ContentList = ({ list, isExam }) => {
         dispatch(startExam({
           examId: item.examId,
           userId: identity.userId,
+          sessionId: identity.sessionId,
         }))
           .then(_ => {
             dispatch(getExam({
@@ -107,7 +111,8 @@ const ContentList = ({ list, isExam }) => {
     if (isExam) {
       dispatch(getSubmissions({
         examId: item.examId,
-        subjectId: item.subjectId
+        subjectId: item.subjectId,
+        sessionId: identity.sessionId,
       }, `${pathname}/mark-exam-${item.examId}`));
     }
   }

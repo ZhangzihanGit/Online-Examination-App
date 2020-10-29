@@ -1,8 +1,10 @@
 package servlet;
 
+import auth.AuthorisationCenter;
 import domain.Instructor;
 import domain.Student;
 import domain.UserType;
+import exceptions.NoAuthorisationException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import service.AdminService;
@@ -23,6 +25,7 @@ public class GetAllStudentsServlet extends HttpServlet {
         String requestData = request.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
         JSONObject jsonObject = new JSONObject(requestData);
         int userId = jsonObject.getInt("userId");
+        String sessionId = jsonObject.getString("sessionId");
         String userType = jsonObject.getString("userType");
         System.out.println(userId);
         System.out.println(userType);
@@ -30,17 +33,18 @@ public class GetAllStudentsServlet extends HttpServlet {
         List<Student> students;
         JSONObject data = new JSONObject ();
 
-        // TODO: do more strict authentication in Part 3
-        // TODO: e.g. not only check string, but check userId in DB to see the user's type
-        if (userType.equalsIgnoreCase(UserType.ADMIN.toString())){
+        AuthorisationCenter authorisationCenter = AuthorisationCenter.getInstance();
+        try {
+            authorisationCenter.checkPermission(sessionId, "admin");
+
             AdminService userService = new AdminServiceImpl();
             students = userService.viewAllStudents();
             JSONArray studentArr = new JSONArray(students);
             data.put("message", "Fetch students successfully");
             data.put("studentList", studentArr);
             response.setStatus(200);
-        } else {
-            data.put("message", "No authority to fetch students");
+        } catch (NoAuthorisationException e) {
+            data.put("message", e.getMessage());
             response.setStatus(403);
         }
 

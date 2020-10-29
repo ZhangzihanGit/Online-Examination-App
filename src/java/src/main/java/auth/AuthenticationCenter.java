@@ -110,7 +110,5 @@ public class AuthenticationCenter {
                 s.stop();
             }
         }
-
-
     }
 }

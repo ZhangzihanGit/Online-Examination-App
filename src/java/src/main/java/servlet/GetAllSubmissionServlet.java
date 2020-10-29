@@ -1,7 +1,9 @@
 package servlet;
 
+import auth.AuthorisationCenter;
 import db.*;
 import domain.*;
+import exceptions.NoAuthorisationException;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.json.JSONArray;
@@ -21,93 +23,93 @@ public class GetAllSubmissionServlet extends HttpServlet {
     private final static Logger logger = LogManager.getLogger(GetAllSubmissionServlet.class);
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         int examId = Integer.parseInt(request.getParameter("examId"));
+        String sessionId = request.getParameter("sessionId");
         int subjectId = Integer.parseInt(request.getParameter("subjectId"));
         int totalMark = 0;
 
-        Exam exam = ExamMapper.loadWithId(examId);
-        Subject subject = SubjectMapper.loadSubject(subjectId);
-        InstructorService service = new InstructorServiceImpl();
-
-        List<Question> questions = exam.getQuestions();
-        List<Student> students = StudentMapper.loadStudentsBySubject(subjectId);
-        List<Submission> submissions = service.getAllSubmission(examId);
-
-        for (Question q : questions) {
-            System.out.println("Question: " + q.getDescription());
-        }
-        for (Student s : students) {
-            System.out.println("Student: " + s.getName());
-        }
-        for (Submission s : submissions) {
-            System.out.println("Submission: " + s.getId());
-        }
-
         JSONObject object = new JSONObject();
-        JSONArray tempArraySubmissions = new JSONArray();
-        for (Submission submission: submissions) {
-            // should create a new question list for each submission
-            JSONArray tempArrayQuestions = new JSONArray();
-            for (Student student: students) {
-                JSONObject tempSubmission = new JSONObject();
-                if (student.getUserId() == submission.getStudentId()) {
-                    tempSubmission.put("userId", student.getUserId());
-                    tempSubmission.put("submissionId", submission.getId());
-                    logger.info("User id submssion id +" + student.getUserId()+ " " + submission.getId());
-                    System.out.println("submission id is: " + submission.getStudentId());
-                    // Find the submission under the name of the student, get back to the questions.
-                    List<Answer> answers = AnswerMapper.loadAnswers(submission.getId());
+        AuthorisationCenter authorisationCenter = AuthorisationCenter.getInstance();
+        try {
+            authorisationCenter.checkPermission(sessionId, "instructor");
 
-                    for (Answer a : answers) {
-                        System.out.println("Answer: " + a.getContent());
-                    }
+            Exam exam = ExamMapper.loadWithId(examId);
+            Subject subject = SubjectMapper.loadSubject(subjectId);
+            InstructorService service = new InstructorServiceImpl();
 
-                    JSONObject tempQuestion = null;
-                    for (Question question: questions) {
-                        for (Answer answer: answers) {
-                            System.out.println("========: " + answer.getContent());
-                            tempQuestion = new JSONObject();
-                            if (question.getQuestionId() == answer.getQuestionId()) {
-                                String questionDescription = question.getDescription();
+            List<Question> questions = exam.getQuestions();
+            List<Student> students = StudentMapper.loadStudentsBySubject(subjectId);
+            List<Submission> submissions = service.getAllSubmission(examId);
 
-                                int assignedMark = 0;
-                                try {
-                                    assignedMark =answer.getMark();
-                                } catch (NullPointerException e){}
+            JSONArray tempArraySubmissions = new JSONArray();
+            for (Submission submission: submissions) {
+                // should create a new question list for each submission
+                JSONArray tempArrayQuestions = new JSONArray();
+                for (Student student: students) {
+                    JSONObject tempSubmission = new JSONObject();
+                    if (student.getUserId() == submission.getStudentId()) {
+                        tempSubmission.put("userId", student.getUserId());
+                        tempSubmission.put("submissionId", submission.getId());
+                        logger.info("User id submssion id +" + student.getUserId()+ " " + submission.getId());
+                        System.out.println("submission id is: " + submission.getStudentId());
+                        // Find the submission under the name of the student, get back to the questions.
+                        List<Answer> answers = AnswerMapper.loadAnswers(submission.getId());
 
-                                int mark = question.getMark();
-                                totalMark +=mark;
-                                String content = answer.getContent();
-                                int questionId = question.getQuestionId();
-                                tempQuestion.put("questionId", questionId);
-                                tempQuestion.put("description", questionDescription);
-                                tempQuestion.put("answer", content);
-                                // mark means the question's full mark
-                                tempQuestion.put("mark", mark);
-                                // assignedMark means the mark that the instructor assigned to the student
-                                tempQuestion.put("assignedMark", assignedMark);
+                        for (Answer a : answers) {
+                            System.out.println("Answer: " + a.getContent());
+                        }
 
-                                tempArrayQuestions.put(tempQuestion);
+                        JSONObject tempQuestion = null;
+                        for (Question question: questions) {
+                            for (Answer answer: answers) {
+                                System.out.println("========: " + answer.getContent());
+                                tempQuestion = new JSONObject();
+                                if (question.getQuestionId() == answer.getQuestionId()) {
+                                    String questionDescription = question.getDescription();
+
+                                    int assignedMark = 0;
+                                    try {
+                                        assignedMark =answer.getMark();
+                                    } catch (NullPointerException e){}
+
+                                    int mark = question.getMark();
+                                    totalMark +=mark;
+                                    String content = answer.getContent();
+                                    int questionId = question.getQuestionId();
+                                    tempQuestion.put("questionId", questionId);
+                                    tempQuestion.put("description", questionDescription);
+                                    tempQuestion.put("answer", content);
+                                    // mark means the question's full mark
+                                    tempQuestion.put("mark", mark);
+                                    // assignedMark means the mark that the instructor assigned to the student
+                                    tempQuestion.put("assignedMark", assignedMark);
+
+                                    tempArrayQuestions.put(tempQuestion);
+                                }
                             }
                         }
-                    }
-                    tempSubmission.put("questions", tempArrayQuestions);
+                        tempSubmission.put("questions", tempArrayQuestions);
 
-                    tempArraySubmissions.put(tempSubmission);
+                        tempArraySubmissions.put(tempSubmission);
+                    }
                 }
             }
+
+            // calculate the totalMark for each exam
+            if (submissions.size() > 0) {
+                totalMark = totalMark / submissions.size();
+            }
+
+            object.put("examId", examId);
+            object.put("totalMark", totalMark);
+            object.put("submissions", tempArraySubmissions);
+            response.setStatus(200);
+        } catch (NoAuthorisationException e) {
+            object.put("message", e.getMessage());
+            response.setStatus(403);
         }
 
-        // calculate the totalMark for each exam
-        if (submissions.size() > 0) {
-            totalMark = totalMark / submissions.size();
-        }
-
-        object.put("examId", examId);
-        object.put("totalMark", totalMark);
-        object.put("submissions", tempArraySubmissions);
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
-        response.setStatus(200);
         response.getWriter().write(object.toString());
     }
 }

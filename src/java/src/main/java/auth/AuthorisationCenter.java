@@ -20,13 +20,24 @@ public class AuthorisationCenter {
     }
 
     public void checkPermission(String sessionId, String role) throws NoAuthorisationException {
-//        Subject subject = SecurityUtils.getSubject();
+        // get the subject by sessionId
         Subject subject = new Subject.Builder().sessionId(sessionId).buildSubject();
         logger.info("auth: " + subject.isAuthenticated());
 
         if (!subject.hasRole(role)) {
             logger.error("User NOT has role: " + role);
             throw new NoAuthorisationException("You do not have authorisation!");
+        }
+    }
+
+    public boolean hasPermission(String sessionId, String role) {
+        Subject subject = new Subject.Builder().sessionId(sessionId).buildSubject();
+        logger.info("auth: " + subject.isAuthenticated());
+
+        if (subject.hasRole(role)) {
+            return true;
+        } else {
+            return false;
         }
     }
 }

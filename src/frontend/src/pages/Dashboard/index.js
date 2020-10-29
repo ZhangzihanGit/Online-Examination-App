@@ -56,6 +56,7 @@ const Dashboard = ({ location }) => {
       dispatch(getSubjectList({
         userId: identity.userId,
         userType: identity.userType,
+        sessionId: identity.sessionId,
       }));
     }
   };
