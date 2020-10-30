@@ -56,7 +56,8 @@ export function createSubject(payload = {}, pathname) {
       message.success('Create subject successfully');
       dispatch(push(pathname));
     } catch (error) {
-      message.error('Fail to create subject')
+      const { message: msg } = error.response.data;
+      message.error(msg);
     }
   }
 };
