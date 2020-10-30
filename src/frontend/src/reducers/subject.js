@@ -105,23 +105,12 @@ export default function reducer(state = initState, action) {
         submissionList: action.payload,
       }
     case SAVE_TOTAL_MARK:
-      // if (action.payload === 'clean') {
-      //   console.log(state)
-      //   return {
-      //     ...state,
-      //     totalMarks: [],
-      //   }
-      // }
-        
-
       // if the state does not have marks, then create one
       if (state.totalMarks) {
-
         const currentSumissionIds = [];
         state.submissionList.submissions.forEach(s => currentSumissionIds.push(s.submissionId));
         const newTotalMarks = state.totalMarks.filter(s => currentSumissionIds.includes(s.submissionId));
         const found = newTotalMarks.find(s => s.submissionId === action.payload.submissionId);
-        // const found = state.totalMarks.find(s => s.submissionId === action.payload.submissionId);
         if (found) {
           // if the mark already exist, then update the value
           newList = newTotalMarks.map(s => {
@@ -133,8 +122,6 @@ export default function reducer(state = initState, action) {
         } else {
           // otherwise just concatenate it
           newList = [...newTotalMarks, action.payload];
-          // newList = [...state.totalMarks, action.payload];
-          // newList = [action.payload];
         }
       } else {
         newList = [action.payload];
@@ -150,7 +137,6 @@ export default function reducer(state = initState, action) {
         state.submissionList.submissions.forEach(s => currentSumissionIds.push(s.submissionId));
         const newDetailedMarks = state.detailedMarks.filter(s => currentSumissionIds.includes(s.submissionId));
         const found = newDetailedMarks.find(d => d.submissionId === action.payload.submissionId);
-        // const found = state.detailedMarks.find(d => d.submissionId === action.payload.submissionId);
         if (found) {
           // if the mark for that question already exist, then update the value
           newList = newDetailedMarks.map(d => {
@@ -178,14 +164,6 @@ export default function reducer(state = initState, action) {
             return d;
           })
         } else {
-          // otherwise just concatenate it
-          // newList = [{
-          //   submissionId: action.payload.submissionId,
-          //   questions: [{
-          //     questionId: action.payload.questionId,
-          //     mark: action.payload.mark,
-          //   }]
-          // }];
           newList = [...newDetailedMarks, {
             submissionId: action.payload.submissionId,
             questions: [{
