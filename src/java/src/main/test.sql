@@ -61,3 +61,15 @@ ALTER TABLE exam.users
 
 ALTER TABLE exam.users
     ADD COLUMN taking_exams VARCHAR (255);
+
+-- ALTER TABLE exam.student_subject_relation
+--     RENAME TO user_subject_relation;
+
+-- ALTER TABLE exam.user_subject_relation
+--     RENAME COLUMN studentid TO userid;
+
+-- ALTER TABLE exam.subject
+--     DROP instructorId;
+
+-- ALTER TABLE exam.subject
+--     ALTER COLUMN instructorId TYPE VARCHAR (255);

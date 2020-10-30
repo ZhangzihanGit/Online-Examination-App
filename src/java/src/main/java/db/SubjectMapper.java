@@ -44,7 +44,7 @@ public class SubjectMapper {
         String sql = "INSERT INTO exam.subject (show_name, description, instructorid) " +
                 " VALUES (?,?,?) RETURNING id";
 
-        String studentSql = "INSERT INTO exam.student_subject_relation (studentid, subjectid) " +
+        String studentSql = "INSERT INTO exam.user_subject_relation (userid, subjectid) " +
                 "VALUES (?,?)";
         String showName = subject.getSubjectCode();
         String description = subject.getDescription();
@@ -97,7 +97,7 @@ public class SubjectMapper {
      * @return
      */
     public static List<Subject> loadStudentSubjects(int userid) {
-        String sql = "SELECT subjectid, studentid FROM exam.student_subject_relation WHERE studentid = ?";
+        String sql = "SELECT subjectid, userid FROM exam.user_subject_relation WHERE userid = ?";
         List<Subject> subjects = new ArrayList<>();
         try {
             PreparedStatement statement = DBConnection.prepare(sql);
