@@ -46,6 +46,7 @@ public class AuthenticationCenter {
             try {
                 Subject subject = SecurityUtils.getSubject();
                 subject.login(token);
+                token.setRememberMe(true);
                 logger.info("User has authenticated");
 
                 Session session = subject.getSession();
@@ -100,14 +101,13 @@ public class AuthenticationCenter {
      * @param sessionId
      */
     public void logout(String sessionId) {
-
         currentSessions = this.sessionManager.getSessionDAO().getActiveSessions();
         for (Session s : currentSessions) {
             logger.info("logout Existing session id: " + s.getId());
             if (sessionId.equals(s.getId())) {
-                SecurityUtils.getSubject().logout();
+                Subject subject = new Subject.Builder().sessionId(sessionId).buildSubject();
+                subject.logout();
                 logger.info(sessionId + " has logged out!");
-                s.stop();
             }
         }
     }

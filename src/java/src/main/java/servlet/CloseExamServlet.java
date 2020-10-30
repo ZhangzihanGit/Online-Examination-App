@@ -34,15 +34,15 @@ public class CloseExamServlet extends HttpServlet {
         AuthorisationCenter authorisationCenter = AuthorisationCenter.getInstance();
         try {
             authorisationCenter.checkPermission(sessionId, "instructor");
+
+            InstructorServiceImpl service = new InstructorServiceImpl();
+            service.closeExam(userId, examId, subjectId);
             data.put("message", "success");
             response.setStatus(200);
         } catch (NoAuthorisationException e) {
             data.put("message", e.getMessage());
             response.setStatus(403);
         }
-
-        InstructorServiceImpl service = new InstructorServiceImpl();
-        service.closeExam(userId, examId, subjectId);
 
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
