@@ -50,7 +50,6 @@ const Submission = () => {
       } else
         return { ...submission };
     });
-    console.log(data);
 
     dispatch(submitMarks({
       examId: Number(examId),

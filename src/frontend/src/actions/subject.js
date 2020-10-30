@@ -191,15 +191,24 @@ export function getSubmissions(payload = {}, pathname) {
   return async (dispatch) => {
     try {
       const result = await api.getSubmissions(payload);
+      console.log(result.data)
       // update assignedTotalMark to Store
       const totalMarks = [];
       result.data.submissions.forEach(s => {
-        let assignedTotalMark = 0;
-        s.questions.forEach(q => assignedTotalMark += q.assignedMark);
+        // calculate the totalMark by adding up each question assigned mark
+        // let assignedTotalMark = 0;
+        // s.questions.forEach(q => assignedTotalMark += q.assignedMark);
+        // totalMarks.push({
+        //   submissionId: s.submissionId,
+        //   userId: s.userId,
+        //   totalMark: assignedTotalMark,
+        // })
+
+        // calculate the totalMark by directly use tableViewMark
         totalMarks.push({
           submissionId: s.submissionId,
           userId: s.userId,
-          totalMark: assignedTotalMark,
+          totalMark: s.tableViewMark,
         })
       });
 
@@ -208,12 +217,6 @@ export function getSubmissions(payload = {}, pathname) {
         type: GET_SUBMISSIONS,
         payload: result.data,
       });
-
-      // // remove previous submissions
-      // dispatch({
-      //   type: SAVE_TOTAL_MARK,
-      //   payload: 'clean',
-      // });
 
       totalMarks.forEach(t => dispatch({
         type: SAVE_TOTAL_MARK,
@@ -234,12 +237,6 @@ export function getSubmissions(payload = {}, pathname) {
           questions,
         })
       });
-
-      // // remove previous submissions
-      // dispatch({
-      //   type: SAVE_TOTAL_MARK,
-      //   payload: 'clean',
-      // });
 
       individualMarks.forEach(s => {
         s.questions.forEach(q => dispatch({

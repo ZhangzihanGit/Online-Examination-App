@@ -49,6 +49,7 @@ public class GetAllSubmissionServlet extends HttpServlet {
                     if (student.getUserId() == submission.getStudentId()) {
                         tempSubmission.put("userId", student.getUserId());
                         tempSubmission.put("submissionId", submission.getId());
+                        tempSubmission.put("tableViewMark", submission.getMark());
                         logger.info("User id submssion id +" + student.getUserId()+ " " + submission.getId());
                         System.out.println("submission id is: " + submission.getStudentId());
                         // Find the submission under the name of the student, get back to the questions.
@@ -73,6 +74,7 @@ public class GetAllSubmissionServlet extends HttpServlet {
 
                                     int mark = question.getMark();
                                     totalMark +=mark;
+                                    logger.info("-==TOTAL MARK: " + totalMark);
                                     String content = answer.getContent();
                                     int questionId = question.getQuestionId();
                                     tempQuestion.put("questionId", questionId);
@@ -93,11 +95,13 @@ public class GetAllSubmissionServlet extends HttpServlet {
                     }
                 }
             }
-
+            logger.info("TOTAL MARK: " + totalMark);
+            logger.info("TOTAL MARK SIZE: " + submissions.size());
             // calculate the totalMark for each exam
             if (submissions.size() > 0) {
                 totalMark = totalMark / submissions.size();
             }
+            logger.info("TOTAL MARK2: " + totalMark);
 
             object.put("examId", examId);
             object.put("totalMark", totalMark);

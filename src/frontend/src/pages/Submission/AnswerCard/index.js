@@ -68,6 +68,7 @@ const AnswerCard = ({ currentQuestion, userId }) => {
 
   useEffect(() => {
     const newTotalMark = sumMarks(detailedMarks, Number(submissionId));
+    console.log(`newTotalMarks: ${newTotalMark}`);
     // update totalMark
     dispatch({
       type: SAVE_TOTAL_MARK,
