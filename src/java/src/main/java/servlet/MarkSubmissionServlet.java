@@ -29,6 +29,8 @@ public class MarkSubmissionServlet extends HttpServlet {
         JSONObject obj = new JSONObject(requestData);
         String sessionId = obj.getString("sessionId");
 
+        logger.info("SESSIONID? " + sessionId);
+
         JSONObject responseObj = new JSONObject();
         AuthorisationCenter authorisationCenter = AuthorisationCenter.getInstance();
         try {

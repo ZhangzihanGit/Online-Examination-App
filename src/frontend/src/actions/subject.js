@@ -209,6 +209,12 @@ export function getSubmissions(payload = {}, pathname) {
         payload: result.data,
       });
 
+      // // remove previous submissions
+      // dispatch({
+      //   type: SAVE_TOTAL_MARK,
+      //   payload: 'clean',
+      // });
+
       totalMarks.forEach(t => dispatch({
         type: SAVE_TOTAL_MARK,
         payload: t,
@@ -228,6 +234,12 @@ export function getSubmissions(payload = {}, pathname) {
           questions,
         })
       });
+
+      // // remove previous submissions
+      // dispatch({
+      //   type: SAVE_TOTAL_MARK,
+      //   payload: 'clean',
+      // });
 
       individualMarks.forEach(s => {
         s.questions.forEach(q => dispatch({
