@@ -46,8 +46,8 @@ public class InstructorMapper {
 
     public static List<Instructor> loadInstructorsBySubject(int subjectId) {
 
-        String sql = "SELECT * FROM exam.users as u INNER JOIN exam.subject as s ON" +
-                " u.id = s.instructorid WHERE s.id = ?";
+        String sql = "SELECT * FROM exam.users as u INNER JOIN exam.user_subject_relation as s ON" +
+                " u.id = s.userid AND u.users_type = 'instructor' WHERE s.subjectid = ?";
         List<Instructor> instructors = new ArrayList<>();
         try {
             PreparedStatement statement = DBConnection.prepare(sql);

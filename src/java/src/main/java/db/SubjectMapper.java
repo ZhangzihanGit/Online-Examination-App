@@ -41,8 +41,8 @@ public class SubjectMapper {
 
     public static void addSubject(Subject subject) {
         // TODO: also need to update student_subject_relation table
-        String sql = "INSERT INTO exam.subject (show_name, description, instructorid) " +
-                " VALUES (?,?,?) RETURNING id";
+        String sql = "INSERT INTO exam.subject (show_name, description) " +
+                " VALUES (?,?) RETURNING id";
 
         String studentSql = "INSERT INTO exam.user_subject_relation (userid, subjectid) " +
                 "VALUES (?,?)";
@@ -50,24 +50,22 @@ public class SubjectMapper {
         String description = subject.getDescription();
 
         List<Instructor> instructors = subject.getInstructors();
-        List<Integer> instructorIds = new ArrayList<>();
         List<Student> students = subject.getStudents();
-        List<Integer> studentIds = new ArrayList<>();
+        List<Integer> ids = new ArrayList<>();
 
         for (Instructor i : instructors) {
-            instructorIds.add(i.getUserId());
+            ids.add(i.getUserId());
         }
         for (Student s : students) {
-            studentIds.add(s.getUserId());
+            ids.add(s.getUserId());
         }
-        // TODO: In Part3, PUT [11, 12, 13] as string into subject table
+
         // insert a new subject in Subject table
         PreparedStatement statement = DBConnection.prepare(sql);
         int subjectId = 0;
         try {
             statement.setString(1,showName);
             statement.setString(2,description);
-            statement.setInt(3, instructorIds.get(0));
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 subjectId = resultSet.getInt("id");
@@ -79,11 +77,11 @@ public class SubjectMapper {
             logger.error(e.getMessage());
         }
 
-        // insert student-subject mappings in Student_Subject_Relation table
+        // insert instructor-subject and student-subject mappings in User_Subject_Relation table
         statement = DBConnection.prepare(studentSql);
-        for (int i = 0; i < studentIds.size(); i++) {
+        for (int i = 0; i < ids.size(); i++) {
             try {
-                statement.setInt(1, studentIds.get(i));
+                statement.setInt(1, ids.get(i));
                 statement.setInt(2, subjectId);
                 statement.executeQuery();
             } catch (SQLException e) {
@@ -119,7 +117,8 @@ public class SubjectMapper {
      * @return
      */
     public static List<Subject> loadInstructorSubjects(int userId) {
-        String sql = "SELECT * FROM exam.subject where instructorid=?";
+        String sql = "SELECT * FROM exam.subject as s INNER JOIN exam.user_subject_relation as u " +
+                "ON s.id = u.subjectid where u.userid=?";
         List<Subject> subjects = new ArrayList<>();
         try {
             PreparedStatement statement = DBConnection.prepare(sql);
@@ -177,7 +176,7 @@ public class SubjectMapper {
 
             String showName = resultSet.getString("show_name");
             String description = resultSet.getString("description");
-            Integer instructorId = resultSet.getInt("instructorId");
+//            Integer instructorId = resultSet.getInt("instructorId");
 
             // TODO: student and subject holds each other's reference, can lead infinite loop
 //            Instructor instructor = InstructorMapper.loadWithId(instructorId);

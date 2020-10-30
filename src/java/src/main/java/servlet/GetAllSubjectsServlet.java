@@ -48,7 +48,9 @@ public class GetAllSubjectsServlet extends HttpServlet {
         JSONObject data = new JSONObject ();
         JSONArray subjectArr = new JSONArray();
 
+
         for (Subject s : subjects) {
+            logger.info("ZZH: " + s.getId() + " " + s.getDescription());
             JSONObject tempSubject = new JSONObject();
             tempSubject.put("id", s.getId());
             tempSubject.put("description", s.getDescription());
