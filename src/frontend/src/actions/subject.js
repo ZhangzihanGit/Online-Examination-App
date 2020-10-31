@@ -286,7 +286,7 @@ export function submitMarks(payload = {}, pathname) {
       message.success('Submit marks successfully');
       dispatch(push(pathname));
     } catch (error) {
-      message.error('Fail to submit marks');
+      message.error(error.response.data.message);
     }
   }
 };

@@ -44,6 +44,7 @@ public class AddExamServlet extends HttpServlet {
 
         logger.info(showName);
 
+
         jsonObject = new JSONObject();
         AuthorisationCenter authorisationCenter = AuthorisationCenter.getInstance();
         try {
