@@ -10,6 +10,7 @@ import {
 } from '@ant-design/icons';
 import {
   getExam,
+  getUpdateExam,
   startExam,
   publishExam,
   closeExam,
@@ -48,7 +49,7 @@ const ContentList = ({ list, isExam }) => {
   const handleEditExam = (item) => {
     if (isExam) {
       // when click edith exam, first get the exam
-      dispatch(getExam({
+      dispatch(getUpdateExam({
         examId: item.examId,
         sessionId: identity.sessionId,
       }, `${pathname}/edit-exam-${item.examId}`));

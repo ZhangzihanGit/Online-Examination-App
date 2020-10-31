@@ -82,6 +82,26 @@ export function getExam(payload = {}, pathname) {
   }
 };
 
+export function getUpdateExam(payload = {}, pathname) {
+  return async (dispatch) => {
+    try {
+      const result = await api.getUpdateExam(payload);
+      dispatch({
+        type: GET_EXAM,
+        payload: result.data.exam,
+      });
+
+      if (pathname) {
+        dispatch(push(pathname));
+      }
+      message.success('Fetching exam successfully');
+    } catch (error) {
+      const { message: msg } = error.response.data;
+      message.error(msg);
+    }
+  }
+};
+
 export function startExam(payload = {}, pathname) {
   return async (dispatch) => {
     try {
