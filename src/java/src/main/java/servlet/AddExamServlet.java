@@ -2,7 +2,9 @@ package servlet;
 
 import auth.AuthorisationCenter;
 import db.ExamMapper;
+import db.LockManager;
 import domain.*;
+import exceptions.AcquireLockException;
 import exceptions.NoAuthorisationException;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -45,6 +47,9 @@ public class AddExamServlet extends HttpServlet {
         jsonObject = new JSONObject();
         AuthorisationCenter authorisationCenter = AuthorisationCenter.getInstance();
         try {
+            // acquire lock
+            LockManager.getInstance().acquireLock(subjectId, sessionId);
+
             // check if the subject session has authorization to add exam
             authorisationCenter.checkPermission(sessionId, "instructor");
 
@@ -70,6 +75,9 @@ public class AddExamServlet extends HttpServlet {
             // The setter will not initiate
             exam.setQuestions(questions);
 
+            // release lock
+            LockManager.getInstance().releaseLock(subjectId);
+
             jsonObject.put("message","success");
             jsonObject.put("examId", exam.getId());
             jsonObject.put("showName", exam.getShowName());
@@ -78,7 +86,7 @@ public class AddExamServlet extends HttpServlet {
             jsonObject.put("published", exam.isPublished());
             jsonObject.put("subjectId", exam.getSubjectId());
             response.setStatus(200);
-        } catch (NoAuthorisationException e) {
+        } catch (NoAuthorisationException | AcquireLockException e) {
             jsonObject.put("message", e.getMessage());
             response.setStatus(403);
         }

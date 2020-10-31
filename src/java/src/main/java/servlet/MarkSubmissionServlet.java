@@ -1,8 +1,10 @@
 package servlet;
 
 import auth.AuthorisationCenter;
+import db.LockManager;
 import domain.Answer;
 import domain.Submission;
+import exceptions.AcquireLockException;
 import exceptions.NoAuthorisationException;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -34,11 +36,17 @@ public class MarkSubmissionServlet extends HttpServlet {
         JSONObject responseObj = new JSONObject();
         AuthorisationCenter authorisationCenter = AuthorisationCenter.getInstance();
         try {
+            int examId = obj.getInt("examId");
+
+            // acquire lock
+            LockManager.getInstance().acquireLock(examId, sessionId);
+
+            // authorization
             authorisationCenter.checkPermission(sessionId, "instructor");
 
             InstructorService service = new InstructorServiceImpl();
 
-            int examId = obj.getInt("examId");
+
             JSONArray array = obj.getJSONArray("marks");
             for (int i=0; i<array.length(); i++) {
                 JSONObject markObject = array.getJSONObject(i);
@@ -62,7 +70,10 @@ public class MarkSubmissionServlet extends HttpServlet {
 
             responseObj.put("message","success");
             response.setStatus(200);
-        } catch (NoAuthorisationException e) {
+
+            // release lock
+            LockManager.getInstance().releaseLock(examId);
+        } catch (NoAuthorisationException | AcquireLockException e) {
             responseObj.put("message", e.getMessage());
             response.setStatus(403);
         }

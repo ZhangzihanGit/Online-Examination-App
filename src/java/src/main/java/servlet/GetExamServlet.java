@@ -1,7 +1,9 @@
 package servlet;
 
+import db.LockManager;
 import domain.Exam;
 import domain.Question;
+import exceptions.AcquireLockException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import service.UserService;
@@ -20,25 +22,36 @@ public class GetExamServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         int examId = Integer.parseInt(request.getParameter("examId"));
-        UserService service = new UserServiceImpl();
-        Exam exam = service.getExam(examId);
-        List<Question> questionLists = exam.getQuestions();
-        JSONObject data = new JSONObject();
-        JSONArray questions = new JSONArray(questionLists);
-        JSONObject examObj = new JSONObject();
-        examObj.put("questions",questions);
-        examObj.put("showName", exam.getShowName());
-        examObj.put("description", exam.getDescription());
-        examObj.put("published", exam.isPublished());
-        examObj.put("closed", exam.isClosed());
-        examObj.put("subjectId", exam.getSubjectId());
-        examObj.put("examId", examId);
+        String sessionId = request.getParameter("sessionId");
 
-        data.put("message", "success");
-        data.put("exam", examObj);
+        JSONObject data = new JSONObject();
+        try {
+            // acquire lock
+            LockManager.getInstance().acquireLock(examId, sessionId);
+
+            UserService service = new UserServiceImpl();
+            Exam exam = service.getExam(examId);
+            List<Question> questionLists = exam.getQuestions();
+            JSONArray questions = new JSONArray(questionLists);
+            JSONObject examObj = new JSONObject();
+            examObj.put("questions",questions);
+            examObj.put("showName", exam.getShowName());
+            examObj.put("description", exam.getDescription());
+            examObj.put("published", exam.isPublished());
+            examObj.put("closed", exam.isClosed());
+            examObj.put("subjectId", exam.getSubjectId());
+            examObj.put("examId", examId);
+
+            data.put("message", "success");
+            data.put("exam", examObj);
+            response.setStatus(200);
+        } catch (AcquireLockException e) {
+            data.put("message", e.getMessage());
+            response.setStatus(403);
+        }
+
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
-        response.setStatus(200);
         response.getWriter().write(data.toString());
     }
 }

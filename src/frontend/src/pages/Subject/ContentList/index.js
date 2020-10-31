@@ -50,6 +50,7 @@ const ContentList = ({ list, isExam }) => {
       // when click edith exam, first get the exam
       dispatch(getExam({
         examId: item.examId,
+        sessionId: identity.sessionId,
       }, `${pathname}/edit-exam-${item.examId}`));
     }
   }
@@ -97,11 +98,13 @@ const ContentList = ({ list, isExam }) => {
           .then(_ => {
             dispatch(getExam({
               examId: item.examId,
+              sessionId: identity.sessionId,
             }, `${pathname}/exam-${item.examId}`));
           })
       } else {
         dispatch(getExam({
           examId: item.examId,
+          sessionId: identity.sessionId,
         }, `${pathname}/exam-${item.examId}`));
       }
     }

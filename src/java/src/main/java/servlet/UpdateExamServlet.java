@@ -2,6 +2,7 @@ package servlet;
 
 import auth.AuthorisationCenter;
 import db.ExamMapper;
+import db.LockManager;
 import domain.Exam;
 import domain.Question;
 import exceptions.ExamGotSubmissionException;
@@ -75,6 +76,9 @@ public class UpdateExamServlet extends HttpServlet {
                     object.put("message","success");
                     object.put("exam", examObj);
                     response.setStatus(200);
+
+                    // release lock
+                    LockManager.getInstance().releaseLock(examId);
                 }
             } catch (ExamGotSubmissionException | StudentTakingExamException e) {
                 object.put("message",e.getMessage());

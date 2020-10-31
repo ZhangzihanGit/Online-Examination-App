@@ -76,7 +76,8 @@ export function getExam(payload = {}, pathname) {
       }
       message.success('Fetching exam successfully');
     } catch (error) {
-      message.error('Fail to fetch exam');
+      const { message: msg } = error.response.data;
+      message.error(msg);
     }
   }
 };
