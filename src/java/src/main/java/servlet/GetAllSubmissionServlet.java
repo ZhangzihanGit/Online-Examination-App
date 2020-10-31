@@ -89,6 +89,8 @@ public class GetAllSubmissionServlet extends HttpServlet {
                                 }
                             }
                         }
+
+                        totalMark = 0;
                         tempSubmission.put("questions", tempArrayQuestions);
 
                         tempArraySubmissions.put(tempSubmission);
@@ -98,9 +100,9 @@ public class GetAllSubmissionServlet extends HttpServlet {
             logger.info("TOTAL MARK: " + totalMark);
             logger.info("TOTAL MARK SIZE: " + submissions.size());
             // calculate the totalMark for each exam
-            if (submissions.size() > 0) {
-                totalMark = totalMark / submissions.size();
-            }
+//            if (submissions.size() > 0) {
+//                totalMark = totalMark / submissions.size();
+//            }
             logger.info("TOTAL MARK2: " + totalMark);
 
             object.put("examId", examId);
