@@ -10,15 +10,15 @@ import { RELATIVE_PATH } from '../constants';
  * "homepag$e": "http://localhost:8080/online_examination_war_exploded",
  */
 export const login = (params) => {
-  return ajax.post(`/login`, { data: params });
+  return ajax.post(`${RELATIVE_PATH}/login`, { data: params });
 };
 
 export const logout = (params) => {
-  return ajax.post(`/logout`, { data: params });
+  return ajax.post(`${RELATIVE_PATH}/logout`, { data: params });
 };
 
 export const getAllInstructors = (params) => {
-  return ajax.post(`/all-instructors`, { data: params });
+  return ajax.post(`${RELATIVE_PATH}/all-instructors`, { data: params });
 };
 
 export const getAllStudents = (params) => {
