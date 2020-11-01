@@ -1,5 +1,7 @@
 package servlet;
 
+import auth.AuthorisationCenter;
+import exceptions.NoAuthorisationException;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.json.JSONObject;
@@ -21,19 +23,27 @@ public class PublishExamServlet extends HttpServlet {
         String requestData = request.getReader().lines().
                 collect(Collectors.joining(System.lineSeparator()));
         JSONObject jsonObject = new JSONObject(requestData);
+        String sessionId = jsonObject.getString("sessionId");
         int userId = jsonObject.getInt("userId");
         int examId = jsonObject.getInt("examId");
 
-        InstructorService service = new InstructorServiceImpl();
-        service.publishExam(userId,examId);
-
         JSONObject data = new JSONObject();
-        data.put("message", "success");
+        AuthorisationCenter authorisationCenter = AuthorisationCenter.getInstance();
+        try {
+            authorisationCenter.checkPermission(sessionId, "instructor");
+
+            InstructorService service = new InstructorServiceImpl();
+            service.publishExam(userId,examId);
+
+            data.put("message", "success");
+            response.setStatus(200);
+        } catch (NoAuthorisationException e) {
+            data.put("message", e.getMessage());
+            response.setStatus(403);
+        }
+
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
-        response.setStatus(200);
         response.getWriter().write(data.toString());
-
     }
-
 }

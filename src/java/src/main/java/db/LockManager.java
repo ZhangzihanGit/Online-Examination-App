@@ -1,5 +1,6 @@
 package db;
 
+import exceptions.AcquireLockException;
 import org.apache.log4j.Logger;
 
 import java.util.Map;
@@ -36,10 +37,13 @@ public class LockManager {
         return false;
     }
 
-    public boolean acquireLock(Integer lockable, String host) {
+    public boolean acquireLock(Integer lockable, String host) throws AcquireLockException {
         boolean lockResult = true;
         if (!hasLock(lockable,host)) {
             lockResult = put(lockable,host);
+            if (!lockResult) {
+                throw new AcquireLockException("Concurrency Error: unable to acquire lock");
+            }
         }
         return lockResult;
     }

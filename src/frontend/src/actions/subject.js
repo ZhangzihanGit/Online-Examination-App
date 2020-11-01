@@ -56,7 +56,8 @@ export function createSubject(payload = {}, pathname) {
       message.success('Create subject successfully');
       dispatch(push(pathname));
     } catch (error) {
-      message.error('Fail to create subject')
+      const { message: msg } = error.response.data;
+      message.error(msg);
     }
   }
 };
@@ -75,7 +76,28 @@ export function getExam(payload = {}, pathname) {
       }
       message.success('Fetching exam successfully');
     } catch (error) {
-      message.error('Fail to fetch exam');
+      const { message: msg } = error.response.data;
+      message.error(msg);
+    }
+  }
+};
+
+export function getUpdateExam(payload = {}, pathname) {
+  return async (dispatch) => {
+    try {
+      const result = await api.getUpdateExam(payload);
+      dispatch({
+        type: GET_EXAM,
+        payload: result.data.exam,
+      });
+
+      if (pathname) {
+        dispatch(push(pathname));
+      }
+      message.success('Fetching exam successfully');
+    } catch (error) {
+      const { message: msg } = error.response.data;
+      message.error(msg);
     }
   }
 };
@@ -166,7 +188,8 @@ export function createExam(payload = {}, pathname) {
       message.success('Create exam successfully');
       dispatch(push(pathname));
     } catch (error) {
-      message.error('Fail to create exam');
+      const { message: msg } = error.response.data;
+      message.error(msg);
     }
   }
 };
@@ -190,15 +213,24 @@ export function getSubmissions(payload = {}, pathname) {
   return async (dispatch) => {
     try {
       const result = await api.getSubmissions(payload);
+      console.log(result.data)
       // update assignedTotalMark to Store
       const totalMarks = [];
       result.data.submissions.forEach(s => {
-        let assignedTotalMark = 0;
-        s.questions.forEach(q => assignedTotalMark += q.assignedMark);
+        // calculate the totalMark by adding up each question assigned mark
+        // let assignedTotalMark = 0;
+        // s.questions.forEach(q => assignedTotalMark += q.assignedMark);
+        // totalMarks.push({
+        //   submissionId: s.submissionId,
+        //   userId: s.userId,
+        //   totalMark: assignedTotalMark,
+        // })
+
+        // calculate the totalMark by directly use tableViewMark
         totalMarks.push({
           submissionId: s.submissionId,
           userId: s.userId,
-          totalMark: assignedTotalMark,
+          totalMark: s.tableViewMark,
         })
       });
 
@@ -254,7 +286,7 @@ export function submitMarks(payload = {}, pathname) {
       message.success('Submit marks successfully');
       dispatch(push(pathname));
     } catch (error) {
-      message.error('Fail to submit marks');
+      message.error(error.response.data.message);
     }
   }
 };

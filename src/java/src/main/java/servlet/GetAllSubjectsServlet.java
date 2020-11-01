@@ -1,5 +1,6 @@
 package servlet;
 
+import auth.AuthorisationCenter;
 import domain.*;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -26,18 +27,20 @@ public class GetAllSubjectsServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         String userId = request.getParameter("userId");
+        String sessionId = request.getParameter("sessionId");
         String userType = request.getParameter("userType");
         System.out.println(userId);
         System.out.println(userType);
 
         List<Subject> subjects = null;
-        if (userType.equalsIgnoreCase(UserType.STUDENT.toString())) {
+        AuthorisationCenter authorisationCenter = AuthorisationCenter.getInstance();
+        if (authorisationCenter.hasPermission(sessionId, "student")) {
             StudentService studentService = new StudentServiceImpl();
             subjects = studentService.viewAllSubjects(Integer.parseInt(userId));
-        } else if (userType.equalsIgnoreCase(UserType.INSTRUCTOR.toString())) {
+        } else if (authorisationCenter.hasPermission(sessionId, "instructor")) {
             InstructorService instructorService = new InstructorServiceImpl();
             subjects = instructorService.viewAllSubjects(Integer.parseInt(userId));
-        } else if (userType.equalsIgnoreCase(UserType.ADMIN.toString())){
+        } else if (authorisationCenter.hasPermission(sessionId, "admin")) {
             UserService userService = new UserServiceImpl();
             subjects = userService.viewAllSubjects(Integer.parseInt(userId));
         }
@@ -45,7 +48,9 @@ public class GetAllSubjectsServlet extends HttpServlet {
         JSONObject data = new JSONObject ();
         JSONArray subjectArr = new JSONArray();
 
+
         for (Subject s : subjects) {
+            logger.info("ZZH: " + s.getId() + " " + s.getDescription());
             JSONObject tempSubject = new JSONObject();
             tempSubject.put("id", s.getId());
             tempSubject.put("description", s.getDescription());

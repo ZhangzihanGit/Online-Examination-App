@@ -16,6 +16,7 @@ const SubjectForm = () => {
     dispatch(createSubject({
       ...values,
       userId: identity.userId,
+      sessionId: identity.sessionId,
     }, `/dashboard/subjects`));
   };
 
@@ -25,6 +26,7 @@ const SubjectForm = () => {
       dispatch(getAllInstructors({
         userId: identity.userId,
         userType: identity.userType,
+        sessionId: identity.sessionId,
       }));
     }
   };
@@ -35,6 +37,7 @@ const SubjectForm = () => {
       dispatch(getAllStudents({
         userId: identity.userId,
         userType: identity.userType,
+        sessionId: identity.sessionId,
       }));
     }
   };

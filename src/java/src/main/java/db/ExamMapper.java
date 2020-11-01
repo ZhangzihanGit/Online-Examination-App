@@ -191,18 +191,10 @@ public class ExamMapper {
         try {
             switch(userType) {
                 case STUDENT:
-                    sql = "SELECT * FROM exam.exam as e INNER JOIN exam.subject AS s ON e.subjectId " +
-                            "= s.id INNER JOIN exam.student_subject_relation AS n ON s.id = n.subjectId" +
-                            " INNER JOIN exam.users as u ON u.id = n.studentId WHERE u.id=? and " +
-                            "s.id = ?";
-                    preparedStatement = DBConnection.prepare(sql);
-                    preparedStatement.setInt(1,userId);
-                    preparedStatement.setInt(2,subjectId);
-                    resultSet = preparedStatement.executeQuery();
-                    break;
                 case INSTRUCTOR:
                     sql = "SELECT * FROM exam.exam as e INNER JOIN exam.subject AS s ON e.subjectId " +
-                            "= s.id WHERE s.instructorid=? and " +
+                            "= s.id INNER JOIN exam.user_subject_relation AS n ON s.id = n.subjectId" +
+                            " INNER JOIN exam.users as u ON u.id = n.userid WHERE u.id=? and " +
                             "s.id = ?";
                     preparedStatement = DBConnection.prepare(sql);
                     preparedStatement.setInt(1,userId);

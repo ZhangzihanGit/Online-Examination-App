@@ -10,6 +10,7 @@ import {
 } from '@ant-design/icons';
 import {
   getExam,
+  getUpdateExam,
   startExam,
   publishExam,
   closeExam,
@@ -48,8 +49,9 @@ const ContentList = ({ list, isExam }) => {
   const handleEditExam = (item) => {
     if (isExam) {
       // when click edith exam, first get the exam
-      dispatch(getExam({
+      dispatch(getUpdateExam({
         examId: item.examId,
+        sessionId: identity.sessionId,
       }, `${pathname}/edit-exam-${item.examId}`));
     }
   }
@@ -60,6 +62,7 @@ const ContentList = ({ list, isExam }) => {
         userId: identity.userId,
         examId: item.examId,
         subjectId: item.subjectId,
+        sessionId: identity.sessionId,
       }));
     }
   }
@@ -70,6 +73,7 @@ const ContentList = ({ list, isExam }) => {
         userId: identity.userId,
         examId: item.examId,
         subjectId: item.subjectId,
+        sessionId: identity.sessionId,
       }));
     }
   }
@@ -79,6 +83,7 @@ const ContentList = ({ list, isExam }) => {
       dispatch(publishExam({
         userId: identity.userId,
         examId: item.examId,
+        sessionId: identity.sessionId,
       }));
     }
   }
@@ -89,15 +94,18 @@ const ContentList = ({ list, isExam }) => {
         dispatch(startExam({
           examId: item.examId,
           userId: identity.userId,
+          sessionId: identity.sessionId,
         }))
           .then(_ => {
             dispatch(getExam({
               examId: item.examId,
+              sessionId: identity.sessionId,
             }, `${pathname}/exam-${item.examId}`));
           })
       } else {
         dispatch(getExam({
           examId: item.examId,
+          sessionId: identity.sessionId,
         }, `${pathname}/exam-${item.examId}`));
       }
     }
@@ -107,7 +115,8 @@ const ContentList = ({ list, isExam }) => {
     if (isExam) {
       dispatch(getSubmissions({
         examId: item.examId,
-        subjectId: item.subjectId
+        subjectId: item.subjectId,
+        sessionId: identity.sessionId,
       }, `${pathname}/mark-exam-${item.examId}`));
     }
   }

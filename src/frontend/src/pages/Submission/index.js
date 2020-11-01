@@ -24,6 +24,7 @@ const Submission = () => {
   const { code, examId } = useParams();
   const { pathname } = useSelector(state => state.router.location);
   const { submissionList, totalMarks, detailedMarks } = useSelector(state => state.subject);
+  const { identity } = useSelector(state => state.user);
   const [haveSubmissions, setHaveSubmissions] = useState(false);
 
   useEffect(() => {
@@ -53,6 +54,7 @@ const Submission = () => {
     dispatch(submitMarks({
       examId: Number(examId),
       marks: data,
+      sessionId: identity.sessionId,
     }, `/dashboard/subjects/${code}`))
   }
 

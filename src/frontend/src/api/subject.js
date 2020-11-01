@@ -8,60 +8,68 @@ import { RELATIVE_PATH } from '../constants';
  * If need to build bundle and run it in server or in production, then add ${RELATIVE_PATH}, 
  * also add below in package.json:
  * "homepage": "http://localhost:8080/online_examination_war_exploded",
+ * 
+ * In Heroku:
+ * remove all ${RELATIVE_PATH}
+ * and remove "homepag$e": "http://localhost:8080/online_examination_war_exploded",
  */
 
 export const getSubjectList = (params) => {
-  return ajax.get(`${RELATIVE_PATH}/all-subjects`, { params });
+  return ajax.get(`/all-subjects`, { params });
 };
 
 export const getSubject = (params) => {
-  return ajax.get(`${RELATIVE_PATH}/subject`, { params });
+  return ajax.get(`/subject`, { params });
 };
 
 export const createSubject = (params) => {
-  return ajax.post(`${RELATIVE_PATH}/add-subject`, { data: params });
+  return ajax.post(`/add-subject`, { data: params });
 };
 
 export const deleteSubject = (params) => {
-  return ajax.post(`${RELATIVE_PATH}/delete`, { data: params });
+  return ajax.post(`/delete`, { data: params });
 };
 
 export const getExam = (params) => {
-  return ajax.get(`${RELATIVE_PATH}/get-exam`, { params });
+  return ajax.get(`/get-exam`, { params });
+};
+
+export const getUpdateExam = (params) => {
+  return ajax.get(`/get-update-exam`, { params });
 };
 
 export const startExam = (params) => {
-  return ajax.get(`${RELATIVE_PATH}/start-exam`, { params });
+  return ajax.get(`/start-exam`, { params });
 };
 
 export const createExam = (params) => {
-  return ajax.post(`${RELATIVE_PATH}/add-exam`, { data: params });
+  return ajax.post(`/add-exam`, { data: params });
 };
 
 export const updateExam = (params) => {
-  return ajax.post(`${RELATIVE_PATH}/update-exam`, { data: params });
+  return ajax.post(`/update-exam`, { data: params });
 };
 
 export const deleteExam = (params) => {
-  return ajax.post(`${RELATIVE_PATH}/delete-exam`, { data: params });
+  return ajax.post(`/delete-exam`, { data: params });
 };
 
 export const submitExam = (params) => {
-  return ajax.post(`${RELATIVE_PATH}/submission`, { data: params });
+  return ajax.post(`/submission`, { data: params });
 };
 
 export const publishExam = (params) => {
-  return ajax.post(`${RELATIVE_PATH}/publish-exam`, { data: params });
+  return ajax.post(`/publish-exam`, { data: params });
 };
 
 export const closeExam = (params) => {
-  return ajax.post(`${RELATIVE_PATH}/close-exam`, { data: params });
+  return ajax.post(`/close-exam`, { data: params });
 };
 
 export const getSubmissions = (params) => {
-  return ajax.get(`${RELATIVE_PATH}/all-submissions`, { params });
+  return ajax.get(`/all-submissions`, { params });
 };
 
 export const submitMarks = (params) => {
-  return ajax.post(`${RELATIVE_PATH}/mark-submit`, { data: params });
+  return ajax.post(`/mark-submit`, { data: params });
 };

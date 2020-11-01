@@ -90,6 +90,7 @@ const ExamForm = () => {
       subjectId: findSubjectByCode(subjectList, code).id,
       userId: identity.userId,
       userType: identity.userType,
+      sessionId: identity.sessionId,
     };
 
     // if has examId, it means we are updating the exam, not creating a new one

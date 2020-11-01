@@ -107,10 +107,13 @@ export default function reducer(state = initState, action) {
     case SAVE_TOTAL_MARK:
       // if the state does not have marks, then create one
       if (state.totalMarks) {
-        const found = state.totalMarks.find(s => s.submissionId === action.payload.submissionId);
+        const currentSumissionIds = [];
+        state.submissionList.submissions.forEach(s => currentSumissionIds.push(s.submissionId));
+        const newTotalMarks = state.totalMarks.filter(s => currentSumissionIds.includes(s.submissionId));
+        const found = newTotalMarks.find(s => s.submissionId === action.payload.submissionId);
         if (found) {
           // if the mark already exist, then update the value
-          newList = state.totalMarks.map(s => {
+          newList = newTotalMarks.map(s => {
             if (s.submissionId === action.payload.submissionId) {
               return { ...s, ...action.payload };
             }
@@ -118,7 +121,7 @@ export default function reducer(state = initState, action) {
           });
         } else {
           // otherwise just concatenate it
-          newList = [...state.totalMarks, action.payload];
+          newList = [...newTotalMarks, action.payload];
         }
       } else {
         newList = [action.payload];
@@ -130,10 +133,13 @@ export default function reducer(state = initState, action) {
     case SAVE_INDIVIDUAL_MARK:
 
       if (state.detailedMarks) {
-        const found = state.detailedMarks.find(d => d.submissionId === action.payload.submissionId);
+        const currentSumissionIds = [];
+        state.submissionList.submissions.forEach(s => currentSumissionIds.push(s.submissionId));
+        const newDetailedMarks = state.detailedMarks.filter(s => currentSumissionIds.includes(s.submissionId));
+        const found = newDetailedMarks.find(d => d.submissionId === action.payload.submissionId);
         if (found) {
           // if the mark for that question already exist, then update the value
-          newList = state.detailedMarks.map(d => {
+          newList = newDetailedMarks.map(d => {
             if (d.submissionId === action.payload.submissionId) {
               // try to see if the question is in the questions list
               const foundQuestion = d.questions.find(q => q.questionId === action.payload.questionId);
@@ -158,8 +164,7 @@ export default function reducer(state = initState, action) {
             return d;
           })
         } else {
-          // otherwise just concatenate it
-          newList = [...state.detailedMarks, {
+          newList = [...newDetailedMarks, {
             submissionId: action.payload.submissionId,
             questions: [{
               questionId: action.payload.questionId,

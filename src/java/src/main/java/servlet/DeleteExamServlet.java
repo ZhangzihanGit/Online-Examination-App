@@ -1,10 +1,12 @@
 package servlet;
 
+import auth.AuthorisationCenter;
 import db.ExamMapper;
 import db.SubjectMapper;
 import domain.Exam;
 import domain.Subject;
 import exceptions.ExamGotSubmissionException;
+import exceptions.NoAuthorisationException;
 import exceptions.StudentTakingExamException;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -28,30 +30,36 @@ public class DeleteExamServlet extends HttpServlet {
                 collect(Collectors.joining(System.lineSeparator()));
         JSONObject jsonObject = new JSONObject(requestData);
         int examId = jsonObject.getInt("examId");
+        String sessionId = jsonObject.getString("sessionId");
         int subjectId = jsonObject.getInt("subjectId");
         int userId = jsonObject.getInt("userId");
 
         InstructorServiceImpl service = new InstructorServiceImpl();
 
+        JSONObject data = new JSONObject();
+        AuthorisationCenter authorisationCenter = AuthorisationCenter.getInstance();
         try {
-            if (service.checkAnySubmission(examId,subjectId) &&
-                    service.checkStudentTakingExam(examId,subjectId)) {
-                // delete exam only if no submission and no student is taking exam
-                service.deleteExam(subjectId,examId);
-                JSONObject data = new JSONObject();
-                data.put("message", "success");
-                response.setContentType("application/json");
-                response.setCharacterEncoding("UTF-8");
-                response.setStatus(200);
-                response.getWriter().write(data.toString());
+            authorisationCenter.checkPermission(sessionId, "instructor");
+
+            try {
+                if (service.checkAnySubmission(examId,subjectId) &&
+                        service.checkStudentTakingExam(examId,subjectId)) {
+                    // delete exam only if no submission and no student is taking exam
+                    service.deleteExam(subjectId,examId);
+                    data.put("message", "success");
+                    response.setStatus(200);
+                }
+            } catch (StudentTakingExamException | ExamGotSubmissionException e) {
+                data.put("message", e.getMessage());
+                response.setStatus(403);
             }
-        } catch (StudentTakingExamException | ExamGotSubmissionException e) {
-            JSONObject data = new JSONObject();
+        } catch (NoAuthorisationException e) {
             data.put("message", e.getMessage());
-            response.setContentType("application/json");
-            response.setCharacterEncoding("UTF-8");
             response.setStatus(403);
-            response.getWriter().write(data.toString());
         }
+
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write(data.toString());
     }
 }

@@ -56,12 +56,15 @@ const Dashboard = ({ location }) => {
       dispatch(getSubjectList({
         userId: identity.userId,
         userType: identity.userType,
+        sessionId: identity.sessionId,
       }));
     }
   };
 
   const handleLogout = () => {
-    dispatch(logout());
+    dispatch(logout({
+      sessionId: identity.sessionId
+    }));
   }
 
   return (

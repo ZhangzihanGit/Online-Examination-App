@@ -1,8 +1,10 @@
 package servlet;
 
+import auth.AuthorisationCenter;
 import domain.Instructor;
 import domain.Subject;
 import domain.UserType;
+import exceptions.NoAuthorisationException;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.json.JSONArray;
@@ -32,6 +34,7 @@ public class GetAllInstructorsServlet extends HttpServlet {
         String requestData = request.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
         JSONObject jsonObject = new JSONObject(requestData);
         int userId = jsonObject.getInt("userId");
+        String sessionId = jsonObject.getString("sessionId");
         String userType = jsonObject.getString("userType");
         System.out.println(userId);
         System.out.println(userType);
@@ -39,17 +42,18 @@ public class GetAllInstructorsServlet extends HttpServlet {
         List<Instructor> instructors;
         JSONObject data = new JSONObject ();
 
-        // TODO: do more strict authentication in Part 3
-        // TODO: e.g. not only check string, but check userId in DB to see the user's type
-        if (userType.equalsIgnoreCase(UserType.ADMIN.toString())){
+        AuthorisationCenter authorisationCenter = AuthorisationCenter.getInstance();
+        try {
+            authorisationCenter.checkPermission(sessionId, "admin");
+
             AdminService userService = new AdminServiceImpl();
             instructors = userService.viewAllInstructors();
             JSONArray instructorArr = new JSONArray(instructors);
             data.put("message", "Fetch instructors successfully");
             data.put("instructorList", instructorArr);
             response.setStatus(200);
-        } else {
-            data.put("message", "No authority to fetch instructors");
+        } catch (NoAuthorisationException e) {
+            data.put("message", e.getMessage());
             response.setStatus(403);
         }
 

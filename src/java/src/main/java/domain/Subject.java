@@ -1,11 +1,16 @@
 package domain;
 
 import db.SubjectMapper;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+import servlet.GetAllSubjectsServlet;
 import util.UnitOfWork;
 
 import java.util.List;
 
 public class Subject {
+    private final static Logger logger = LogManager.getLogger(Subject.class);
+
     private Integer id;
     private String subjectCode;
     private List<Exam> exams;
@@ -113,6 +118,7 @@ public class Subject {
     }
 
     private void load() {
+        logger.info("here: " + this.id);
         Subject subject = SubjectMapper.loadWithId(this.id);
         if (this.exams == null) {
             this.exams = subject.exams;

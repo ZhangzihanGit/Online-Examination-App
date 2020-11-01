@@ -1,5 +1,7 @@
 package servlet;
 
+import auth.AuthorisationCenter;
+import exceptions.NoAuthorisationException;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.json.JSONObject;
@@ -22,19 +24,28 @@ public class CloseExamServlet extends HttpServlet {
                 collect(Collectors.joining(System.lineSeparator()));
         JSONObject jsonObject = new JSONObject(requestData);
         int userId = jsonObject.getInt("userId");
+        String sessionId = jsonObject.getString("sessionId");
         int examId = jsonObject.getInt("examId");
         int subjectId = jsonObject.getInt("subjectId");
 
         logger.info("User: " + userId + " Exam: " + examId + " Subject: " + subjectId );
 
-        InstructorServiceImpl service = new InstructorServiceImpl();
-        service.closeExam(userId, examId, subjectId);
-
         JSONObject data = new JSONObject();
-        data.put("message", "success");
+        AuthorisationCenter authorisationCenter = AuthorisationCenter.getInstance();
+        try {
+            authorisationCenter.checkPermission(sessionId, "instructor");
+
+            InstructorServiceImpl service = new InstructorServiceImpl();
+            service.closeExam(userId, examId, subjectId);
+            data.put("message", "success");
+            response.setStatus(200);
+        } catch (NoAuthorisationException e) {
+            data.put("message", e.getMessage());
+            response.setStatus(403);
+        }
+
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
-        response.setStatus(200);
         response.getWriter().write(data.toString());
     }
 }

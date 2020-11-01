@@ -1,5 +1,6 @@
 package servlet;
 
+import auth.AuthorisationCenter;
 import domain.Exam;
 import domain.Instructor;
 import domain.Student;
@@ -31,6 +32,7 @@ public class GetSubjectServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String userId = request.getParameter("userId");
         String userType = request.getParameter("userType");
+        String sessionId = request.getParameter("sessionId");
         String subjectId = request.getParameter("subjectId");
         System.out.println(userId);
         System.out.println(userType);
@@ -57,15 +59,14 @@ public class GetSubjectServlet extends HttpServlet {
         data.put("message", "success");
         data.put("examList", examArr);
 
-        List<Student> students = new ArrayList<>();
-        List<Instructor> instructors = new ArrayList<>();
         // get student and instructor list
-        if (userType.equalsIgnoreCase(UserType.ADMIN.toString())){
+        AuthorisationCenter authorisationCenter = AuthorisationCenter.getInstance();
+        if (authorisationCenter.hasPermission(sessionId, "admin")) {
             logger.info("is admin");
             InstructorService instructorService = new InstructorServiceImpl();
             StudentService studentService = new StudentServiceImpl();
-            students = studentService.viewAllStudents(Integer.parseInt(subjectId));
-            instructors = instructorService.viewAllInstructors(Integer.parseInt(subjectId));
+            List<Student> students = studentService.viewAllStudents(Integer.parseInt(subjectId));
+            List<Instructor> instructors = instructorService.viewAllInstructors(Integer.parseInt(subjectId));
             JSONArray instructorArr = new JSONArray(instructors);
             JSONArray studentArr = new JSONArray(students);
             data.put("instructorList", instructorArr);

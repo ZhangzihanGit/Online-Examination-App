@@ -39,6 +39,7 @@ const SubjectList = () => {
       userId: identity.userId,
       userType: identity.userType,
       subjectId: item.id,
+      sessionId: identity.sessionId,
     }, `${pathname}/${item.subjectCode}`));
   };
 
