@@ -1,4 +1,4 @@
-# SWEN90007 Software Design and Architecture (Semester 2, 2020)
+# Online Examination App
 This is an online examination application for SWEN90007 Software Design and Architecture.
 
 ## Deployment & Testing
@@ -24,16 +24,16 @@ Deployed at [heroku](https://online-examination-app.herokuapp.com/).
 
 | Username |   Password    |  Identity  |
 | :------: | :-----------: | :--------: |
-| eduardo  | any, e.g. 123 |   admin    |
-|  maria   | any, e.g. 123 | instructor |
-|   toby   | any, e.g. 123 | instructor |
-|   ben    | any, e.g. 123 | instructor |
-|  zhazz   | any, e.g. 123 |  student   |
-|   tony   | any, e.g. 123 |  student   |
-|   ash    | any, e.g. 123 |  student   |
-|   mark   | any, e.g. 123 |  student   |
-|  steve   | any, e.g. 123 |  student   |
-|  james   | any, e.g. 123 |  student   |
+| eduardo  | 123 |   admin    |
+|  maria   | 123 | instructor |
+|   toby   | 123 | instructor |
+|   ben    | 123 | instructor |
+|  zhazz   | 123 |  student   |
+|   tony   | 123 |  student   |
+|   ash    | 123 |  student   |
+|   mark   | 123 |  student   |
+|  steve   | 123 |  student   |
+|  james   | 123 |  student   |
 
 
 ## Team
